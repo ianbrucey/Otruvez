@@ -1240,4 +1240,8 @@ function s3BucketFolderList() {
         'logos'
     ];
 }
+
+function baseUrlConcat($str) {
+    return sprintf("%s%s",env('APP_URL'),$str);
+}
 // logo: <img src="{{getImage("logos/otruvez-logo.png")}}" style="width: 150px; height: auto;">
