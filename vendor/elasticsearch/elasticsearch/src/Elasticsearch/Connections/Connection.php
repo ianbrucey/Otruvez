@@ -103,7 +103,7 @@ class Connection implements ConnectionInterface
                                 SerializerInterface $serializer, LoggerInterface $log, LoggerInterface $trace)
     {
         if (isset($hostDetails['port']) !== true) {
-            $hostDetails['port'] = '';
+            $hostDetails['port'] = 9200;
         }
 
         if (isset($hostDetails['scheme'])) {
@@ -120,8 +120,7 @@ class Connection implements ConnectionInterface
             unset($connectionParams['client']['headers']);
         }
 
-//        $host = $hostDetails['host'].':'.$hostDetails['port'];
-        $host = $hostDetails['host'];
+        $host = $hostDetails['host'].':'.$hostDetails['port'];
         $path = null;
         if (isset($hostDetails['path']) === true) {
             $path = $hostDetails['path'];

@@ -49,7 +49,7 @@
         {{--<div class="col-md-12">--}}
             <nav class="navbar navbar-light navbar-expand-md navigation p-4" style="width: 100% !important">
                 <a class="navbar-brand" href="/">
-                    <img src="{{getImage("logos/otruvez-logo.png")}}" style="width: 150px; height: auto;">
+                    {{--<img src="{{getImage("logos/otruvez-logo.png")}}" style="width: 150px; height: auto;">--}}
                 </a>
                 <button class="navbar-toggler theme-background" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                     {!! hasNewNotifications() ? '<span class="fa fa-bell text-danger"></span>' : '<span class="navbar-toggler-icon"></span>' !!}
@@ -105,39 +105,7 @@
         <!--============================
 =            Footer            =
 =============================-->
-        @if(!\Illuminate\Support\Facades\Auth::check())
-            <!-- Container Start -->
-            <!-- Container End -->
-        </footer>
-        <!-- Footer Bottom -->
-        <footer class="footer-bottom">
-            <!-- Container Start -->
-            <div class="container">
-                <div class="row">
-                    <div class="col-sm-6 col-12">
-                        <!-- Copyright -->
-                        <div class="copyright">
-                            <p>Copyright © 2016. All Rights Reserved</p>
-                        </div>
-                    </div>
-                    <div class="col-sm-6 col-12">
-                        <!-- Social Icons -->
-                        <ul class="social-media-icons text-right">
-                            <li><a class="fa fa-facebook" href=""></a></li>
-                            <li><a class="fa fa-twitter" href=""></a></li>
-                            <li><a class="fa fa-pinterest-p" href=""></a></li>
-                            <li><a class="fa fa-vimeo" href=""></a></li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-            <!-- Container End -->
-            <!-- To Top -->
-            <div class="top-to">
-                <a id="top" class="" href=""><i class="fa fa-angle-up"></i></a>
-            </div>
-        </footer>
-        @endif
+
 
         <!-- JAVASCRIPTS -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>

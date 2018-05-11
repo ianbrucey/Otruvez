@@ -35,5 +35,5 @@
 @endsection
 
 @section('footer')
-    <script src="{{asset('js/ajax/checkin.js')}}"></script>
+    <script src="{{baseUrlConcat('/js/ajax/checkin.js')}}"></script>
 @endsection

@@ -31,7 +31,7 @@
                 @foreach($plans as $plan)
                     <div class="col-md-4 plan-preview-card">
                         <div class="card-body">
-                            <h3><strong>{{$plan->stripe_plan_name}}</strong></h3>
+                            <h6><strong>{{$plan->stripe_plan_name}}</strong></h6>
                             <p>{{$plan->featured_photo_path == null ? '0/1' : '1/1'}} Featured photo</p>
                             <p>{{count($plan->photos)}}/4 gallery photos</p>
 
@@ -78,10 +78,10 @@
 
 @section('footer')
 
-    <script src="{{ asset('js/index.js') }}"></script>
+    <script src="{{ baseUrlConcat('/js/index.js') }}"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.2.0/min/dropzone.min.js"></script>
-    <script src="{{ asset('js/dropzone-options.js') }}"></script>
-    <script src="{{asset('js/google-location/set-address.js')}}"></script>
+    <script src="{{ baseUrlConcat('/js/dropzone-options.js') }}"></script>
+    <script src="{{baseUrlConcat('/js/google-location/set-address.js')}}"></script>
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAuTqYHpeNjvxPvYQZG7JueMS9tClD7yVY&libraries=places&callback=initAutocomplete" async defer></script>
 
 @endsection

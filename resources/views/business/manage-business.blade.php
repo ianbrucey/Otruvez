@@ -124,10 +124,10 @@
 @section('footer')
 
 
-    <script src="{{ asset('js/index.js') }}"></script>
-    <script src="{{ asset('js/dropzone.js') }}"></script>
-    <script src="{{ asset('js/dropzone-options.js') }}"></script>
-    <script src="{{asset('js/google-location/set-address.js')}}"></script>
+    <script src="{{ baseUrlConcat('/js/index.js') }}"></script>
+    <script src="{{ baseUrlConcat('/js/dropzone.js') }}"></script>
+    <script src="{{ baseUrlConcat('/js/dropzone-options.js') }}"></script>
+    <script src="{{baseUrlConcat('/js/google-location/set-address.js')}}"></script>
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAuTqYHpeNjvxPvYQZG7JueMS9tClD7yVY&libraries=places&callback=initAutocomplete" async defer></script>
 
 

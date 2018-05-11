@@ -16,7 +16,7 @@
 
 
     <!-- Custom styles for this template -->
-    <link href="{{asset('themes/theme-1/css/shop-homepage.css')}}" rel="stylesheet">
+    <link href="{{baseUrlConcat('/themes/theme-1/css/shop-homepage.css')}}" rel="stylesheet">
 
 </head>
 
@@ -61,7 +61,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/lity/2.3.0/lity.min.js"></script>
-<script src="{{ asset('js/stripe.js') }}"></script>
+<script src="{{ baseUrlConcat('/js/stripe.js') }}"></script>
 </body>
 </html>
 

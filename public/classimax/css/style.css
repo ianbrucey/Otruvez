@@ -2422,9 +2422,11 @@ article.single-post p {
 }
 
 .footer-bottom {
-  position: relative;
+  position: fixed;
   background: #363839;
   padding: 25px 0;
+  bottom: 0;
+  width: 100%;
 }
 
 @media (max-width: 480px) {
