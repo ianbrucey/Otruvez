@@ -34,7 +34,7 @@ class AWSPhoto implements PhotoInterface
     }
 
     public function createFileName(UploadedFile $file, $folderName) {
-        return $folderName . sha1($file->getClientOriginalName().date('now')) . "." . $file->getClientOriginalExtension();
+        return "/".$folderName . sha1($file->getClientOriginalName().date('now')) . "." . $file->getClientOriginalExtension();
     }
 
 

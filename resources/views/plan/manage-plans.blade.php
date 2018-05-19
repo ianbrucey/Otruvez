@@ -32,7 +32,7 @@
                     <div class="col-md-4 plan-preview-card">
                         <div class="card-body">
                             <h6><strong>{{$plan->stripe_plan_name}}</strong></h6>
-                            <p>{{$plan->featured_photo_path == null ? '0/1' : '1/1'}} Featured photo</p>
+                            {!! $plan->featured_photo_path == null ? '<p class="text-danger"><span class="fa fa-warning text-danger"></span> Service inactive. please add a featured photo</p>' : '<p class="text-info">active</p>'!!}
                             <p>{{count($plan->photos)}}/4 gallery photos</p>
 
                         </div>
@@ -46,7 +46,7 @@
                                         <span class="fa fa-pencil fa-2x"></span>
                                     </div>
                                     <div class="col-3 show-sm-modal" data-toggle="modal" data-modal-target="#plan-gallery-{{$plan->id}}">
-                                        <span class="fa fa-photo fa-2x"></span>
+                                        <span class="fa fa-photo fa-2x {{$plan->featured_photo_path == null ? 'text-danger' : ''}}"></span>
                                     </div>
                                     <div class="col-3" data-target="#delete-plan-form-{{$plan->id}}" onclick="triggerTargetSubmit(event, this)">
                                         <form action="/plan/delete/{{$plan->id}}" method="POST" id="delete-plan-form-{{$plan->id}}">
