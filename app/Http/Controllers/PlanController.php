@@ -135,7 +135,7 @@ class PlanController extends Controller
             'use_limit_year'    => $useLimitYear,
             'limit_interval'    => $limitInterval,
             'description'       => $description,
-            'featured_photo_path' => '',
+            'featured_photo_path' => null,
         ]);
 
         $this->updateEsIndex($plan, $es);
