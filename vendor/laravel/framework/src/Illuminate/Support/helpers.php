@@ -1241,6 +1241,10 @@ function s3BucketFolderList() {
     ];
 }
 
+function truncateCardTitle($str){
+    return strlen($str) > 55 ? substr($str,0,55)."..." : substr($str,0,55);
+}
+
 function baseUrlConcat($str) {
     return sprintf("%s%s",env('APP_URL'),$str);
 }

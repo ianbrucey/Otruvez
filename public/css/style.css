@@ -25,6 +25,12 @@ body {
     /*background: #4cb996;*/
 /*}*/
 
+.search-card-title {
+    height: 50px;
+    max-height: 50px;
+    text-overflow: ellipsis !important;
+}
+
 #scoreboard {
     box-shadow: 2px 2px 5px black;
 }

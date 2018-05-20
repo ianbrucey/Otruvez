@@ -102,7 +102,7 @@
 
                             </div>
                             <div class="card-body">
-                                <h4 class="card-title">{{$plan->stripe_plan_name}}</h4>
+                                <h4 class="card-title search-card-title">{{ truncateCardTitle($plan->stripe_plan_name) }}</h4>
                                 <ul class="list-inline product-meta">
                                     <li class="list-inline-item">
                                         <a href=""><i class="fa fa-briefcase"></i>{{$plan->business['name']}}</a>
