@@ -1224,7 +1224,7 @@ function getBusinessNotificationsUrl($businessId)
 }
 
 function s3PhotobucketPath() {
-    return "https://s3-us-west-2.amazonaws.com/otruvez-images";
+    return "https://s3-us-west-2.amazonaws.com/otruvez-images/";
 }
 
 function getImage($imgPath) {

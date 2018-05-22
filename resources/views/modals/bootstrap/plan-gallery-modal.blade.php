@@ -14,7 +14,6 @@
                     <a class="text-primary" data-target="#plan-dropzone-{{$plan->id}}" onclick="triggerTargetClick(event, this)">update</a>
                     <form method="POST" action="/plan/featuredPhoto/{{$plan->id}}" class="dropzone text-center hide" id="plan-dropzone-{{$plan->id}}" >
                         <span data-dz-message class="fa fa-photo fa-1x dz-message"><br>Add a featured image</span>
-                        {{form_method_field("POST")}}
                         {{csrf_field()}}
                     </form>
                 </p>
@@ -38,10 +37,10 @@
                             @if(count($plan->photos) < 4)
                                 <button class="btn theme-background text-center">
                                     <a class="text-default" data-target="#gallery-dropzone-{{$plan->id}}" onclick="triggerTargetClick(event, this)">{{sprintf('choose up to %s more',4 - count($plan->photos))}}</a>
-                                    <form method="POST" action="/plan/galleryPhoto/{{$plan->id}}" class="dropzone hide" id="gallery-dropzone-{{$plan->id}}">
-                                        {{csrf_field()}}
-                                    </form>
                                 </button>
+                                <form class="dropzone hide" id="gallery-dropzone-{{$plan->id}}" method="POST" action="/plan/galleryPhoto/{{$plan->id}}">
+                                    {{csrf_field()}}
+                                </form>
                             @endif
                         </div>
                 </div>
