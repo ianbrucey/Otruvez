@@ -10,7 +10,7 @@
                     <h1 style="display: inline" class="mr-4"><span class="fa fa-frown-o"></span></h1>
                     @for($i = 1; $i <=5; $i++)
 
-                        <h1 style="display: inline" class="rate-star"><span class="fa fa-star-o fa-lg star-icons" data-rate="{{$i}}"></span></h1>
+                        <h3 style="display: inline" class="rate-star"><span class="fa fa-star-o fa-lg star-icons" data-rate="{{$i}}"></span></h3>
 
                     @endfor
                     <h1 style="display: inline" class="ml-4"><span class="fa fa-smile-o"></span></h1>

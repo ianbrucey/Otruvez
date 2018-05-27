@@ -84,6 +84,10 @@ body {
     color: whitesmoke !important;
 }
 
+.text-white-children * {
+    color: whitesmoke !important;
+}
+
 .card {
     padding: 5%;
     background: whitesmoke;
