@@ -1,6 +1,6 @@
 $('.checkin').on('click', function () {
     let zis     = $(this);
-    let planId = zis.attr('data-plan-id');
+    let planId  = zis.attr('data-plan-id');
 
     let subscriptionId = zis.attr('data-subscription-id');
     let url = "/subscription/checkin/"+planId+"/"+subscriptionId;
@@ -12,7 +12,6 @@ $('.checkin').on('click', function () {
 
     $.post(url, postdata).done(function (data) {
         checkinModal.find('.checkin-code').text(data);
-        zis.html("code: "+ data);
     });
 
 });

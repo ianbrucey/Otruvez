@@ -5,12 +5,9 @@
     <list id="534c903b-4485-49e3-8a3f-1f56f2d95018" name="fixing the way images render with slashes" comment="" />
     <list id="1f2c4008-d236-47ea-9571-ddc9f46b4607" name="Standardizing the size of the results card title on the search page" comment="" />
     <list default="true" id="5bdff3f8-39b9-40cf-90de-11c0f74c8f01" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/resources/views/modals/custom/subscription-details-modal.blade.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/css/style.css" afterPath="$PROJECT_DIR$/public/css/style.css" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/resources/views/account/subscriptions.blade.php" afterPath="$PROJECT_DIR$/resources/views/account/subscriptions.blade.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/resources/views/layouts/app.blade.php" afterPath="$PROJECT_DIR$/resources/views/layouts/app.blade.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/resources/views/modals/custom/ratings-modal.blade.php" afterPath="$PROJECT_DIR$/resources/views/modals/custom/ratings-modal.blade.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/js/ajax/checkin.js" afterPath="$PROJECT_DIR$/public/js/ajax/checkin.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/resources/views/modals/custom/checkin-modal.blade.php" afterPath="$PROJECT_DIR$/resources/views/modals/custom/checkin-modal.blade.php" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -35,7 +32,7 @@
       <file leaf-file-name="subscriptions.blade.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/resources/views/account/subscriptions.blade.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="279">
+            <state relative-caret-position="-41">
               <caret line="42" column="130" lean-forward="false" selection-start-line="42" selection-start-column="130" selection-end-line="42" selection-end-column="130" />
               <folding>
                 <element signature="e#2676#2698#0#HTML" expanded="true" />
@@ -44,61 +41,31 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="subscription-details-modal.blade.php" pinned="false" current-in-tab="true">
+      <file leaf-file-name="checkin.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/public/js/ajax/checkin.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="210">
+              <caret line="14" column="7" lean-forward="true" selection-start-line="14" selection-start-column="7" selection-end-line="14" selection-end-column="7" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="checkin-modal.blade.php" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/resources/views/modals/custom/checkin-modal.blade.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="15">
+              <caret line="1" column="50" lean-forward="true" selection-start-line="1" selection-start-column="50" selection-end-line="1" selection-end-column="67" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="subscription-details-modal.blade.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/resources/views/modals/custom/subscription-details-modal.blade.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="330">
-              <caret line="23" column="45" lean-forward="true" selection-start-line="23" selection-start-column="45" selection-end-line="23" selection-end-column="45" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="style.css" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/public/css/style.css">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="118">
-              <caret line="81" column="0" lean-forward="true" selection-start-line="81" selection-start-column="0" selection-end-line="81" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="ratings-modal.blade.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/resources/views/modals/custom/ratings-modal.blade.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="0">
-              <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="28" selection-end-column="6" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="app.blade.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/resources/views/layouts/app.blade.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-97">
-              <caret line="52" column="87" lean-forward="false" selection-start-line="52" selection-start-column="87" selection-end-line="52" selection-end-column="87" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="scratch.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/Http/Controllers/scratch.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="170">
-              <caret line="62" column="0" lean-forward="false" selection-start-line="62" selection-start-column="0" selection-end-line="62" selection-end-column="43" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name=".env" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/.env">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="120">
-              <caret line="8" column="17" lean-forward="true" selection-start-line="8" selection-start-column="17" selection-end-line="8" selection-end-column="17" />
+            <state relative-caret-position="30">
+              <caret line="2" column="30" lean-forward="true" selection-start-line="2" selection-start-column="20" selection-end-line="2" selection-end-column="40" />
               <folding />
             </state>
           </provider>
@@ -191,8 +158,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/app/Http/Controllers/LocationController.php" />
-        <option value="$PROJECT_DIR$/resources/views/partials/location/location-list.blade.php" />
         <option value="$PROJECT_DIR$/app/User.php" />
         <option value="$PROJECT_DIR$/vendor/elasticsearch/elasticsearch/src/Elasticsearch/Connections/Connection.php" />
         <option value="$PROJECT_DIR$/app/Http/Controllers/scratch.php" />
@@ -242,6 +207,8 @@
         <option value="$PROJECT_DIR$/.env" />
         <option value="$PROJECT_DIR$/public/css/style.css" />
         <option value="$PROJECT_DIR$/resources/views/modals/custom/subscription-details-modal.blade.php" />
+        <option value="$PROJECT_DIR$/public/js/ajax/checkin.js" />
+        <option value="$PROJECT_DIR$/resources/views/modals/custom/checkin-modal.blade.php" />
       </list>
     </option>
   </component>
@@ -599,7 +566,7 @@
       <workItem from="1515166884915" duration="463000" />
       <workItem from="1515284633093" duration="225000" />
       <workItem from="1515884318804" duration="8394000" />
-      <workItem from="1527116098733" duration="6110000" />
+      <workItem from="1527116098733" duration="7249000" />
     </task>
     <task id="LOCAL-00001" summary="adding variables for &quot;thank you for subscribing page&quot;">
       <created>1516115781701</created>
@@ -615,11 +582,18 @@
       <option name="project" value="LOCAL" />
       <updated>1526970395043</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="updating subscription details modal on account page">
+      <created>1527454306642</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1527454306642</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="466889000" />
+    <option name="totallyTimeSpent" value="468028000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1280" height="800" extended-state="0" />
@@ -681,7 +655,8 @@
     <MESSAGE value="adding variables for &quot;thank you for subscribing page&quot;" />
     <MESSAGE value="Standardizing search result card size and fixing the way images render" />
     <MESSAGE value="Standardizing search result card size and fixing the way images render with slash" />
-    <option name="LAST_COMMIT_MESSAGE" value="Standardizing search result card size and fixing the way images render with slash" />
+    <MESSAGE value="updating subscription details modal on account page" />
+    <option name="LAST_COMMIT_MESSAGE" value="updating subscription details modal on account page" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -762,22 +737,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/resources/views/layouts/theme/theme-1-layout.blade.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-40">
-          <caret line="33" column="48" lean-forward="false" selection-start-line="33" selection-start-column="46" selection-end-line="33" selection-end-column="79" />
-          <caret line="38" column="49" lean-forward="false" selection-start-line="38" selection-start-column="46" selection-end-line="38" selection-end-column="85" />
-          <caret line="41" column="51" lean-forward="false" selection-start-line="41" selection-start-column="46" selection-end-line="41" selection-end-column="87" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/resources/views/partials/base-theme/store-nav.blade.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="150">
-          <caret line="10" column="35" lean-forward="false" selection-start-line="10" selection-start-column="35" selection-end-line="10" selection-end-column="35" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/resources/views/themes/base-theme/store-front.blade.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="149">
@@ -1119,7 +1078,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/resources/views/account/subscriptions.blade.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="279">
+        <state relative-caret-position="-41">
           <caret line="42" column="130" lean-forward="false" selection-start-line="42" selection-start-column="130" selection-end-line="42" selection-end-column="130" />
           <folding>
             <element signature="e#2676#2698#0#HTML" expanded="true" />
@@ -1127,10 +1086,26 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/public/js/ajax/checkin.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="210">
+          <caret line="14" column="7" lean-forward="true" selection-start-line="14" selection-start-column="7" selection-end-line="14" selection-end-column="7" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/resources/views/modals/custom/subscription-details-modal.blade.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="330">
-          <caret line="23" column="45" lean-forward="true" selection-start-line="23" selection-start-column="45" selection-end-line="23" selection-end-column="45" />
+        <state relative-caret-position="30">
+          <caret line="2" column="30" lean-forward="true" selection-start-line="2" selection-start-column="20" selection-end-line="2" selection-end-column="40" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/resources/views/modals/custom/checkin-modal.blade.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="15">
+          <caret line="1" column="50" lean-forward="true" selection-start-line="1" selection-start-column="50" selection-end-line="1" selection-end-column="67" />
           <folding />
         </state>
       </provider>
