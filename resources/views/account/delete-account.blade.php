@@ -7,9 +7,9 @@
                     <h4>Are you sure you want to delete your account?</h4>
                 </div>
                 <div class="card-body">
-                <a href="/account" class="btn theme-background text-white pull-left">Back</a>
+                <a href="/account" class="btn-sm theme-background text-white pull-left">Back</a>
 
-                    <button class="btn btn-danger pull-right show-sm-modal" data-modal-target="#confirm-delete-account-modal">Delete Account</button>
+                    <button class="btn-sm btn-danger  pull-right show-sm-modal" data-modal-target="#confirm-delete-account-modal">Delete Account</button>
                 </div>
             </div>
         </div>

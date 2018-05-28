@@ -27,7 +27,7 @@
 <div class="row text-center">
     @if($business->logo_path)
         <div class="col-12">
-            <h3 class="text-center">{{$business->name}} thanks you</h3>
+            <h3 class="text-center m-3">{{$business->name}} thanks you</h3>
         </div>
         <div style="margin: auto; margin-bottom: 5px; width: 70px; height: 70px; background: url({{ getImage($business->logo_path) }}) no-repeat; background-size: contain"> </div>
     @endif
