@@ -23,7 +23,7 @@
                             @php /** @var \App\Notification $notification */ @endphp
                             {!! $notification->renderNotificationView($notification->type) !!}
                         @else
-                            {{$notification->body}}
+                            {!!$notification->body!!}
                         @endif
                     </div>
                 </div><br>

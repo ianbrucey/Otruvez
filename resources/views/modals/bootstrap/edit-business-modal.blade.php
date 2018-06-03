@@ -4,8 +4,8 @@
         <!-- Modal content-->
         <div class="modal-content">
             <div class="modal-header">
+                <h4 class="modal-title">Edit Business Details</h4>
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h4 class="modal-title">Business Details</h4>
             </div>
             <div class="modal-body">
                 <h3>{{$business->name}}</h3>
@@ -27,10 +27,10 @@
                     <label>Address:</label>
                 </div>
                 <div class="edit-input-div">
-                    <div class="card-body">
+                    {{--<div class="card-body">--}}
                         <input id="autocomplete" placeholder="Enter your address" value="{{$business->address}}"
                                onFocus="geolocate()" class="form-control" type="text" autocomplete="user-address">
-                    </div>
+                    {{--</div>--}}
                     <input type="hidden" class="field" id="address" name="address" value="{{$business->address}}">
                     <input type="hidden" class="field" id="locality" name="city" value="{{$business->city}}">
                     <input type="hidden" class="field" id="administrative_area_level_1" name="state" value="{{$business->state}}">
