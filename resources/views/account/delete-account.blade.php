@@ -14,5 +14,5 @@
             </div>
         </div>
     </div>
-    @include('modals.custom.confirm-delete-account-modal');
+    @include('modals.custom.confirm-delete-account-modal')
 @endsection

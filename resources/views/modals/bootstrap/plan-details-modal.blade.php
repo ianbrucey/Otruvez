@@ -2,8 +2,8 @@
     <!-- Modal content-->
         <div class="modal-content col-md-8 offset-md-2">
             <div class="modal-header">
-                <button type="button" class="hide-sm-modal" data-dismiss="modal">&times;</button>
                 <h4 class="modal-title">Plan Details</h4>
+                <button type="button" class="hide-sm-modal float-right" data-dismiss="modal">&times;</button>
             </div>
             <div class="modal-body">
                 <div class="">
