@@ -80,3 +80,6 @@ sudo find /var/www/html/ -type f -exec chmod 644 {} \;
 
 sudo chgrp -R webapp /var/www/html/storage /var/www/html/bootstrap/cache
 sudo chmod -R ug+rwx /var/www/html/storage /var/www/html/bootstrap/cache
+
+curl -XDELETE 'localhost:9200/plans?pretty'
+curl -XDELETE 'https://vpc-otruvez-es-omtlemroamzj2e4llaalijwiaa.us-west-2.es.amazonaws.com/plans?pretty'
