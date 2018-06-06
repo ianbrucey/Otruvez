@@ -68,15 +68,15 @@ class ReindexCommand extends Command
                         ],
                         'properties' => [
                             'stripe_plan_name' => [
-                                'type' => 'string',
+                                'type' => 'text',
                                 'analyzer' => 'english'
                             ],
                             'id' => [
                                 'type' => 'integer',
-                                'index' => 'not_analyzed'
+                                'index' => 'false'
                             ],
                             'description' => [
-                                'type' => 'string',
+                                'type' => 'text',
                                 'analyzer' => 'english'
                             ],
                             "location" => [
