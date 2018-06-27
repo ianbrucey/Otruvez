@@ -25,6 +25,19 @@
                         $haslogo    = !empty($business->logo_path);
                     @endphp
                     <div class="col-md-10 offset-md-1 card-body row" href="#">
+                        <div class="col-12">
+                            <hr>
+                            <h4 class="text-center">Choose your store's theme color</h4>
+
+                            <div class="col-4 offset-4">
+                                <form action="/action_page.php">
+                                    <div class="text-center">
+                                        <input type="color" class="form-control" name="favcolor" value="">
+                                    </div>
+                                </form>
+                            </div>
+                            <hr>
+                        </div>
 
                         <div class="col-md-6">
                             {{--PRIMARY BUSINESS LOGO--}}
@@ -52,32 +65,32 @@
                             @endif
                             {{--PRIMARY BUSINESS LOGO--}}
                         </div>
-                        <div class="col-md-6">
+                        {{--<div class="col-md-6">--}}
                             {{--PRIMARY BUSINESS PHOTO--}}
-                            <p class="text-center">
-                                <a class="text-primary btn theme-background" id="update-business_photo" data-target="#business-dropzone" onclick="triggerTargetClick(event, this)">update primary photo</a>
-                                <form action="/business/updatePhoto/{{$business->id}}" class="dropzone hide" id="business-dropzone">
-                                    {{ csrf_field() }}
-                                    {{ form_method_field("POST") }}
-                                    <div class="fallback">
-                                        <input name="file" type="file" multiple />
-                                    </div>
-                                </form>
-                            </p>
-                            <div href="{{ $hasPhoto ? getImage($business->photo_path) : ''}}" class="business-img-placeholder text-center mb-3" style="background-image: url({{$hasPhoto ? getImage($business->photo_path) : ''}})" {{$hasPhoto ? 'data-lity' : ''}}>
-                                @if(!$hasPhoto) <span class="fa fa-photo fa-2x" style="display: block; margin-top: 30%"></span> @endif
-                            </div>
-                            @if($hasPhoto)
-                            <p class="text-center">
-                                <a class="text-danger" id="delete-business-photo" data-target="#delete-business-photo-form" onclick="triggerTargetSubmit(event, this)">remove</a>
-                                <form method="post" action="/business/deletePhoto/{{$business->id}}" class="hide" id="delete-business-photo-form">
-                                    {{ csrf_field() }}
-                                    {{ form_method_field("DELETE") }}
-                                </form>
-                            </p>
-                            @endif
+                            {{--<p class="text-center">--}}
+                                {{--<a class="text-primary btn theme-background" id="update-business_photo" data-target="#business-dropzone" onclick="triggerTargetClick(event, this)">update primary photo</a>--}}
+                                {{--<form action="/business/updatePhoto/{{$business->id}}" class="dropzone hide" id="business-dropzone">--}}
+                                    {{--{{ csrf_field() }}--}}
+                                    {{--{{ form_method_field("POST") }}--}}
+                                    {{--<div class="fallback">--}}
+                                        {{--<input name="file" type="file" multiple />--}}
+                                    {{--</div>--}}
+                                {{--</form>--}}
+                            {{--</p>--}}
+                            {{--<div href="{{ $hasPhoto ? getImage($business->photo_path) : ''}}" class="business-img-placeholder text-center mb-3" style="background-image: url({{$hasPhoto ? getImage($business->photo_path) : ''}})" {{$hasPhoto ? 'data-lity' : ''}}>--}}
+                                {{--@if(!$hasPhoto) <span class="fa fa-photo fa-2x" style="display: block; margin-top: 30%"></span> @endif--}}
+                            {{--</div>--}}
+                            {{--@if($hasPhoto)--}}
+                            {{--<p class="text-center">--}}
+                                {{--<a class="text-danger" id="delete-business-photo" data-target="#delete-business-photo-form" onclick="triggerTargetSubmit(event, this)">remove</a>--}}
+                                {{--<form method="post" action="/business/deletePhoto/{{$business->id}}" class="hide" id="delete-business-photo-form">--}}
+                                    {{--{{ csrf_field() }}--}}
+                                    {{--{{ form_method_field("DELETE") }}--}}
+                                {{--</form>--}}
+                            {{--</p>--}}
+                            {{--@endif--}}
                         {{--PRIMARY BUSINESS PHOTO--}}
-                        </div>
+                        {{--</div>--}}
 
                         <div class="card-body">
                             <h3 class="text-justify">{{$business->name}}</h3>
