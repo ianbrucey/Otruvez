@@ -256,8 +256,20 @@ class BusinessController extends Controller
             {
                 $notification->sendNotifyBusinessModificationNotification($business, $subscription);
             }
+//            if($request->async)
+//            {
+//                echo "Business details updated successfully \n";
+//                return "1";
+//            }
+
             return redirect('/business/manageBusiness')->with('successMessage','Business details updated successfully');
         }
+
+//        if($request->async)
+//        {
+//            echo "Business details not updated \n";
+//            return "0";
+//        }
 
         return redirect('/business/manageBusiness')->with('warningMessage','Business does not exist or is inactive');
     }

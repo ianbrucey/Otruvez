@@ -107,7 +107,7 @@ body {
 
 .plan-preview-card {
     clear: none !important;
-    height: 220px;
+    height: 400px;
 }
 
 .plan-preview-card-footer {
@@ -124,6 +124,12 @@ body {
 .plan-preview-card-footer div:hover {
     background: #4cb996;
     color: whitesmoke;
+}
+
+
+.featured-photo-container {
+    text-align: center;
+    padding: 5px;
 }
 
 .plan-footer-buttons {
@@ -260,7 +266,7 @@ label {
 .gallery-photo {
     display: block;
     background-repeat: no-repeat !important;
-    background-size: contain !important;
+    background-size: cover !important;
     width: 200px;
     height: 200px;
     margin: auto;

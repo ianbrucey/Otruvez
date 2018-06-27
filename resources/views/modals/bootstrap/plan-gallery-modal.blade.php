@@ -9,7 +9,7 @@
             <div class="plan-preview-photo">
                 <div class="text-center">Featured photo</div>
                 {{--FEATURED PHOTO START--}}
-                <? $hasFeaturedPhoto = !empty($plan->featured_photo_path); ?>
+                @php $hasFeaturedPhoto = !empty($plan->featured_photo_path); @endphp
                 <p class="text-center">
                     <a class="text-primary" data-target="#plan-dropzone-{{$plan->id}}" onclick="triggerTargetClick(event, this)">update</a>
                     <form method="POST" action="/plan/featuredPhoto/{{$plan->id}}" class="dropzone text-center hide" id="plan-dropzone-{{$plan->id}}" >

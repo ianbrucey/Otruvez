@@ -25,19 +25,37 @@
                         $haslogo    = !empty($business->logo_path);
                     @endphp
                     <div class="col-md-10 offset-md-1 card-body row" href="#">
-                        <div class="col-12">
-                            <hr>
-                            <h4 class="text-center">Choose your store's theme color</h4>
+                        {{--<div class="col-12">--}}
+                            {{--<hr>--}}
+                            {{--<h4 class="text-center">Choose your store's theme color</h4>--}}
 
-                            <div class="col-4 offset-4">
-                                <form action="/action_page.php">
-                                    <div class="text-center">
-                                        <input type="color" class="form-control" name="favcolor" value="">
-                                    </div>
-                                </form>
-                            </div>
-                            <hr>
-                        </div>
+                            {{--<div class="col-4 offset-4">--}}
+                                {{--<div class="alert alert-success m-4 hide" id="color-saved">--}}
+                                    {{--Theme color saved--}}
+                                {{--</div>--}}
+                                {{--<form id="theme-color-form" action="/business/update/{{$business->id}}" method="post">--}}
+                                    {{--<div class="text-center">--}}
+                                        {{--<input type="color" class="form-control" id="theme-color" name="theme_color">--}}
+                                        {{--<input type="hidden" name="async" value=1>--}}
+                                        {{--{{csrf_field()}}--}}
+                                        {{--{{method_field("put")}}--}}
+                                    {{--</div>--}}
+                                {{--</form>--}}
+                            {{--</div>--}}
+                            {{--<hr>--}}
+                        {{--</div>--}}
+                        {{--<script>--}}
+                            {{--let themeColorForm = $("#theme-color-form");--}}
+                            {{--let url  = themeColorForm.attr("action");--}}
+                            {{--let postdata = themeColorForm.serialize();--}}
+                            {{--$("#theme-color").on('change', function(){--}}
+                                {{--console.log("lets go");--}}
+                                {{--$.post(url, postdata).done(function () {--}}
+                                    {{--$('#color-saved').show();--}}
+                                    {{--$('#color-saved').hide(1000);--}}
+                                {{--})--}}
+                            {{--});--}}
+                        {{--</script>--}}
 
                         <div class="col-md-6">
                             {{--PRIMARY BUSINESS LOGO--}}
