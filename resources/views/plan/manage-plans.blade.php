@@ -33,22 +33,48 @@
                         <div class="card-body">
                             <h6><strong>{{$plan->stripe_plan_name}}</strong></h6>
                             {!! $plan->featured_photo_path == null ? '<p class="text-danger"><span class="fa fa-warning text-danger"></span> Service inactive. please add a featured photo</p>' : '<p class="text-info">active</p>'!!}
-                            <p>{{count($plan->photos)}}/4 gallery photos</p>
+                            {{--If photo is null, show span element, else show the actual photo--}}
+                            <div class="featured-photo-container">
+                                <button class="btn-sm theme-background text-white show-sm-modal m-1" data-toggle="modal" data-modal-target="#plan-gallery-{{$plan->id}}" >Edit Photos</button>
+                                <p>Featured Photo</p>
+                                @if(!$plan->featured_photo_path)
+                                    <span class="fa fa-photo fa-3x text-danger"></span>
+                                @else
+                                    <img src="{{getImage($plan->featured_photo_path)}}" width="48" height="48" style="display: inline-block" href="{{getImage($plan->featured_photo_path)}}" data-lity>
+                                @endif
+                            </div>
 
+                            {{--The div below should either show a photo, or the span element--}}
+                            <div class=" featured-photo-container" style="margin-bottom: -10px">
+                                {{--<hr>--}}
+                                <p>{{count($plan->photos)}}/4 gallery photos</p>
+                                @for($i = 0; $i < $maxGalleryCount; $i++)
+                                    @php
+                                        $hasGalleryPhoto = isset($plan->photos[$i]);
+                                        $path    = $hasGalleryPhoto ? $plan->photos[$i]->path : '';
+                                    @endphp
+                                    @if($hasGalleryPhoto)
+                                        <img src="{{getImage($path)}}" width="40" height="40" style="display: inline-block; margin-top: -25px" href="{{ getImage($path) }}" data-lity>
+                                    @else
+                                        <span class="fa fa-2x fa-picture-o"></span>
+                                    @endif
+                                @endfor
+                            </div>
+                            <hr>
                         </div>
-                        <div class="row plan-preview-card-footer" style="width: 100%; margin: 0">
+
+                        <div class="row plan-preview-card-footer" style="width: 100%; margin-top: -15px; margin-left: 10px">
+
+
                                 {{--<div style="width: 100%" class="text-center">--}}
-                                    <div class="col-3 show-sm-modal" data-toggle="modal" data-modal-target="#plan-details-{{$plan->id}}">
+                                    <div class="col-4 show-sm-modal" data-toggle="modal" data-modal-target="#plan-details-{{$plan->id}}">
                                         {{--view details--}}
                                         <span class="fa fa-eye fa-2x"></span>
                                     </div>
-                                    <div class="col-3 show-sm-modal" data-toggle="modal" data-modal-target="#plan-edit-{{$plan->id}}">
+                                    <div class="col-4 show-sm-modal" data-toggle="modal" data-modal-target="#plan-edit-{{$plan->id}}">
                                         <span class="fa fa-pencil fa-2x"></span>
                                     </div>
-                                    <div class="col-3 show-sm-modal" data-toggle="modal" data-modal-target="#plan-gallery-{{$plan->id}}">
-                                        <span class="fa fa-photo fa-2x {{$plan->featured_photo_path == null ? 'text-danger' : ''}}"></span>
-                                    </div>
-                                    <div class="col-3" data-target="#delete-plan-form-{{$plan->id}}" onclick="triggerTargetSubmit(event, this)">
+                                    <div class="col-4" data-target="#delete-plan-form-{{$plan->id}}" onclick="triggerTargetSubmit(event, this)">
                                         <form action="/plan/delete/{{$plan->id}}" method="POST" id="delete-plan-form-{{$plan->id}}">
                                             {{method_field('DELETE')}}
                                             {{csrf_field()}}

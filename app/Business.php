@@ -30,7 +30,8 @@ class Business extends Model
         'thursday',
         'friday',
         'saturday',
-        'sunday'
+        'sunday',
+        'theme_color',
     ];
 
     public function user() {
