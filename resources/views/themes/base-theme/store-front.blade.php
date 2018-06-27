@@ -14,11 +14,7 @@
     @endif
   </div>
   @include('partials.base-theme.store-nav')
-  <style>
-    .theme-background {
-      background: red !important;
-    }
-  </style>
+
     <!-- Page Content -->
     <div class="container">
 
