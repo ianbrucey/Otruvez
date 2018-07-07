@@ -74,7 +74,7 @@
                                     <div class="col-4 show-sm-modal" data-toggle="modal" data-modal-target="#plan-edit-{{$plan->id}}">
                                         <span class="fa fa-pencil fa-2x"></span>
                                     </div>
-                                    <div class="col-4" data-target="#delete-plan-form-{{$plan->id}}" onclick="triggerTargetSubmit(event, this)">
+                                    <div class="col-4 delete-plan" data-target="#delete-plan-form-{{$plan->id}}" data-plan-name="{{$plan->stripe_plan_name}}" onclick="deletePlan(event, this)">
                                         <form action="/plan/delete/{{$plan->id}}" method="POST" id="delete-plan-form-{{$plan->id}}">
                                             {{method_field('DELETE')}}
                                             {{csrf_field()}}

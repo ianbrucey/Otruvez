@@ -66,6 +66,30 @@ $('.which_usage_interval').on('change', function () {
         console.log('works');
     }
 });
+
+function deletePlan(e, obj) {
+    $.confirm({
+        icon: 'fa fa-warning text-danger',
+        title: 'Are you sure?',
+        content: 'Do you want to delete your plan: "' + $(obj).attr("data-plan-name") + '"',
+        buttons: {
+            delete: {
+                btnClass: 'btn-danger',
+                action: function() {
+                    triggerTargetSubmit(e, obj);
+                }
+            },
+
+            cancel: {
+                btnClass: 'theme-background',
+            }
+        }
+    });
+}
+
+$('form').submit(function(){
+   $('#submitting').fadeIn(1000);
+});
 // When clicking here, we will trigger the dropzone that
 // lets us choose a NEW FEATURED PHOTO for the the PLAN
 
