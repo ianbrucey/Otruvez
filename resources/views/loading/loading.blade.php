@@ -17,7 +17,7 @@
 
         <h1 class="text-center">
             <span><img src="{{getImage('logos/otruvez-logo.png')}}" width="200"></span><br>
-            Saving<br>
+            <p id="submit-message"></p>
             <span class="fa fa-spinner fa-spin fa-2x theme-color"></span>
         </h1>
     </div>
