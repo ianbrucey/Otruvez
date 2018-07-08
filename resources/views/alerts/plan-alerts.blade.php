@@ -21,3 +21,9 @@
         {{ session('errorMessage') }}
     </div>
 @endif
+
+@if (isset($_GET['uploadSuccess']))
+    <div class="alert alert-success">
+        Your upload was successful
+    </div>
+@endif

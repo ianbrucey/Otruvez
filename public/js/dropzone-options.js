@@ -1,6 +1,8 @@
 /**
  * Created by macbook on 11/9/17.
  */
+
+let currentLocation = window.location.href;
 let dropzones = $('.dropzone');
 
 Dropzone.autoDiscover = false;
@@ -16,12 +18,11 @@ $(function() {
         dropzone.uploadMultiple = true;
         dropzone.on("sending", function(file) {
             /* Maybe display some more file information on your page */
-            $('#loading').show();
+            $('#loading-photo').fadeIn();
         });
         dropzone.on("complete", function(file) {
             /* Maybe display some more file information on your page */
-            $('#loading').hide();
-            location.reload();
+            window.location.href = currentLocation + "?uploadSuccess";
         });
 
         dropzone.on('sending', function (file, xhr, formData) {

@@ -27,16 +27,12 @@
     <!-- FAVICON -->
     <link rel="shortcut icon" href="{{getImage('logos/o-logo.png')}}">
 
-    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
-    <!--<script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>-->
-    <!--<script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>-->
-    <![endif]-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.0/jquery-confirm.min.css">
 
 </head>
 
 <body class="body-wrapper">
+@include("loading.loading")
 
 {{--NAV SECTION--}}
 <div class="container">
@@ -93,7 +89,6 @@
     </div>
 </div>
 {{--NAV SECTION--}}
-
 @yield('header')
 @include("alerts.plan-alerts")
 @yield('body')
@@ -109,6 +104,7 @@
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.0/jquery-confirm.min.js"></script>
 <script src="{{baseUrlConcat('/classimax/plugins/raty/jquery.raty-fa.js')}}"></script>
 <script src="{{baseUrlConcat('/classimax/plugins/bootstrap/dist/js/popper.min.js')}}"></script>
 <script src="{{baseUrlConcat('/classimax/plugins/bootstrap/dist/js/bootstrap.min.js')}}"></script>
