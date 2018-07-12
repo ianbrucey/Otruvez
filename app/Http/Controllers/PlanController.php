@@ -219,11 +219,15 @@ class PlanController extends Controller
 
         Subscription::where('plan_id', $id)->delete();
         $planId =  $smPlan->stripe_plan_id;
-        setStripeApiKey('secret');
-        $plan = \Stripe\Plan::retrieve($planId."_month");
-        $plan->delete();
-        $plan = \Stripe\Plan::retrieve($planId."_year");
-        $plan->delete();
+        try {
+            setStripeApiKey('secret');
+            $plan = \Stripe\Plan::retrieve($planId . "_month");
+            $plan->delete();
+            $plan = \Stripe\Plan::retrieve($planId . "_year");
+            $plan->delete();
+        } catch (Exception $e) {
+            return redirect("/plan/managePlans")->with('warningMessage',"There was a problem deleting the service because <br>it may no longer exist. please contact support with the following id if problems persist: $planId");
+        }
 
         return redirect("/plan/managePlans")->with('infoMessage',"$planName deleted successfully");
 

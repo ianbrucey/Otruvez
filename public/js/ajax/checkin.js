@@ -18,19 +18,28 @@ $('.checkin').on('click', function () {
 
 $('.confirm-checkin').on('click', function () {
     let zis     = $(this);
+    if($('#checkin-code').val() == '') {
+        $('.checkin-error-message').show().text('Checkin code required');
+        $('.sm-modal').hide();
+        return false;
+    } else {
+        $('.checkin-error-message').hide();
+    }
+
     let subscriptionId = zis.attr('data-subscription-id');
     let url = "/subscription/confirmCheckin/"+subscriptionId  ;
     let checkinCard = $('#confirm-checkin-card-'+subscriptionId);
     let checkinForm = $('.confirm-checkin-form-'+subscriptionId);
     let responseContainer = $('#confirm-checkin-response-container-'+subscriptionId);
     let postdata = checkinForm.serialize();
-
+    // response is wrong. got successful response on bad code
     $.post(url, postdata).done(function (data) {
-        if(data){
+        if(data == 1){
+            alert(data);
             responseContainer.html('<h3 class="text-success text-center">The customer is confirmed! <br> They may use your service.<hr>An email has been sent to their email for confirmation</h3>');
             checkinCard.hide();
         } else {
-            responseContainer.html('<h3 class="text-success text-center">Check-in Failed. Please double check that the code is valid. If it is, the user has reached their limit for the time period.</h3>');
+            responseContainer.html('<h3 class="text-danger text-center">Check-in Failed. Please double check that the code is valid.<br> If it is, the user has reached their limit for the time period.</h3>');
         }
     });
 

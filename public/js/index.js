@@ -87,9 +87,69 @@ function deletePlan(e, obj) {
     });
 }
 
-$('form').submit(function(){
+function cancelSubscription(e, obj) {
+    $.confirm({
+        icon: 'fa fa-warning text-danger',
+        title: 'Are you sure?',
+        content: 'Do you want to delete your subscription: "' + $(obj).attr("data-subscription-name") + '"',
+        buttons: {
+            delete: {
+                btnClass: 'btn-danger',
+                action: function() {
+                    triggerTargetSubmit(e, obj);
+                }
+            },
+
+            cancel: {
+                btnClass: 'theme-background',
+            }
+        }
+    });
+}
+
+$('form, .stripe-payment-form').submit(function(){
    $('#submitting').fadeIn(1000);
 });
+
+
+$(document).find('.Button-animationWrapper-child--primary').on('click', function (e) {
+    e.preventDefault();
+    alert();
+});
+
+$(document).ready(function () {
+
+    $('.validate-message').validate({
+        rules: {
+            subject: {
+                required: true,
+                minlength: 3
+            },
+            body: {
+                required: true,
+                minlength: 10
+            }
+        },
+        invalidHandler: function(event, validator) {
+            // 'this' refers to the form
+            $('#submitting').hide();
+
+            var errors = validator.numberOfInvalids();
+            if (errors) {
+
+
+                var message = errors == 1
+                    ? 'You missed 1 field. It has been highlighted'
+                    : 'You missed ' + errors + ' fields. They have been highlighted';
+                $("div.error span").html(message);
+                $("div.error").show().css('color','red');
+            } else {
+                $("div.error").hide();
+            }
+        }
+    });
+});
+
 // When clicking here, we will trigger the dropzone that
 // lets us choose a NEW FEATURED PHOTO for the the PLAN
 

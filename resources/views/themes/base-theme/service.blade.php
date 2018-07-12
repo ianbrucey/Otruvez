@@ -105,7 +105,7 @@ $intervals = ['month','year'];
                     <div class="list-group">
                             @foreach($intervals as $interval)
 
-                            <form action="/subscription/subscribe" class=" list-group-item text-center" method="POST">
+                            <form action="/subscription/subscribe" class=" list-group-item text-center stripe-payment-form" method="POST" >
                                 <h5 class="">{{$interval == 'month' ? formatPrice($plan->month_price) . " / month" : formatPrice($plan->year_price) . " / year"}}</h5>
                                 <script
                                         src="https://checkout.stripe.com/checkout.js" class="stripe-button"

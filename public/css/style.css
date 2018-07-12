@@ -80,6 +80,10 @@ body {
 
 }
 
+.error {
+     color:red;
+ }
+
 .text-white {
     color: whitesmoke !important;
 }
