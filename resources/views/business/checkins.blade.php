@@ -22,9 +22,10 @@
                        <h5>Subscriber:</h5>
                        <p>{{$user->first}} {{$user->last}} <br>{{$user->email}}</p>
                        <h4>Service: {{removeLastWord($checkin->name)}}</h4>
+                       <div class="alert alert-danger checkin-error-message" style="display: none"></div>
                        <div class="card-body">
                            <form class="confirm-checkin-form-{{$checkin->id}}">
-                               <input class="form-control text-center" placeholder="ENTER CHECK-IN CODE" name="checkin_code">
+                               <input class="form-control text-center" placeholder="ENTER CHECK-IN CODE" name="checkin_code" id="checkin-code">
                            </form>
                        </div>
                        <div class="card-body text-center">

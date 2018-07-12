@@ -151,8 +151,13 @@ class SubscriptionController extends Controller
         }
 
         (new Notification())->sendUnsubscribedUserNotification($user,$business, $localSubscription);
-        $stripeSubscription->cancel(); // need a catch here
         $localSubscription->delete();
+        try {
+            $stripeSubscription->cancel(); // need a catch here
+        } catch (Exception $e) {
+            return redirect("/account/mysubscriptions")->with('warningMessage',"There was a problem deleting the service because it may no longer exist. please contact support with the following id if problems persist: {$localSubscription->stripe_id}");
+        }
+
 
 
         $isBusinessAcoount    = $request->is_business_account;

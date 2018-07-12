@@ -26,7 +26,7 @@
                         <div class="card-header text-center">
                             {{removeLastWord($subscription->name)}}
                             {{--- {{$subscription->uses ? : 0}}/{{$plan->use_limit}} uses--}}
-                            <form method="POST" action=/subscription/cancel/{{$subscription->id}}" style="display: inline-block" class="float-right">
+                            <form method="POST" id="delete-subscription-form-{{$subscription->id}}" action=/subscription/cancel/{{$subscription->id}}" style="display: inline-block" class="float-right">
                                 {{csrf_field()}}
                                 {{method_field("DELETE")}}
                                 <input type="hidden" name="is_business_account" value="0">
@@ -44,7 +44,7 @@
                             <a style="display: block" class="col-12 btn-sm theme-background text-center" href="{{$mustUpdatePaymentMethod ? "#" : '/business/viewService/'.$plan->id.'/#review-container'}}" ><span class="fa fa-pencil-square"></span> Write A Review </a>
                             <button class=" col-12 btn-sm theme-background show-sm-modal" data-modal-target="#rate-{{$plan->id}}" {{$mustUpdatePaymentMethod ? "disabled" : ""}}><span class="fa fa-star"></span> Rate </button>
                             <hr>
-                            <button type="submit" class="btn-sm btn-danger "> Cancel Subscription </button> {{-- still needs to be worked out --}}
+                            <button type="submit" class="btn-sm btn-danger" data-target="#delete-subscription-form-{{$subscription->id}}" data-subscription-name="{{removeLastWord($subscription->name)}}" onclick="cancelSubscription(event, this)"> Cancel Subscription </button> {{-- still needs to be worked out --}}
                         </div>
                 </div>
                 @include('modals.custom.checkin-modal')
