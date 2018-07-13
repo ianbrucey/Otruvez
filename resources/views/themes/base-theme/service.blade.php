@@ -103,30 +103,40 @@ $intervals = ['month','year'];
                         Subscribe
                     </div>
                     <div class="list-group">
-                            @foreach($intervals as $interval)
+                            @if($alreadySubscribed)
+                                <div class="list-group-item text-center ">
+                                    <a href="/account/mysubscriptions#subscription-details-{{$plan->id}}" class="btn-sm theme-background"><span class="fa fa-star"></span> Use this subscription </a>
+                                </div>
+                            @elseif($owner)
+                            <div class="list-group-item text-center ">
+                                <p class=""> You own this subscription </p>
+                            </div>
+                            @else
+                                @foreach($intervals as $interval)
 
-                            <form action="/subscription/subscribe" class=" list-group-item text-center stripe-payment-form" method="POST" >
-                                <h5 class="">{{$interval == 'month' ? formatPrice($plan->month_price) . " / month" : formatPrice($plan->year_price) . " / year"}}</h5>
-                                <script
-                                        src="https://checkout.stripe.com/checkout.js" class="stripe-button"
-                                        data-key="{{$publicStripeKey}}"
-                                        data-amount="{{$interval == 'month' ? $plan->month_price : $plan->year_price}}"
-                                        data-name="{{$plan->stripe_plan_name}} {{strtoupper($interval)}}"
-                                        data-description="For plan: {{$plan->stripe_plan_id}}_{{$interval}}"
-                                        data-image="{{ $haslogo ? getImage($business->logo_path) : ''}}"
-                                        data-locale="auto">
-                                </script>
-                                <input type="hidden" name="plan_id" value="{{$plan->id}}">
-                                <input type="hidden" name="stripe_plan_id" value="{{$plan->stripe_plan_id}}_{{$interval}}">
-                                <input type="hidden" name="stripe_plan_name" value="{{$plan->stripe_plan_name}} {{strtoupper($interval)}}">
-                                <input type="hidden" name="is_app_plan" value="{{$plan->is_app_plan}}">
-                                <input type="hidden" name="business_id" value="{{$plan->business_id}}">
-                                <input type="hidden" name="price" value="{{$interval == 'month' ? $plan->month_price : $plan->year_price}}">
-                                <input type="hidden" name="o_interval" value="{{$interval}}">
-                                {{csrf_field()}}
-                                <input type="hidden" name="user_id" value="{{\Illuminate\Support\Facades\Auth::id()}}">
-                            </form>
-                            @endforeach
+                                    <form action="/subscription/subscribe" class=" list-group-item text-center stripe-payment-form" method="POST" >
+                                        <h5 class="">{{$interval == 'month' ? formatPrice($plan->month_price) . " / month" : formatPrice($plan->year_price) . " / year"}}</h5>
+                                        <script
+                                                src="https://checkout.stripe.com/checkout.js" class="stripe-button"
+                                                data-key="{{$publicStripeKey}}"
+                                                data-amount="{{$interval == 'month' ? $plan->month_price : $plan->year_price}}"
+                                                data-name="{{$plan->stripe_plan_name}} {{strtoupper($interval)}}"
+                                                data-description="For plan: {{$plan->stripe_plan_id}}_{{$interval}}"
+                                                data-image="{{ $haslogo ? getImage($business->logo_path) : ''}}"
+                                                data-locale="auto">
+                                        </script>
+                                        <input type="hidden" name="plan_id" value="{{$plan->id}}">
+                                        <input type="hidden" name="stripe_plan_id" value="{{$plan->stripe_plan_id}}_{{$interval}}">
+                                        <input type="hidden" name="stripe_plan_name" value="{{$plan->stripe_plan_name}} {{strtoupper($interval)}}">
+                                        <input type="hidden" name="is_app_plan" value="{{$plan->is_app_plan}}">
+                                        <input type="hidden" name="business_id" value="{{$plan->business_id}}">
+                                        <input type="hidden" name="price" value="{{$interval == 'month' ? $plan->month_price : $plan->year_price}}">
+                                        <input type="hidden" name="o_interval" value="{{$interval}}">
+                                        {{csrf_field()}}
+                                        <input type="hidden" name="user_id" value="{{\Illuminate\Support\Facades\Auth::id()}}">
+                                    </form>
+                                @endforeach
+                            @endif
                     </div>
                 </div>
             </div>
