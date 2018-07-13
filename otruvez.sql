@@ -3,18 +3,12 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Jun 24, 2018 at 06:06 PM
+-- Generation Time: Jul 13, 2018 at 07:15 AM
 -- Server version: 5.6.38
 -- PHP Version: 7.2.1
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
-
-
-/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
-/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
-/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8mb4 */;
 
 --
 -- Database: `otruvez`
@@ -34,6 +28,7 @@ CREATE TABLE `businesses` (
   `name` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `photo_path` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `logo_path` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `theme_color` varchar(11) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `description` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `address` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `email` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
@@ -59,9 +54,9 @@ CREATE TABLE `businesses` (
 -- Dumping data for table `businesses`
 --
 
-INSERT INTO `businesses` (`id`, `user_id`, `notification_count`, `industry`, `name`, `photo_path`, `logo_path`, `description`, `address`, `email`, `phone`, `city`, `state`, `monday`, `tuesday`, `wednesday`, `thursday`, `friday`, `saturday`, `sunday`, `zip`, `lat`, `lng`, `active`, `created_at`, `updated_at`) VALUES
-(7, 1, 0, NULL, 'Local Dope LLC', NULL, NULL, 'we do everything', '630 Pacific Coast Highway, Long Beach, CA, USA', 'ib708090@gmail.com', '5623700559', 'Long Beach', 'CA', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 90806, '33.789287', '-118.183608', '1', '2018-03-12 15:21:04', '2018-03-12 15:21:04'),
-(8, 2, 0, NULL, 'US gubmint', NULL, NULL, 'we are the gubmint here to take yer guns', '2667 East 56th Way, Long Beach, CA, USA', 'yourvillage.us@gmail.com', '5555555555', 'Long Beach', 'CA', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 90805, '33.858830', '-118.161318', '1', '2018-04-06 10:27:48', '2018-04-06 10:27:48');
+INSERT INTO `businesses` (`id`, `user_id`, `notification_count`, `industry`, `name`, `photo_path`, `logo_path`, `theme_color`, `description`, `address`, `email`, `phone`, `city`, `state`, `monday`, `tuesday`, `wednesday`, `thursday`, `friday`, `saturday`, `sunday`, `zip`, `lat`, `lng`, `active`, `created_at`, `updated_at`) VALUES
+(7, 1, 0, NULL, 'Local Dope LLC', NULL, NULL, '#000000', 'we do everythings', '630 Pacific Coast Highway, Long Beach, CA, USA', 'ib708090@gmail.com', '5623700559', 'Long Beach', 'CA', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 90806, '33.789287', '-118.183608', '1', '2018-03-12 15:21:04', '2018-07-08 10:13:34'),
+(8, 2, 0, NULL, 'US gubmint', NULL, NULL, NULL, 'we are the gubmint here to take yer guns', '2667 East 56th Way, Long Beach, CA, USA', 'yourvillage.us@gmail.com', '5555555555', 'Long Beach', 'CA', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 90805, '33.858830', '-118.161318', '1', '2018-04-06 10:27:48', '2018-04-06 10:27:48');
 
 -- --------------------------------------------------------
 
@@ -29684,16 +29679,17 @@ INSERT INTO `notifications` (`id`, `type`, `on_behalf_of_id`, `on_behalf_of_emai
 (42, 'unsubscribed_user', NULL, NULL, NULL, 1, NULL, 6, 'Confirmation: Canceled subscription', 'Local Dope LLC', '<h4>You\'ve canceled your subscription to <span class=\"theme-color\">Local Dope LLC</span>.</h4>\n<hr>\n<ul style=\"width: 100%\">\n    <li>Subscription name: <h3>newr</h3></li>\n\n    <li>Confirmation ID: <p style=\"color: black\">sub_CYXxBnUYI1DlWq</p></li>\n\n</ul>\n\n<hr>\n<div class=\"row text-center\">\n    </div>', '2018-03-25 11:56:52', '2018-03-25 11:56:52', '0', '0', 'notifications.templates.unsubscribed-user'),
 (44, 'notify_business_modification', NULL, NULL, NULL, 1, NULL, 7, 'Welcome to Otruvez!', 'Local Dope LLC', '<h4>We thought you should know that we changed some of the details for our business. Your subscriptions will not be affected.</h4>\n<h5>The details are below</h5>\n\n<hr>\n<div class=\"card\">\n    <div class=\"card-body\">\n        <h3 class=\"text-justify\">Local Dope LLC</h3>\n        <p><i>\"this is a description\"</i></p>\n        <p>ib708090@gmail.com</p>\n        <p>5623700559</p>\n        <p>555e East Ocean Boulevard, Long Beach, CA, USA</p>\n        <h5><b><u>Business hours</u></b></h5>\n        <div class=\"business-hours\" style=\"display: block\">\n                            <div class=\"edit-label-div\">\n                    <label>Monday</label>\n                </div>\n                <div class=\"edit-input-div\">\n                    <p></p>\n                </div>\n\n                            <div class=\"edit-label-div\">\n                    <label>Tuesday</label>\n                </div>\n                <div class=\"edit-input-div\">\n                    <p></p>\n                </div>\n\n                            <div class=\"edit-label-div\">\n                    <label>Wednesday</label>\n                </div>\n                <div class=\"edit-input-div\">\n                    <p></p>\n                </div>\n\n                            <div class=\"edit-label-div\">\n                    <label>Thursday</label>\n                </div>\n                <div class=\"edit-input-div\">\n                    <p></p>\n                </div>\n\n                            <div class=\"edit-label-div\">\n                    <label>Friday</label>\n                </div>\n                <div class=\"edit-input-div\">\n                    <p></p>\n                </div>\n\n                            <div class=\"edit-label-div\">\n                    <label>Saturday</label>\n                </div>\n                <div class=\"edit-input-div\">\n                    <p></p>\n                </div>\n\n                            <div class=\"edit-label-div\">\n                    <label>Sunday</label>\n                </div>\n                <div class=\"edit-input-div\">\n                    <p></p>\n                </div>\n\n                    </div>\n    </div>\n</div>\n\n<div class=\"row text-center\">\n            <div class=\"col-12\">\n            <h3 class=\"text-center\">Local Dope LLC thanks you</h3>\n        </div>\n        <div style=\"margin: auto; margin-bottom: 5px; width: 70px; height: 70px; background: url(http://localhost:8888/business/logos/8OxEy0Xm4pS6cDpKHo04G7PN2oYeH99fY294gs2A.jpeg) no-repeat; background-size: contain\"> </div>\n    </div>\n', '2018-03-25 12:01:53', '2018-03-25 12:01:53', '0', '0', 'notifications.templates.notify-business-modification'),
 (54, 'unsubscribed_user', NULL, NULL, NULL, 2, NULL, 8, 'Confirmation: Canceled subscription', 'Local Dope LLC', '<h4>You\'ve canceled your subscription to <span class=\"theme-color\">Local Dope LLC</span>.</h4>\n<hr>\n<ul style=\"width: 100%\">\n    <li>Subscription name: <h3>newr</h3></li>\n\n    <li>Confirmation ID: <p style=\"color: black\">sub_CYuz7rA2nKF53X</p></li>\n\n</ul>\n\n<hr>\n<div class=\"row text-center\">\n    </div>', '2018-04-03 13:36:02', '2018-04-03 13:36:02', '0', '0', 'notifications.templates.unsubscribed-user'),
-(55, 'subscribed_user', NULL, NULL, NULL, 2, 7, 9, 'You have a new subscription!', 'Local Dope LLC', '<h4>Thank you for your subscription to <span class=\"theme-color\">Local Dope LLC</span> . Here are the details of your subscription</h4>\n<hr>\n<ul style=\"width: 100%\">\n    <li>Purchased Subscription: <h3>newr</h3></li>\n    <li>Price per month: <h3>$65</h3></li>\n    <li>Usage limit: <h4>5 time(s) a year</h4> </li>\n    <li>description: <p style=\"color: black\">asdfasd fsd asdf sdf</p></li>\n</ul>\n\n<hr>\n<div class=\"row text-center\">\n    </div>', '2018-04-03 13:37:05', '2018-04-03 13:37:05', '0', '0', 'notifications.templates.subscribed-user'),
-(56, 'notify_plan_modification', NULL, NULL, NULL, 2, NULL, 9, 'Details on a subscription you own have changed', 'Local Dope LLC', '<h4>Please see the changes to your subscription below</h4>\n<hr>\n<h5 class=\"text-danger\">Old Details</h5>\n<ul style=\"width: 100%\">\n    <li>Name: <h3 class=\"text-muted\">newr</h3></li>\n\n    <li>Description: <p>asdfasd fsd asdf sdf</p></li>\n</ul>\n<hr class=\"theme-color\">\n<h5 class=\"theme-color\">New Details</h5>\n<ul style=\"width: 100%\">\n    <li>Name: <h3 class=\"theme-color\">newrs</h3></li>\n\n    <li>Description: <p class=\"theme-color\">asdfasd fsd asdf sdf</p></li>\n</ul>\n<hr>\n<div class=\"row text-center\">\n    </div>', '2018-04-03 13:43:00', '2018-04-03 13:43:00', '0', '0', 'notifications.templates.notify-plan-modification'),
-(57, 'notify_plan_modification', NULL, NULL, NULL, 2, NULL, 9, 'Details on a subscription you own have changed', 'Local Dope LLC', '<h4>Please see the changes to your subscription below</h4>\n<hr>\n<h5 class=\"text-danger\">Old Details</h5>\n<ul style=\"width: 100%\">\n    <li>Name: <h3 class=\"text-muted\">newrs</h3></li>\n\n    <li>Description: <p>asdfasd fsd asdf sdf</p></li>\n</ul>\n<hr class=\"theme-color\">\n<h5 class=\"theme-color\">New Details</h5>\n<ul style=\"width: 100%\">\n    <li>Name: <h3 class=\"theme-color\">newr</h3></li>\n\n    <li>Description: <p class=\"theme-color\">asdfasd fsd asdf sdf</p></li>\n</ul>\n<hr>\n<div class=\"row text-center\">\n    </div>', '2018-04-03 13:44:26', '2018-04-03 13:44:26', '0', '0', 'notifications.templates.notify-plan-modification'),
-(58, 'notify_plan_modification', NULL, NULL, NULL, 2, NULL, 9, 'Details on a subscription you own have changed', 'Local Dope LLC', '<h4>Please see the changes to your subscription below</h4>\n<hr>\n<h5 class=\"text-danger\">Old Details</h5>\n<ul style=\"width: 100%\">\n    <li>Name: <h3 class=\"text-muted\">newr</h3></li>\n\n    <li>Description: <p>asdfasd fsd asdf sdf</p></li>\n</ul>\n<hr class=\"theme-color\">\n<h5 class=\"theme-color\">New Details</h5>\n<ul style=\"width: 100%\">\n    <li>Name: <h3 class=\"theme-color\">news</h3></li>\n\n    <li>Description: <p class=\"theme-color\">asdfasd fsd asdf sdf</p></li>\n</ul>\n<hr>\n<div class=\"row text-center\">\n    </div>', '2018-04-04 10:40:14', '2018-04-04 10:40:14', '0', '0', 'notifications.templates.notify-plan-modification'),
-(59, 'notify_plan_modification', NULL, NULL, NULL, 2, NULL, 9, 'Details on a subscription you own have changed', 'Local Dope LLC', '<h4>Please see the changes to your subscription below</h4>\n<hr>\n<h5 class=\"text-danger\">Old Details</h5>\n<ul style=\"width: 100%\">\n    <li>Name: <h3 class=\"text-muted\">news</h3></li>\n\n    <li>Description: <p>asdfasd fsd asdf sdf</p></li>\n</ul>\n<hr class=\"theme-color\">\n<h5 class=\"theme-color\">New Details</h5>\n<ul style=\"width: 100%\">\n    <li>Name: <h3 class=\"theme-color\">newst</h3></li>\n\n    <li>Description: <p class=\"theme-color\">asdfasd fsd asdf sdf</p></li>\n</ul>\n<hr>\n<div class=\"row text-center\">\n    </div>', '2018-04-04 10:44:08', '2018-04-04 10:44:08', '0', '0', 'notifications.templates.notify-plan-modification'),
-(60, 'notify_plan_modification', NULL, NULL, NULL, 2, NULL, 9, 'Details on a subscription you own have changed', 'Local Dope LLC', '<h4>Please see the changes to your subscription below</h4>\n<hr>\n<h5 class=\"text-danger\">Old Details</h5>\n<ul style=\"width: 100%\">\n    <li>Name: <h3 class=\"text-muted\">newst</h3></li>\n\n    <li>Description: <p>asdfasd fsd asdf sdf</p></li>\n</ul>\n<hr class=\"theme-color\">\n<h5 class=\"theme-color\">New Details</h5>\n<ul style=\"width: 100%\">\n    <li>Name: <h3 class=\"theme-color\">news</h3></li>\n\n    <li>Description: <p class=\"theme-color\">asdfasd fsd asdf sdf</p></li>\n</ul>\n<hr>\n<div class=\"row text-center\">\n    </div>', '2018-04-04 10:46:01', '2018-04-04 10:46:01', '0', '0', 'notifications.templates.notify-plan-modification'),
-(61, 'notify_plan_modification', NULL, NULL, NULL, 2, NULL, 9, 'Details on a subscription you own have changed', 'Local Dope LLC', '<h4>Please see the changes to your subscription below</h4>\n<hr>\n<h5 class=\"text-danger\">Old Details</h5>\n<ul style=\"width: 100%\">\n    <li>Name: <h3 class=\"text-muted\">news</h3></li>\n\n    <li>Description: <p>asdfasd fsd asdf sdf</p></li>\n</ul>\n<hr class=\"theme-color\">\n<h5 class=\"theme-color\">New Details</h5>\n<ul style=\"width: 100%\">\n    <li>Name: <h3 class=\"theme-color\">news a</h3></li>\n\n    <li>Description: <p class=\"theme-color\">asdfasd fsd asdf sdf</p></li>\n</ul>\n<hr>\n<div class=\"row text-center\">\n    </div>', '2018-04-05 23:21:00', '2018-04-05 23:21:00', '0', '0', 'notifications.templates.notify-plan-modification'),
-(62, 'notify_plan_modification', NULL, NULL, NULL, 2, NULL, 9, 'Details on a subscription you own have changed', 'Local Dope LLC', '<h4>Please see the changes to your subscription below</h4>\n<hr>\n<h5 class=\"text-danger\">Old Details</h5>\n<ul style=\"width: 100%\">\n    <li>Name: <h3 class=\"text-muted\">news a</h3></li>\n\n    <li>Description: <p>asdfasd fsd asdf sdf</p></li>\n</ul>\n<hr class=\"theme-color\">\n<h5 class=\"theme-color\">New Details</h5>\n<ul style=\"width: 100%\">\n    <li>Name: <h3 class=\"theme-color\">news ads</h3></li>\n\n    <li>Description: <p class=\"theme-color\">asdfasd fsd asdf sdf</p></li>\n</ul>\n<hr>\n<div class=\"row text-center\">\n    </div>', '2018-04-06 10:16:58', '2018-04-06 10:16:58', '0', '0', 'notifications.templates.notify-plan-modification'),
 (63, 'welcome_business', NULL, NULL, NULL, 2, 8, NULL, 'Congrats! now sell some subscriptions', 'Otruvez', '<p class=\"notification-text\">Now that you\'ve created your business, it\'s time to get setup. Here\'s how it works</p>\n<ol class=\"notification-list\">\n    <li>1) Go the <a class=\"theme-color\" href=\"#\">manage business</a> page to add a logo, a main photo and to edit any details of your business</li>\n    <li>2) Then go to the <a class=\"theme-color\" href=\"#\">service plans</a> page to create service subscriptions for your business. Be sure to add photos</li>\n    <li>3) Once you get some subscribers, if you require customers to check-in before using your service, go to your check-in page to confirm their check-in</li>\n</ol>', '2018-04-06 10:27:48', '2018-04-06 10:27:48', '1', '0', 'notifications.templates.welcome-business'),
-(64, 'failed_payment', NULL, NULL, NULL, 2, NULL, 9, 'Payment Failed', 'Otruvez', '<h4>\n    Hi your,<br>\n    we had to suspend your subscription to\n    <span class=\"theme-color\">news ads</span>\n    because your payment didn\'t go through\n </h4>\n<h4>Please update your payment method</h4>\n<hr>\n\n<div class=\"text-center\">\n    <a href=\"/account/paymentMethod\" class=\"btn btn-danger\">\n        Update Payment\n    </a>\n</div>\n\n\n<p>Thank you for your business.</p>\n', '2018-04-16 07:35:53', '2018-04-16 07:35:53', '0', '0', 'notifications.webhook-templates.failed_payment');
+(85, 'unsubscribed_user', NULL, NULL, NULL, 2, NULL, 9, 'Confirmation: Canceled subscription', 'Local Dope LLC', '<h4>You\'ve canceled your subscription to <span class=\"theme-color\">Local Dope LLC</span>.</h4>\n<hr>\n<ul style=\"width: 100%\">\n    <li>Subscription name: <h3>news ads</h3></li>\n\n    <li>Confirmation ID: <p style=\"color: black\">sub_CbweucRb8ZyVil</p></li>\n\n</ul>\n\n<hr>\n<div class=\"row text-center\">\n    </div>', '2018-07-12 10:46:32', '2018-07-12 10:46:32', '0', '0', 'notifications.templates.unsubscribed-user'),
+(86, 'unsubscribed_user', NULL, NULL, NULL, 2, NULL, 10, 'Confirmation: Canceled subscription', 'Local Dope LLC', '<h4>You\'ve canceled your subscription to <span class=\"theme-color\">Local Dope LLC</span>.</h4>\n<hr>\n<ul style=\"width: 100%\">\n    <li>Subscription name: <h3>software ads</h3></li>\n\n    <li>Confirmation ID: <p style=\"color: black\">sub_DDLxVAssrSZcRv</p></li>\n\n</ul>\n\n<hr>\n<div class=\"row text-center\">\n    </div>', '2018-07-12 10:46:47', '2018-07-12 10:46:47', '0', '0', 'notifications.templates.unsubscribed-user'),
+(88, 'unsubscribed_user', NULL, NULL, NULL, 2, NULL, 11, 'Confirmation: Canceled subscription', 'Local Dope LLC', '<h4>You\'ve canceled your subscription to <span class=\"theme-color\">Local Dope LLC</span>.</h4>\n<hr>\n<ul style=\"width: 100%\">\n    <li>Subscription name: <h3>software ads</h3></li>\n\n    <li>Confirmation ID: <p style=\"color: black\">sub_DDMUJEdb49PaSC</p></li>\n\n</ul>\n\n<hr>\n<div class=\"row text-center\">\n    </div>', '2018-07-12 10:47:25', '2018-07-12 10:47:25', '0', '0', 'notifications.templates.unsubscribed-user'),
+(90, 'unsubscribed_user', NULL, NULL, NULL, 2, NULL, 12, 'Confirmation: Canceled subscription', 'Local Dope LLC', '<h4>You\'ve canceled your subscription to <span class=\"theme-color\">Local Dope LLC</span>.</h4>\n<hr>\n<ul style=\"width: 100%\">\n    <li>Subscription name: <h3>software ads</h3></li>\n\n    <li>Confirmation ID: <p style=\"color: black\">sub_DDMcWWmHZ4lQTj</p></li>\n\n</ul>\n\n<hr>\n<div class=\"row text-center\">\n    </div>', '2018-07-12 10:54:49', '2018-07-12 10:54:49', '0', '0', 'notifications.templates.unsubscribed-user'),
+(92, 'unsubscribed_user', NULL, NULL, NULL, 2, NULL, 13, 'Confirmation: Canceled subscription', 'Local Dope LLC', '<h4>You\'ve canceled your subscription to <span class=\"theme-color\">Local Dope LLC</span>.</h4>\n<hr>\n<ul style=\"width: 100%\">\n    <li>Subscription name: <h3>software ads</h3></li>\n\n    <li>Confirmation ID: <p style=\"color: black\">sub_DDMhWZwvNOxIaT</p></li>\n\n</ul>\n\n<hr>\n<div class=\"row text-center\">\n    </div>', '2018-07-12 11:00:30', '2018-07-12 11:00:30', '0', '0', 'notifications.templates.unsubscribed-user'),
+(93, 'subscribed_user', NULL, NULL, NULL, 2, 7, 14, 'You have a new subscription!', 'Local Dope LLC', '<h4>Thank you for your subscription to <span class=\"theme-color\">Local Dope LLC</span> . Here are the details of your subscription</h4>\n<hr>\n<ul style=\"width: 100%\">\n    <li>Purchased Subscription: <h3>software ads</h3></li>\n    <li>Price per month: <h3>$89</h3></li>\n    <li>Usage limit: <h4>5 time(s) a year</h4> </li>\n    <li>description: <p style=\"color: black\">kdslfj sdjfj dslkfjjf jsdlfjsd lkfjskdjflksjdf lkjsdfljsdlkfjslkdjf</p></li>\n</ul>\n\n<hr>\n<div class=\"row text-center\">\n    </div>', '2018-07-12 11:05:33', '2018-07-12 11:05:33', '0', '0', 'notifications.templates.subscribed-user'),
+(94, 'message_to_customers', NULL, NULL, NULL, 2, 7, 14, 'asDASdasd', 'Local Dope LLC', 'asdasdsadad', '2018-07-13 12:55:15', '2018-07-13 12:55:15', '0', '0', 'notifications.templates.message-to-customers'),
+(95, 'message_to_customers', NULL, NULL, NULL, 2, 7, 14, 'dfdsfdsf', 'Local Dope LLC', 'dsfdfdslkjfsd', '2018-07-13 12:55:38', '2018-07-13 12:55:38', '0', '0', 'notifications.templates.message-to-customers'),
+(96, 'message_to_customers', NULL, NULL, NULL, 2, 7, 14, 'skljfdfsadf', 'Local Dope LLC', 'sdafdsafdsfsdaf asfdf asdf asdf', '2018-07-13 13:33:36', '2018-07-13 13:33:36', '0', '0', 'notifications.templates.message-to-customers'),
+(97, 'message_to_customers', NULL, NULL, NULL, 2, 7, 14, 'skljfdfsadf', 'Local Dope LLC', 'sadfkldsjf jskadf kljsd fjsadlf', '2018-07-13 13:34:21', '2018-07-13 13:34:21', '0', '0', 'notifications.templates.message-to-customers');
 
 -- --------------------------------------------------------
 
@@ -29815,6 +29811,16 @@ CREATE TABLE `photos` (
   `path` varchar(191) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+--
+-- Dumping data for table `photos`
+--
+
+INSERT INTO `photos` (`id`, `user_id`, `plan_id`, `type`, `path`) VALUES
+(2, 1, 27, 'plan', '/plan-gallery-photo/f41c002669b8818ab244c47c23b86f13cfd3fc61.png'),
+(4, 1, 27, 'plan', '/plan-gallery-photo/779eae07287ea61e98e2f250132725c6af02f1a7.jpg'),
+(5, 1, 27, 'plan', '/plan-gallery-photo/1f872135871717721d0a7a7e9ca8a1e1da940c85.jpg'),
+(6, 1, 27, 'plan', '/plan-gallery-photo/779eae07287ea61e98e2f250132725c6af02f1a7.jpg');
+
 -- --------------------------------------------------------
 
 --
@@ -29854,9 +29860,7 @@ INSERT INTO `plans` (`id`, `user_id`, `stripe_plan_id`, `stripe_plan_name`, `yea
 (22, 1, '7_15ac64ba156ecc', 'cars ad', 500000, 50000, '0', 0, 0, NULL, 7, 'fklasj dfjsadfj sdljfasd', NULL, '2018-04-05 23:15:30', '2018-04-06 10:12:08'),
 (23, 1, '7_15ac64bbb3de8b', 'gym ads', 50000, 6000, '0', 6, 0, 'year', 7, 'sadfkj sdjkf ajslkdfajsdfl', NULL, '2018-04-05 23:15:56', '2018-04-06 10:12:02'),
 (24, 1, '7_15ac64bd709084', 'phone ad', 90000, 10000, '0', 6, 0, 'year', 7, 'jlkajdfsjlkasdjf lkjsdaf jsdkljflksjad fkljsdfkjalsk dfa', NULL, '2018-04-05 23:16:23', '2018-04-06 10:11:22'),
-(25, 1, '7_15ac64bf4db7d9', 'software ads', 89900, 8900, '0', 5, 0, 'year', 7, 'kdslfj sdjfj dslkfjjf jsdlfjsd lkfjskdjflksjdf lkjsdfljsdlkfjslkdjf', NULL, '2018-04-05 23:16:53', '2018-04-06 10:11:16'),
-(26, 1, '7_15ac64c4c06572', 'rent ad', 500000, 60000, '0', 0, 0, NULL, 7, 'daslkjds ajflksaj dfkljs adlfj lkasjd fkljasdlkf jlkjsadflsadf', NULL, '2018-04-05 23:18:20', '2018-04-06 10:11:10'),
-(27, 1, '7_15ac64c60f02b5', 'food ads', 10000, 1000, '0', 0, 0, NULL, 7, 'saf adfjklsjdf jsladkjf jsdaflj sdkjflsjadfjsdfljasdf', NULL, '2018-04-05 23:18:41', '2018-04-06 10:08:35'),
+(25, 1, '7_15ac64bf4db7d9', 'software ads', 89900, 8900, '0', 5, 0, 'year', 7, 'kdslfj sdjfj dslkfjjf jsdlfjsd lkfjskdjflksjdf lkjsdfljsdlkfjslkdjf', '/plan-featured-photo/88d540c20e10e9f70678836e8c636677dc306fa2.png', '2018-04-05 23:16:53', '2018-07-12 10:12:58'),
 (28, 2, '8_25ac6e9745d2b2', 'ins ad', 3500, 300, '0', 0, 0, NULL, 8, 'adsfdasfsdaf asd dsfsad fsda fsad', NULL, '2018-04-06 10:28:54', '2018-04-06 10:28:54'),
 (29, 2, '8_25ac6e991d2455', 'insurance ad', 43500, 4300, '0', 0, 0, NULL, 8, 'klwl lkfj sdalfjklsdfj lksdafjlsdajfksdjf43io4j 3jf03j09 3904fj03', NULL, '2018-04-06 10:29:22', '2018-04-06 10:29:22'),
 (30, 2, '8_25ac6e9a36b473', 'carpenter ads', 0, 3300, '0', 0, 0, NULL, 8, 'dsafasdlfj sadfklsjadkfl jksladjf lksadjfasd', NULL, '2018-04-06 10:29:40', '2018-04-06 10:29:40'),
@@ -29947,7 +29951,7 @@ INSERT INTO `subscriptions` (`id`, `user_id`, `name`, `stripe_id`, `last_charge_
 (3, 2, 'Standard Plan MONTH', 'sub_Bwko9KQea1Z73T', NULL, 'sm_standard_month', NULL, 0, 1200, 'month', 0, 122017, 0, '1', NULL, 1, NULL, NULL, '2017-12-14 15:39:16', '2017-12-14 15:39:16'),
 (4, 2, 'Standard Plan MONTH', 'sub_CPrOnGZNMLpTRh', NULL, 'sm_standard_month', NULL, 0, 100, 'month', 0, 32018, 0, '1', NULL, 1, NULL, NULL, '2018-03-02 08:23:04', '2018-03-02 08:23:04'),
 (5, 2, 'Standard Plan MONTH', 'sub_CPyC3ZlGP7vcQT', NULL, 'sm_standard_month', NULL, 0, 100, 'month', 0, 32018, 0, '1', NULL, 1, NULL, NULL, '2018-03-02 15:24:54', '2018-03-02 15:24:54'),
-(9, 2, 'newr MONTH', 'sub_CbweucRb8ZyVil', NULL, '7_15aaa13075bd9d_month', 16, 7, 6500, 'month', 1, 42018, 0, '0', NULL, 1, NULL, NULL, '2018-04-03 13:37:04', '2018-04-19 21:16:24');
+(14, 2, 'software ads MONTH', 'sub_DDMnxRuKsHFxFq', NULL, '7_15ac64bf4db7d9_month', 25, 7, 8900, 'month', 1, 72018, 0, '1', 22755, 1, NULL, NULL, '2018-07-12 11:05:32', '2018-07-12 11:05:55');
 
 -- --------------------------------------------------------
 
@@ -30006,6 +30010,8 @@ CREATE TABLE `users` (
   `has_valid_payment_method` int(1) DEFAULT '1',
   `trial_ends_at` timestamp NULL DEFAULT NULL,
   `remember_token` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `customer_service_limit` int(1) DEFAULT '0',
+  `last_customer_service_contact_date` timestamp NULL DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -30014,9 +30020,9 @@ CREATE TABLE `users` (
 -- Dumping data for table `users`
 --
 
-INSERT INTO `users` (`id`, `activated`, `activation_token`, `first`, `last`, `email`, `password`, `notification_count`, `location_id`, `business_account`, `business_account_plan`, `business_id`, `subscription_id`, `stripe_id`, `card_brand`, `card_last_four`, `has_valid_payment_method`, `trial_ends_at`, `remember_token`, `created_at`, `updated_at`) VALUES
-(1, '1', '07cacd6b5a1d01726b0f214cecd3a9ce', 'ian', 'bruce', 'ib708090@gmail.com', '$2y$10$f.pJwY5ZK5CgiEpppDB8ZuDkGynXnjREsCrb2Is29r/Cti2ddosPG', 0, 1760, '1', NULL, 7, NULL, 'cus_CTH1lzaH65nfDB', 'Visa', '4242', 1, NULL, 'mfpwdT40MfVzJD7K53bgQM8uGIFQe1jaJAPHmmKPfW76wrS093TQ2v5GUWRd', '2018-03-11 10:03:30', '2018-04-19 09:23:24'),
-(2, '1', '92444dd3a05c41f8a7e4b2295d1096c1', 'your', 'village', 'yourvillage.us@gmail.com', '$2y$10$Bzriyf0ScykayVrNPUSA3OmU83vUDrdIsduf/VxAXPQ87RLbpXM0W', 0, 1760, '1', NULL, 8, NULL, 'cus_CVr8Z834cszfr5', 'Visa', '4242', 1, NULL, '5uQsAKkrw0zDHT9h6jiQ9V026QLdJI2hoylpxwxLVV8eJB8vvI1nlbf4w4b4', '2018-03-18 07:30:24', '2018-04-19 21:15:27');
+INSERT INTO `users` (`id`, `activated`, `activation_token`, `first`, `last`, `email`, `password`, `notification_count`, `location_id`, `business_account`, `business_account_plan`, `business_id`, `subscription_id`, `stripe_id`, `card_brand`, `card_last_four`, `has_valid_payment_method`, `trial_ends_at`, `remember_token`, `customer_service_limit`, `last_customer_service_contact_date`, `created_at`, `updated_at`) VALUES
+(1, '1', '07cacd6b5a1d01726b0f214cecd3a9ce', 'ian', 'bruce', 'ib708090@gmail.com', '$2y$10$f.pJwY5ZK5CgiEpppDB8ZuDkGynXnjREsCrb2Is29r/Cti2ddosPG', 0, 1760, '1', NULL, 7, NULL, 'cus_CTH1lzaH65nfDB', 'Visa', '4242', 1, NULL, 'sbuvK5ewHMMPlBJutuM82DtqzqHzqAdpgVReAAqsIDjncWjcveTvDRpLY1ai', 0, NULL, '2018-03-11 10:03:30', '2018-04-19 09:23:24'),
+(2, '1', '92444dd3a05c41f8a7e4b2295d1096c1', 'your', 'village', 'yourvillage.us@gmail.com', '$2y$10$Bzriyf0ScykayVrNPUSA3OmU83vUDrdIsduf/VxAXPQ87RLbpXM0W', 0, 1760, '1', NULL, 8, NULL, 'cus_CVr8Z834cszfr5', 'Visa', '4242', 1, NULL, '5uQsAKkrw0zDHT9h6jiQ9V026QLdJI2hoylpxwxLVV8eJB8vvI1nlbf4w4b4', 0, NULL, '2018-03-18 07:30:24', '2018-04-19 21:15:27');
 
 --
 -- Indexes for dumped tables
@@ -30173,7 +30179,7 @@ ALTER TABLE `migrations`
 -- AUTO_INCREMENT for table `notifications`
 --
 ALTER TABLE `notifications`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=65;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=98;
 
 --
 -- AUTO_INCREMENT for table `oauth_clients`
@@ -30197,7 +30203,7 @@ ALTER TABLE `payment_accounts`
 -- AUTO_INCREMENT for table `photos`
 --
 ALTER TABLE `photos`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `plans`
@@ -30221,7 +30227,7 @@ ALTER TABLE `reviews`
 -- AUTO_INCREMENT for table `subscriptions`
 --
 ALTER TABLE `subscriptions`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT for table `subscription_services`
@@ -30234,7 +30240,3 @@ ALTER TABLE `subscription_services`
 --
 ALTER TABLE `users`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
-
-/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
-/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
-/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

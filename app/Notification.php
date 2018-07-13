@@ -115,11 +115,11 @@ class Notification extends Model
 
     /** CONSUMER notification types END */
 
-//    const SUPPORT_ACKNOWLEDGE_NOTIFICATION  = [
-//        'type'              => 'support_acknowledge',
-//        'subject'           => 'Otruvez Support',
-//        'body_template'     => 'notifications.templates.support-acknowledge'
-//    ];
+    const SUPPORT_ACKNOWLEDGE_NOTIFICATION  = [
+        'type'              => 'support_acknowledge',
+        'subject'           => 'Otruvez Support',
+        'body_template'     => 'notifications.templates.support-acknowledge'
+    ];
 //
 //    const SUPPORT_RESPONSE_NOTIFICATION     = [
 //        'type_id'           => 3,
@@ -242,6 +242,10 @@ class Notification extends Model
                 'user'          => $data['user'],
                 'plan'          => $data['plan']
             ]);
+        }
+
+        if($notificationType == self::SUPPORT_ACKNOWLEDGE_NOTIFICATION['type']) {
+            return view($this->body_template)->with('user', Auth::user());
         }
 
         return view();
@@ -401,11 +405,12 @@ class Notification extends Model
         $this->body         = $request->get('body');
         $this->save(); // sends to us
 
-        $userNotification               = new Notification(); // sends to the user
-        $userNotification->type         = self::SUPPORT_ACKNOWLEDGE_NOTIFICATION['type'];
-        $userNotification->subject      = self::SUPPORT_ACKNOWLEDGE_NOTIFICATION['subject'];
-        $userNotification->body         = self::SUPPORT_ACKNOWLEDGE_NOTIFICATION['body_template'];
-        $userNotification->recipient_id = Auth::id();
+        $userNotification                   = new Notification(); // sends to the user
+        $userNotification->type             = self::SUPPORT_ACKNOWLEDGE_NOTIFICATION['type'];
+        $userNotification->subject          = self::SUPPORT_ACKNOWLEDGE_NOTIFICATION['subject'];
+        $userNotification->body_template    = self::SUPPORT_ACKNOWLEDGE_NOTIFICATION['body_template'];
+        $userNotification->body             = $userNotification->renderNotificationView(self::SUPPORT_ACKNOWLEDGE_NOTIFICATION['type'])->render();
+        $userNotification->recipient_id     = Auth::id();
 
         return $userNotification->save();
     }
