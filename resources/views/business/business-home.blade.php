@@ -8,12 +8,10 @@
         <div class="col-md-8 offset-md-2" href="#">
             <div class="row theme-background p-2" id="scoreboard">
                 <div class="col-6 text-default ">
-                    <p class="text-default">Plans</p>
                     <p class="text-default">Subscriptions </p>
                     <p class="text-default">Projected monthly income </p>
                 </div>
                 <div class="col-6">
-                    <p class="text-default"><span>{{$data['planCount']}}</span></p>
                     <p class="text-default"><span>{{$data['subscriptionCount']}}</span></p>
                     <p class="text-default"><span>{{$data['projectedMonthlyIncome']}}</span></p>
                 </div>
