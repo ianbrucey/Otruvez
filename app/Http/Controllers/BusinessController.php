@@ -44,7 +44,6 @@ class BusinessController extends Controller
             $stats = DB::select($this->getBusinessAccountStatsQuery());
             $projectedMonthlyIncome = $this->calulateMonthlyIncome();
             $subscriptionCount = !count($stats) ? 0 :$stats[0]->subCount;
-            var_dump($stats);
             $data = [
               'businessId'            => Auth::user()->business ? Auth::user()->business->id : 0,
               'subscriptionCount'     => $subscriptionCount,
