@@ -44,7 +44,7 @@ function triggerTargetClick(e, obj) {
     $($(obj).attr('data-target')).trigger('click');
 }
 
-function triggerTargetSubmit(e, obj) {
+function triggerTargetSubmit(e, obj, ajaxSubmit = false) {
     e = e || window.event;
     e.preventDefault();
     let form = $($(obj).attr('data-target'));
@@ -52,7 +52,32 @@ function triggerTargetSubmit(e, obj) {
     if(paginationIndex > 0) {
         form.append('<input type="hidden" name="from" value="'+paginationIndex+'">');
     }
-    form.submit();
+    if(ajaxSubmit) {
+        if(form.find('#subject').val() == '' || form.find('#body').val() == ''){
+            $.confirm({
+                icon: 'fa fa-warning text-danger',
+                title: '',
+                content: 'both fields are required',
+                buttons: {
+                    ok: {
+                        btnClass: 'theme-background',
+                    }
+                }
+            });
+            return;
+        }
+        $('#submitting').show(500);
+        let currentLocation = window.location.href;
+        let postdata    = form.serialize();
+        let url         = form.attr('action');
+        $.post(url, postdata);
+
+        setTimeout(function () {
+            window.location.href = "/business?messageSent";
+        }, 2000);
+    } else {
+        form.submit();
+    }
 }
 
 

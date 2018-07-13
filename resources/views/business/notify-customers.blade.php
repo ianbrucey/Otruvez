@@ -8,20 +8,17 @@
                 <div class="card-header">
                     <h4>Send a message to your customers</h4>
                 </div>
-                <form class="form-group validate-message" action="/business/notifyCustomers" method="post">
+                <form class="form-group validate-message" action="/business/notifyCustomers" method="post" id="notify-customer-form">
                     {{csrf_field()}}
                     <label for="subject">Subject</label>
-                    <input type="text"  class="form-control bg-white" name="subject" placeholder="">
+                    <input type="text"  class="form-control bg-white" name="subject" id="subject" placeholder="">
 
                     <hr>
                     <label for="message">Message</label>
-                    <textarea class="form-control bg-white" name="body" placeholder="" rows="5" cols="50"></textarea>
-                    <input type="hidden" name="type" value="support">
-                    <input type="hidden" name="type" value="support">
-                    <input type="hidden" name="type" value="support">
+                    <textarea class="form-control bg-white" name="body" id="body" placeholder="" rows="5" cols="50"></textarea>
                     <input type="hidden" name="type" value="support">
                     <hr>
-                    <button type="submit" class="btn theme-background">Submit</button>
+                    <button type="button" class="btn theme-background" data-target="#notify-customer-form" onclick="triggerTargetSubmit(event, this, true)">Submit</button>
                 </form>
             </div>
         </div>
