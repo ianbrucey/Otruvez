@@ -1248,4 +1248,6 @@ function truncateCardTitle($str){
 function baseUrlConcat($str) {
     return sprintf("%s%s",env('APP_URL'),$str);
 }
+
+const CUSTOMER_SERVICE_CONTACT_LIMIT = 5;
 // logo: <img src="{{getImage("logos/otruvez-logo.png")}}" style="width: 150px; height: auto;">
