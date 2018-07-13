@@ -104,6 +104,7 @@ class BusinessController extends Controller
         $business           = $plan->business;
         $hasPhoto           = !empty($business->photo_path);
         $haslogo            = !empty($business->logo_path);
+        $alreadySubscribed  = (new \App\Subscription())->where('user_id', Auth::id())->where('plan_id', $planId)->exists();
         $owner              = $business->user ? $business->user->id == Auth::id() : false;
         $publicStripeKey    = getPublicStripeKey();
         $rating             = (new Rating())->where('plan_id', $planId)->avg('rate_number');
@@ -116,6 +117,7 @@ class BusinessController extends Controller
             ->with('hasReview',$hasReview)
             ->with('reviews',$reviews)
             ->with('rating',$rating)
+            ->with('alreadySubscribed',$alreadySubscribed)
             ->with('active','')
             ->with('publicStripeKey',$publicStripeKey)
             ->with('plan',$plan)->with('owner',$owner);
