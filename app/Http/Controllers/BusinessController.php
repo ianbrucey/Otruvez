@@ -43,11 +43,10 @@ class BusinessController extends Controller
 
             $stats = DB::select($this->getBusinessAccountStatsQuery());
             $projectedMonthlyIncome = $this->calulateMonthlyIncome();
-            $planCount = !count($stats) ? 0 :$stats[0]->planCount;
             $subscriptionCount = !count($stats) ? 0 :$stats[0]->subCount;
+            var_dump($stats);
             $data = [
               'businessId'            => Auth::user()->business ? Auth::user()->business->id : 0,
-              'planCount'             => $planCount,
               'subscriptionCount'     => $subscriptionCount,
               'name'                  => ucfirst(Auth::user()->first),
               'projectedMonthlyIncome'=> formatPrice($projectedMonthlyIncome)
@@ -450,19 +449,16 @@ class BusinessController extends Controller
 
     private function getBusinessAccountStatsQuery(){
         $userId = Auth::id();
-        return DB::raw("SELECT (
-                                SELECT COUNT(id) from businesses where user_id = $userId
-                                ) as bizCount,
+        $query = DB::raw("SELECT 
                                 (
-                                SELECT COUNT(business_id) from plans where business_id = $userId
-                                ) AS planCount,
-                                
-                                (
-                                SELECT COUNT(business_id) from subscriptions where business_id = $userId
+                                SELECT COUNT(s.id) FROM subscriptions s join businesses b  WHERE b.user_id = $userId and b.id = s.business_id
                                 ) AS subCount
                                 
                                 FROM businesses;
                                 ");
+
+        return $query;
+
     }
 
     public function calulateMonthlyIncome()
