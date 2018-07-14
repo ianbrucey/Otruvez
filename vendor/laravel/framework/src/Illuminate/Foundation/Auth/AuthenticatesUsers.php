@@ -67,8 +67,8 @@ trait AuthenticatesUsers
     protected function validateLogin(Request $request)
     {
         $this->validate($request, [
-            $this->username() => 'required|string',
-            'password' => 'required|string',
+            $this->username() => 'required|email',
+            'password' => 'required|string|min:8',
         ]);
     }
 

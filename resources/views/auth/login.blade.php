@@ -4,7 +4,9 @@
 <div class="container">
     <div class="row">
         <div class="col-md-8 offset-md-2">
-            <div class="card"><br><br>
+            <div class="card card-default">
+                <h3 class="card-heading text-center"><img src="{{getOtruvezLogoImg()}}" width="100"></h3>
+                <br><br>
                 <h3 class="card-heading text-center">Login</h3>
 
                 <div class="card-body">
@@ -51,11 +53,11 @@
 
                         <div class="form-group">
                             <div class="col-md-8">
-                                <button type="submit" class="btn btn-primary">
+                                <button type="submit" class="btn theme-background">
                                     Login
                                 </button>
 
-                                <a class="btn btn-link" href="{{ route('password.request') }}">
+                                <a class="btn btn-link theme-color" href="{{ route('password.request') }}">
                                     Forgot Your Password?
                                 </a>
                             </div>

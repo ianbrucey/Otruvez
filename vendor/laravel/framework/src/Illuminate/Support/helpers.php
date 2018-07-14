@@ -1205,7 +1205,7 @@ function getBusinessLogoImg($business)
 
 function getOtruvezLogoImg()
 {
-    return getImage('logos/otruvez-logo.png');
+    return baseUrlConcat('/classimax/images/logos/otruvez-logo.png');
 }
 
 function getAccountNotificationsUrl()
@@ -1228,6 +1228,10 @@ function s3PhotobucketPath() {
 }
 
 function getImage($imgPath) {
+    return s3PhotobucketPath().$imgPath;
+}
+
+function getLocalImage($imgPath) {
     return s3PhotobucketPath().$imgPath;
 }
 
