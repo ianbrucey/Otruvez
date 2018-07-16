@@ -5,10 +5,11 @@
     <div class="row">
         <div class="col-md-8 offset-md-2">
             <div class="card card-default">
-                <h3 class="card-heading text-center"><img src="{{getOtruvezLogoImg()}}" width="100"></h3>
-                <br><br>
+                <div class="card-header">
+                    <h3 class="card-heading text-center"><img src="{{getOtruvezLogoImg()}}" width="100"></h3>
+                    <h3 class="card-heading text-center">Register</h3>
+                </div>
 
-                <h3 class="card-heading text-center">Register</h3>
 
                 <div class="card-body">
                     <form class="form-horizontal" method="POST" action="{{baseUrlConcat("/register")}}">

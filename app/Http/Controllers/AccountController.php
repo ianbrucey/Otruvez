@@ -59,7 +59,7 @@ class AccountController extends Controller
             $user->save();
         } elseif($user->customer_service_limit == CUSTOMER_SERVICE_CONTACT_LIMIT ) {
             if($currentMonthAndDay == (new \DateTime($user->last_customer_service_contact_date))->format('m-d')) {
-                return redirect('/account')->with('successMessage', "Request limit reached for the day. We will respond to your previous requests within 24-48 hours");
+                return redirect('/account')->with('infoMessage', "Request limit reached for the day. We will respond to your previous requests within 24-48 hours");
             } else {
                 $user->customer_service_limit = 1;
                 $user->last_customer_service_contact_date = $currentTimestamp;

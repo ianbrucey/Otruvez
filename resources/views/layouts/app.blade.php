@@ -68,10 +68,10 @@
                     <div class="collapse navbar-collapse" id="navbarSupportedContent">
                         <ul class="navbar-nav ml-4">
                             <li class="nav-item">
-                                <a class="nav-link login-button" href="/">How it works</a>
+                                <a class="nav-link login-button" href="/">Home</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link login-button" href="/">Contact</a>
+                                <a class="nav-link login-button" href="/contact">Contact</a>
                             </li>
 
                             <li class="nav-item">

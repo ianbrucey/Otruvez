@@ -1,18 +1,19 @@
 @extends('layouts.app')
 
 @section('body')
-<section class="hero-area text-center  bg-white" style="min-height: 100% !important;">
+<section class="hero-area text-center  bg-white" style="min-height: 100% !important;" id="landing-page-section-1">
 	<!-- Container Start -->
 	<div class="container">
 		<div class="row">
 
-			<div class="col-md-12">
+			<div class="col-md-12 text-center">
 				<!-- Header Contetnt -->
 				<div class="content-block">
 				<img src="{{baseUrlConcat('/classimax/images/logos/o-logo-w-tagline.png')}}" style="width: 70%; height: auto">
 					
 				</div>
 				<!-- Advance Search -->
+				<a href="/#how-it-works" class="btn-lg theme-background">How it Works</a>
 
 			</div>
 		</div>
@@ -29,11 +30,11 @@
 =            Popular deals section            =
 ============================================-->
 
-<section class="popular-deals section bg-gray theme-background">
-	<div class="container">
+<section class="popular-deals section bg-gray theme-background" id="how-it-works">
+	<div class="container ">
 		<div class="row">
 			<div class="col-md-12 mb-0">
-				<div class="section-title">
+				<div class="section-title text-center">
 					<h2 class="text-white">How it works</h2>
 					<p class="text-white">1st, find a service that you use often or just need in general</p>
 				</div>
@@ -57,6 +58,8 @@
 			</div>
 		</div>
 	</div>
+
+	<div class="text-center"><a href="#second-section" class="btn bg-white theme-color m-2">Next Section</a></div>
 </div>
 
 
@@ -64,7 +67,7 @@
 </div>
 </section>
 
-<section class="popular-deals section bg-gray bg-white">
+<section class="popular-deals section bg-gray bg-white" id="second-section">
 	<div class="container">
 		<div class="row">
 			<div class="col-md-12 mb-0">
@@ -94,7 +97,7 @@
 </section>
 
 
-<section class="popular-deals section bg-gray theme-background">
+<section class="popular-deals section bg-gray theme-background" id="third-section">
 	<div class="container">
 		<div class="row">
 			<div class="col-md-12 mb-0">
@@ -122,6 +125,7 @@
 
 		</div>
 	</div>
+	<div class="text-center"><a href="#third-section" class="btn theme-background m-2">Next Section</a></div>
 </section>
 
 
@@ -149,7 +153,12 @@
 	</div>
 	<!-- Container End -->
 </section>
+<script>
+	var screenheight = screen.height + "px";
+	$('#landing-page-section-1').css('height', screenheight);
 
+
+</script>
 
 @endsection
 

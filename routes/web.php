@@ -22,6 +22,16 @@ Route::get('/', function () {
     }
 });
 
+Route::get('/contact', function () {
+    if(Auth::check()) {
+        return redirect('/home');
+    } else {
+        return view('contact');
+    }
+});
+
+Route::post('/contactUs', 'HomeController@contactUs');
+
 Route::get('/log/out', function () {
     \Illuminate\Support\Facades\Auth::logout();
     return redirect('/');
