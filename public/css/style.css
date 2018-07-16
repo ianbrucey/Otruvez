@@ -80,6 +80,10 @@ body {
 
 }
 
+hr {
+    background-color: #4cb996;
+}
+
 .error {
      color:red;
  }
