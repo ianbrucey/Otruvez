@@ -24,7 +24,8 @@ class WebhookController extends Controller
         ];
     }
 
-    public function verifyStripeEvent(Request $payload, $webhooktype) {
+    public function verifyStripeEvent(Request $request, $webhooktype) {
+        $payload = @file_get_contents('php://input');
         $endpointSecret = getWebHookKey($webhooktype);
 
         $sig_header = $_SERVER["HTTP_STRIPE_SIGNATURE"];
@@ -37,10 +38,12 @@ class WebhookController extends Controller
         } catch(\UnexpectedValueException $e) {
             // Invalid payload
             http_response_code(400); // PHP 5.4 or greater
+            throw new \Exception($e->getMessage());
             exit();
         } catch(\Stripe\Error\SignatureVerification $e) {
             // Invalid signature
             http_response_code(400); // PHP 5.4 or greater
+            throw new \Exception($e->getMessage());
             exit();
         }
 
@@ -80,7 +83,7 @@ class WebhookController extends Controller
         if (isset($event) && in_array($event->type, $this->getSuccessfulPaymentEventList())) {
 
             Subscription::where('stripe_id', $event->data->object->lines->data[0]->id)
-                        ->update(['last_charge_id' => $event->data->object->charge]);
+                ->update(['last_charge_id' => $event->data->object->charge]);
 
             return 1;
         }
