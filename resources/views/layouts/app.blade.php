@@ -65,23 +65,26 @@
                         </ul>
                     </div>
                 @else
-                    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                        <ul class="navbar-nav ml-4">
+                    <div class="collapse navbar-collapse text-center" id="navbarSupportedContent">
+                        <ul class="navbar-nav ">
                             <li class="nav-item">
-                                <a class="nav-link login-button" href="/">Home</a>
+                                <a class="btn theme-background  nav-link login-button" href="/">Home</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link login-button" href="/contact">Contact</a>
+                                <a class="btn theme-background  nav-link login-button" href="/contact">Contact</a>
                             </li>
 
                             <li class="nav-item">
-                                <a class="nav-link login-button" href="/register">Register</a>
+                                <a class="btn theme-background  nav-link login-button" href="/register">Register</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link login-button" href="/login">Login</a>
+                                <a class="btn theme-background  nav-link login-button" href="/login">Login</a>
                             </li>
+
                         </ul>
+
                     </div>
+                    <hr>
                 @endif
             </nav>
         {{--</div>--}}
