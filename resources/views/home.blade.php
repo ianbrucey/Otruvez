@@ -4,10 +4,11 @@
 <div class="container-fluid">
     <div class="row page-search">
                 <!-- Store Search -->
-        <form action="/home" method="get" class="col-md-5 offset-md-1 " id="search-form">
+        <form action="/home" method="get" class="col-md-5 offset-md-1" id="search-form">
             <div class="block d-flex">
+                    <input type="hidden" name="submitted"  value=true>
                     <input type="hidden" name="location_id" id="location_id" value="{{getAuthUser()->location_id ?: 0}}">
-                    <input type="text" class="form-control mb-2 mr-sm-2 mb-sm-0" value="{{$searchField ?: ''}}" id="searchField" name="searchField" placeholder="What are you looking for?" style="background: white ">
+                    <input type="text" class="form-control mb-2 mr-sm-2 mb-sm-0" value="{{$searchField ?: ''}}" id="searchField" name="searchField" placeholder="What are you looking for?" style="background: white " required>
             </div>
             <hr>
             <a class="text-white" data-toggle="collapse" data-target="#more-criteria" aria-expanded="false" aria-controls="more-criteria">
@@ -35,7 +36,7 @@
         </form>
         <div class="col-md-2 col-sm-12">
             <div class="block d-flex">
-                <button class="btn btn-default form-control" style="background: white" onclick="triggerTargetSubmit(event, this)" data-target="#search-form"><span class="fa fa-search"></span></button>
+                <button class="btn btn-default form-control" style="background: white" onclick="triggerTargetSubmit(event, this)" data-target="#search-form" id="searchField-btn" disabled><span class="fa fa-search"></span></button>
             </div>
         </div>
     </div>

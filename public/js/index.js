@@ -7,6 +7,18 @@ $('.show-sm-modal').on('click', function(){
     console.log(target);
 });
 
+$('#searchField').keyup(function(event) {
+    if($(this).val().trim() == '' || $(this).val().length < 2) {
+        $("#searchField-btn").prop('disabled', true);
+        return;
+    } else {
+        $("#searchField-btn").prop('disabled', false);
+    }
+    if (event.keyCode === 13) {
+        $("#searchField-btn").trigger('click');
+    }
+});
+
 $('.hide-sm-modal').on('click', function(){
     $('.sm-modal').hide(500);
 });
@@ -279,6 +291,7 @@ $(document).ready(function () {
             form.submit();
         }
     });
+
 });
 
 // may keep for smoother transition

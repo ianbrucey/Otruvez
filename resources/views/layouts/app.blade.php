@@ -81,6 +81,10 @@
                                 <a class="btn btn-lg white-bg theme-color  nav-link login-button" href="/login">Login</a>
                             </li>
 
+                            <li class="nav-item">
+                                <a class="btn btn-lg white-bg theme-color  nav-link login-button" href="/login">Business Owners</a>
+                            </li>
+
                         </ul>
 
                     </div>
