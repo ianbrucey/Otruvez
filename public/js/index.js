@@ -56,6 +56,13 @@ function triggerTargetClick(e, obj) {
     $($(obj).attr('data-target')).trigger('click');
 }
 
+function triggerTargetHref(e, obj) {
+    $('#submitting').fadeIn(250);
+    e = e || window.event;
+    e.preventDefault();
+    window.location.href = $(obj).attr('data-href');
+}
+
 function triggerTargetSubmit(e, obj, ajaxSubmit = false) {
     e = e || window.event;
     e.preventDefault();
@@ -88,6 +95,7 @@ function triggerTargetSubmit(e, obj, ajaxSubmit = false) {
             window.location.href = "/business?messageSent";
         }, 2000);
     } else {
+        $('#submitting').fadeIn(500);
         form.submit();
     }
 }

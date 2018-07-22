@@ -39,12 +39,23 @@
                                 </div>
                             </div>
                             <hr>
-                            <button class=" col-12 btn-sm theme-background show-sm-modal checkin" data-subscription-id="{{$subscription->id}}" data-plan-id="{{$plan->id}}" data-modal-target="#checkin-{{$subscription->id}}" {{$mustUpdatePaymentMethod ? "disabled" : ""}}><span class="fa fa-check-circle"></span> Check-in </button> {{-- still needs to be worked out --}}
-                            <button class=" col-12 btn-sm theme-background show-sm-modal" data-modal-target="#subscription-details-{{$plan->id}}" {{$mustUpdatePaymentMethod ? "disabled" : ""}}><span class="fa fa-eye"></span> View Details </button> {{-- we need a modal for this --}}
-                            <a style="display: block" class="col-12 btn-sm theme-background text-center" href="{{$mustUpdatePaymentMethod ? "#" : '/business/viewService/'.$plan->id.'/#review-container'}}" ><span class="fa fa-pencil-square"></span> Write A Review </a>
-                            <button class=" col-12 btn-sm theme-background show-sm-modal" data-modal-target="#rate-{{$plan->id}}" {{$mustUpdatePaymentMethod ? "disabled" : ""}}><span class="fa fa-star"></span> Rate </button>
+
+                            {{--<button class=" col-12 btn-sm theme-background show-sm-modal checkin" data-subscription-id="{{$subscription->id}}" data-plan-id="{{$plan->id}}" data-modal-target="#checkin-{{$subscription->id}}" {{$mustUpdatePaymentMethod ? "disabled" : ""}}><span class="fa fa-check-circle"></span> Check-in </button> --}}{{-- still needs to be worked out --}}
+                            {{--<button class=" col-12 btn-sm theme-background show-sm-modal" data-modal-target="#subscription-details-{{$plan->id}}" {{$mustUpdatePaymentMethod ? "disabled" : ""}}><span class="fa fa-eye"></span> View Details </button> --}}{{-- we need a modal for this --}}
+                            {{--<a style="display: block" class="col-12 btn-sm theme-background text-center" href="{{$mustUpdatePaymentMethod ? "#" : '/business/viewService/'.$plan->id.'/#review-container'}}" ><span class="fa fa-pencil-square"></span> Write A Review </a>--}}
+                            {{--<button class=" col-12 btn-sm theme-background show-sm-modal" data-modal-target="#rate-{{$plan->id}}" {{$mustUpdatePaymentMethod ? "disabled" : ""}}><span class="fa fa-star"></span> Rate </button>--}}
+                            {{--<hr>--}}
+                            {{--<button type="submit" class="btn-sm btn-danger" data-target="#delete-subscription-form-{{$subscription->id}}" data-subscription-name="{{removeLastWord($subscription->name)}}" onclick="cancelSubscription(event, this)"> Cancel Subscription </button> --}}{{-- still needs to be worked out --}}
+                            <table class="table table-striped">
+                                <tbody>
+                                <tr class=" theme-background text-center show-sm-modal checkin" data-subscription-id="{{$subscription->id}}" data-plan-id="{{$plan->id}}" data-modal-target="#checkin-{{$subscription->id}}" {{$mustUpdatePaymentMethod ? "disabled" : ""}}><td><span class="fa fa-check-circle"></span> Check-in </td></tr>
+                                <tr class=" theme-background text-center show-sm-modal" data-modal-target="#subscription-details-{{$plan->id}}" {{$mustUpdatePaymentMethod ? "disabled" : ""}}><td><span class="fa fa-eye"></span> View Details</td></tr>
+                                <tr class=" theme-background text-center" data-href="{{$mustUpdatePaymentMethod ? "#" : '/business/viewService/'.$plan->id.'/#review-container'}}" onclick="triggerTargetHref(event, this)"><td><span class="fa fa-pencil-square"></span> Write A Review </td></tr>
+                                <tr class=" theme-background text-center show-sm-modal" data-modal-target="#rate-{{$plan->id}}" {{$mustUpdatePaymentMethod ? "disabled" : ""}}><td><span class="fa fa-star"></span> Rate </td></tr>
+                                </tbody>
+                            </table>
                             <hr>
-                            <button type="submit" class="btn-sm btn-danger" data-target="#delete-subscription-form-{{$subscription->id}}" data-subscription-name="{{removeLastWord($subscription->name)}}" onclick="cancelSubscription(event, this)"> Cancel Subscription </button> {{-- still needs to be worked out --}}
+                            <button type="submit" class="btn-sm btn-danger" data-target="#delete-subscription-form-{{$subscription->id}}" data-subscription-name="{{removeLastWord($subscription->name)}}" onclick="cancelSubscription(event, this)"> Cancel Subscription </button>
                         </div>
                 </div>
                 @include('modals.custom.checkin-modal')
