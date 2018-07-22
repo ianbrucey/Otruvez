@@ -22,3 +22,8 @@
         </h1>
     </div>
 </div>
+
+<div id="blanket" class="" style="position: fixed; width: 100%; height: 100%; background-color: white; z-index: 99999999; display: ">
+
+
+</div>

@@ -6,7 +6,7 @@
                 <div class="card-header">
                     <h4 class="text-white">Create Business</h4>
                 </div>
-                <form method="post" action="/business/create" class="form-group-md">
+                <form method="post" action="/business/create" class="form-group-md validate-create-business">
                     <div class="card-body theme-form">
                         {{csrf_field()}}
                         <input type="text" name="name" class="form-control" placeholder="Business Name" required>
