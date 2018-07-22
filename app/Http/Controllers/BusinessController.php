@@ -37,10 +37,10 @@ class BusinessController extends Controller
 
     public function index()
     {
-        if(!Business::where('user_id', Auth::id())->first()) {
+        $business = Business::where('user_id', Auth::id())->first();
+        if(!$business) {
             return redirect('/business/manageBusiness');
         } else {
-
             $stats = DB::select($this->getBusinessAccountStatsQuery());
             $projectedMonthlyIncome = $this->calulateMonthlyIncome();
             $subscriptionCount = !count($stats) ? 0 :$stats[0]->subCount;
@@ -320,8 +320,10 @@ class BusinessController extends Controller
             return redirect()->back()->with("errorMessage","Not authorized to make this request");
         }
 
-        $business = (new Business())->find($businessId);
-        if(!$business){
+        $business = (new Business())->where('user_id', Auth::id())->first();
+
+
+        if(!$business) {
             return redirect()->back()->with("errorMessage","Business doesn't exist");
         }
 
@@ -349,7 +351,9 @@ class BusinessController extends Controller
             }
         }
 
-        if($plans = $business->plans()) {
+        $plans = $business->plans();
+
+        if(count($plans)) {
             foreach($plans as $plan)
             {
 
