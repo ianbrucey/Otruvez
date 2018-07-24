@@ -146,4 +146,10 @@ $intervals = ['month','year'];
         </div>
 
     </div>
+    <script>
+        $( window ).unload(function() {
+            // $('#blanket').show();
+            $('#blanket').fadeIn(250);
+        });
+    </script>
  @endsection

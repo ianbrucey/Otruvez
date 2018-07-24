@@ -87,6 +87,17 @@ hr {
 .error {
      color:red;
  }
+.p-20 {
+    font-size: 20px !important;
+}
+
+.p-24 {
+    font-size: 24px !important;
+}
+
+.p-26 {
+    font-size: 26px !important;
+}
 
 .text-white {
     color: whitesmoke !important;
