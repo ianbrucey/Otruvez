@@ -7,10 +7,17 @@
 
                 <div class="card mt-4">
                     <h4 class="card-header">Contact info</h4>
-                    <div class="card-body">
-                        <h5 class="card-text">Phone: <a href="tel:{{$business->phone}}">{{$business->phone}}</a></h5>
-                        <h5 class="card-text">Email: <a href="mailto:{{$business->email}}">{{$business->email}}</a></h5>
-                        <h5 class="card-text">Address: <a href="https://maps.google.com/?q={{$business->address}}">{{$business->address}}</a></h5>
+                    <div class="card-body text-center">
+                        <p>Phone: {{ $business->phone }}</p>
+                        <div class="card-text mb-2"><a class="btn theme-background col-12" href="tel:{{$business->phone}}"><span class="fa fa-2x fa-phone"></span> <br> Call</a><hr></div>
+                        <p>Email: {{ $business->email }}</p>
+                        <div class="card-text mb-2"><a class="btn theme-background col-12" href="mailto:{{$business->email}}"><span class="fa fa-2x fa-envelope"></span><br> Send email</a><hr></div>
+                        <p>Address: {{ $business->address }}</p>
+                        <a class=" card-text btn theme-background col-12 mb-2" style="overflow: hidden" href="https://maps.google.com/?q={{$business->address}}">
+                                <span class="fa fa-2x fa-map-marker"></span><br>
+                            Get Directions
+                        </a>
+
                     </div>
                 </div>
             </div>

@@ -5,14 +5,7 @@
     $showCarousel = false;
     $hasPlans     = false;
   @endphp
-  <div class="col-12">
-    <h3 class="text-center">
-      @if($business->logo_path)
-        <div class="d-inline-block" style="width: 200px; height: 100px; background: url({{ getImage($business->logo_path) }}) no-repeat; background-size: contain; background-position: center;" ></div></h3>
-    @else
-      {{$business->name}}
-    @endif
-  </div>
+
   @include('partials.base-theme.store-nav')
 
     <!-- Page Content -->
@@ -122,6 +115,6 @@
     @endif
   </script>
   <script>
-    $('.navbar-brand').children('img').hide();
+//    $('.navbar-brand').children('img').hide();
   </script>
 @endsection
