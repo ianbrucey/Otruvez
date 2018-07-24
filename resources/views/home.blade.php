@@ -133,6 +133,16 @@
 
         @empty
             <br>
+                <div class="col-sm-12 offset-md-4 col-md-4">
+                    <!-- product card -->
+                    <div class="product-item bg-light">
+                        <div class="card">
+                            <div class="card-header text-center">
+                                <h3>No services available in your area.</h3>
+                            </div>
+                        </div>
+                    </div>
+                </div>
         @endforelse
     </div>
 </div>
