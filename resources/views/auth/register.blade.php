@@ -6,6 +6,9 @@
         <div class="col-md-8 offset-md-2">
             <div class="card card-default">
                 <div class="card-header">
+                    <div class="alert alert-info">
+                        Site is in testing mode. Feel free to login after registering. No confirmation email needed
+                    </div>
                     <h3 class="card-heading text-center"><img src="{{getOtruvezLogoImg()}}" width="100"></h3>
                     <h3 class="card-heading text-center">Register</h3>
                 </div>

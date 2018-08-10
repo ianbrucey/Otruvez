@@ -88,7 +88,7 @@ class RegisterController extends Controller
             'email' => $data['email'],
             'password' => bcrypt($data['password']),
             'stripe_id' => $stripeCustomer->id,
-            'activated' => "0",
+            'activated' => "1",
             'activation_token' => $activationToken
         ]);
 
