@@ -24,7 +24,7 @@
         <form class="col-md-3 col-sm-12" id="location-form">
             <div class="block d-flex location-label-container">
                 <label class="form-control" id="location-label" style="background: white"><span class="fa fa-location-arrow fa-2x"></span> {{sprintf("%s, %s",$location->city, $location->state) }}</label>
-                <input class="form-control {{$location ? 'hide' : ''}}" name="location" id="location" placeholder="Enter your location" autocomplete="off" style="background: white ">
+                <input class="form-control {{$location ? 'hide' : ''}}" name="location" id="location" placeholder="Enter your location" autocomplete="nah" style="background: white ">
             </div>
 
             <div id="location-list-container" class="col-md-8 card">

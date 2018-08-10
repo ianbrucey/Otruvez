@@ -203,8 +203,7 @@ $(document).ready(function () {
             },
             phone: {
                 required: true,
-                minlength: 10,
-                phoneUS: true
+                minlength: 10
             },
             description: {
                 required: true,

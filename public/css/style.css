@@ -398,3 +398,20 @@ textarea {
 .pac-container {
     z-index: 1051 !important;
 }
+
+.sell-with-o-section:nth-child(odd) {
+    background: #4cb996;
+}
+
+.sell-with-o-section:nth-child(odd) .sect-message {
+    color: white;
+}
+
+.sell-with-o-section:nth-child(even) {
+    background: white;
+}
+
+
+.sell-with-o-section:nth-child(even) .sect-message {
+    color: #4cb996;
+}

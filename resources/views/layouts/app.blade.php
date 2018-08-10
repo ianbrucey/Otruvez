@@ -82,7 +82,7 @@
                             </li>
 
                             <li class="nav-item">
-                                <a class="btn btn-lg white-bg theme-color  nav-link login-button" href="/login">Business Owners</a>
+                                <a class="btn btn-lg white-bg theme-color  nav-link login-button" href="/sellYourServices"> <span class="fa fa-shopping-cart "></span> How to sell with Otruvez </a>
                             </li>
 
                         </ul>
@@ -98,7 +98,7 @@
 {{--NAV SECTION--}}
 @yield('header')
 @include("alerts.plan-alerts")
-        @yield('body')
+@yield('body')
 
 
         <!--============================

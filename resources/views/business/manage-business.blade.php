@@ -159,7 +159,8 @@
     <script src="{{ baseUrlConcat('/js/dropzone.js') }}"></script>
     <script src="{{ baseUrlConcat('/js/dropzone-options.js') }}"></script>
     <script src="{{baseUrlConcat('/js/google-location/set-address.js')}}"></script>
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAuTqYHpeNjvxPvYQZG7JueMS9tClD7yVY&libraries=places&callback=initAutocomplete" async defer></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCgE-TwAg_-s8NzBqtdJtkMVlQ86Qf9nho&libraries=places&callback=initAutocomplete"
+            async defer></script>
 
 
 @endsection

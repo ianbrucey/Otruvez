@@ -67,10 +67,16 @@ function geolocate() {
     }
 }
 
-$('#autocomplete').attr('autocomplete','user-address');
+
 $('#autocomplete').parents('form').on('submit', function(e){
    if($('#locality').val() == '') {
        e.preventDefault();
        alert('please enter an address');
    }
+});
+
+$(document).ready(function () {
+    setTimeout(function () {
+        $('#autocomplete').attr('autocomplete', 'nah');
+    }, 1000);
 });
