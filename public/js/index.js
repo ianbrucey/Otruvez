@@ -3,8 +3,20 @@
  */
 $('.show-sm-modal').on('click', function(){
     var target = $(this).attr('data-modal-target');
-    $(target).show(500);
+    $(target).fadeIn(500);
     console.log(target);
+});
+
+$('#searchField').keyup(function(event) {
+    if($(this).val().trim() == '' || $(this).val().length < 2) {
+        $("#searchField-btn").prop('disabled', true);
+        return;
+    } else {
+        $("#searchField-btn").prop('disabled', false);
+    }
+    if (event.keyCode === 13) {
+        $("#searchField-btn").trigger('click');
+    }
 });
 
 $('.hide-sm-modal').on('click', function(){
@@ -44,6 +56,13 @@ function triggerTargetClick(e, obj) {
     $($(obj).attr('data-target')).trigger('click');
 }
 
+function triggerTargetHref(e, obj) {
+    $('#submitting').fadeIn(250);
+    e = e || window.event;
+    e.preventDefault();
+    window.location.href = $(obj).attr('data-href');
+}
+
 function triggerTargetSubmit(e, obj, ajaxSubmit = false) {
     e = e || window.event;
     e.preventDefault();
@@ -66,7 +85,7 @@ function triggerTargetSubmit(e, obj, ajaxSubmit = false) {
             });
             return;
         }
-        $('#submitting').show(500);
+        $('#submitting').fadeIn(500);
         let currentLocation = window.location.href;
         let postdata    = form.serialize();
         let url         = form.attr('action');
@@ -76,6 +95,7 @@ function triggerTargetSubmit(e, obj, ajaxSubmit = false) {
             window.location.href = "/business?messageSent";
         }, 2000);
     } else {
+        $('#submitting').fadeIn(500);
         form.submit();
     }
 }
@@ -132,10 +152,6 @@ function cancelSubscription(e, obj) {
     });
 }
 
-$('form, .stripe-payment-form').submit(function(){
-   $('#submitting').fadeIn(1000);
-});
-
 
 $(document).find('.Button-animationWrapper-child--primary').on('click', function (e) {
     e.preventDefault();
@@ -157,12 +173,8 @@ $(document).ready(function () {
         },
         invalidHandler: function(event, validator) {
             // 'this' refers to the form
-            $('#submitting').hide();
-
             var errors = validator.numberOfInvalids();
             if (errors) {
-
-
                 var message = errors == 1
                     ? 'You missed 1 field. It has been highlighted'
                     : 'You missed ' + errors + ' fields. They have been highlighted';
@@ -171,10 +183,129 @@ $(document).ready(function () {
             } else {
                 $("div.error").hide();
             }
+        },
+        submitHandler: function (form) {
+            $('#submitting').fadeIn(500);
+            form.submit();
         }
     });
+
+    $('.validate-create-business').validate({
+        rules: {
+            name: {
+                required: true,
+                minlength: 3
+            },
+            email: {
+                required: true,
+                email: true,
+                minlength: 10
+            },
+            phone: {
+                required: true,
+                minlength: 10
+            },
+            description: {
+                required: true,
+                minlength: 10
+            },
+        },
+        invalidHandler: function(event, validator) {
+            // 'this' refers to the form
+            var errors = validator.numberOfInvalids();
+            if (errors) {
+                var message = errors == 1
+                    ? 'You missed 1 field. It has been highlighted'
+                    : 'You missed ' + errors + ' fields. They have been highlighted';
+                $("div.error span").html(message);
+                $("div.error").show().css('color','red');
+            } else {
+                $("div.error").hide();
+            }
+        },
+        submitHandler: function (form) {
+            $('#submitting').fadeIn(500);
+            form.submit();
+        }
+    });
+
+    $('.validate-login').validate({
+        rules: {
+            email: {
+                required: true,
+                email: true
+            },
+            password: {
+                required: true,
+                minlength: 8
+            }
+        },
+        invalidHandler: function(event, validator) {
+            // 'this' refers to the form
+            var errors = validator.numberOfInvalids();
+            if (errors) {
+                var message = errors == 1
+                    ? 'You missed 1 field. It has been highlighted'
+                    : 'You missed ' + errors + ' fields. They have been highlighted';
+                $("div.error span").html(message);
+                $("div.error").show().css('color','red');
+            } else {
+                $("div.error").hide();
+            }
+        },
+        submitHandler: function (form) {
+            $('#submitting').fadeIn(500);
+            form.submit();
+        }
+    });
+
+    $('.validate-register').validate({
+        rules: {
+            first: {
+                required: true
+            },
+            last: {
+                required: true
+            },
+            email: {
+                required: true,
+                email: true
+            },
+            password: {
+                required: true,
+                minlength: 8
+            },
+            password_confirmation: {
+                required: true,
+                minlength: 8
+            }
+        },
+        invalidHandler: function(event, validator) {
+            // 'this' refers to the form
+            var errors = validator.numberOfInvalids();
+            if (errors) {
+                var message = errors == 1
+                    ? 'You missed 1 field. It has been highlighted'
+                    : 'You missed ' + errors + ' fields. They have been highlighted';
+                $("div.error span").html(message);
+                $("div.error").show().css('color','red');
+            } else {
+                $("div.error").hide();
+            }
+        },
+        submitHandler: function (form) {
+            $('#submitting').fadeIn(500);
+            form.submit();
+        }
+    });
+
 });
 
+// may keep for smoother transition
+$( window ).ready(function() {
+    // $('#blanket').show();
+    $('#blanket').fadeOut(500);
+});
 // When clicking here, we will trigger the dropzone that
 // lets us choose a NEW FEATURED PHOTO for the the PLAN
 

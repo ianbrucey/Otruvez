@@ -22,3 +22,14 @@
         </h1>
     </div>
 </div>
+
+<div id="blanket" class="" style="position: fixed; width: 100%; height: 100%; background-color: white; z-index: 99999999; display: ">
+    <div style="margin-top: 20%">
+
+        <h1 class="text-center">
+            <span><img src="{{getImage('logos/otruvez-logo.png')}}" width="200"></span><br>
+            <span class="fa fa-spinner fa-spin fa-2x theme-color"></span>
+        </h1>
+    </div>
+
+</div>

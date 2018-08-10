@@ -35,6 +35,10 @@ class HomeController extends Controller
      */
     public function index(ESPlanRepository $ESPlanRepository, Request $request)
     {
+        if($request->get('submitted') && empty($request->get('searchField'))) {
+            return redirect('/home')->with('warningMessage','Search field required');
+        }
+
         $location = (new Location())->find($request->get('location_id') ?: Auth::user()->location_id);
         $kms = $request->get('miles') ? ($request->get('miles') * 1.61) . "km" : '16.10km'; // default distance is 10 miles | 8.05km == 5 mi
         $lat = $location ? $location->lat : null;

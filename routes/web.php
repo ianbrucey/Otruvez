@@ -30,6 +30,62 @@ Route::get('/contact', function () {
     }
 });
 
+Route::get('/sellYourServices', function () {
+    if(Auth::check()) {
+        return redirect('/home');
+    } else {
+        $sections = [
+            [
+                'msg'       => '1st, register with us and then login. After logging in you will see "business account" at the top. Go there',
+                'photoPath' => baseUrlConcat('/images/highlight-business.png'),
+                'first'     => 'Sell your services with Otruvez'
+            ],
+            [
+                'msg'       => "Once in the business center, you'll see this form. <br>Enter all your business's information and submit",
+                'photoPath' => baseUrlConcat('/images/merchantForm.png'),
+                'first'     => ''
+            ],
+            [
+                'msg'       => "Now you can begin adding services.",
+                'photoPath' => baseUrlConcat('/images/business-dash-buttons.png'),
+                'first'     => ''
+            ],
+            [
+                'msg'       => "In Manage Service page, you'll see this button<br> Click it.",
+                'photoPath' => baseUrlConcat('/images/createservicebutton.png'),
+                'first'     => ''
+            ],
+            [
+                'msg'       => "That button will present to you the form to create your service",
+                'photoPath' => baseUrlConcat('/images/createserviceform.png'),
+                'first'     => ''
+            ],
+            [
+                'msg'       => "After creating the service, you'll still need to <br>activate it by adding a \"Featured Photo\"",
+                'photoPath' => baseUrlConcat('/images/inactiveplan.png'),
+                'first'     => ''
+            ],
+            [
+                'msg'       => "You can add a featured photo and up to 4 gallery photos",
+                'photoPath' => baseUrlConcat('/images/addphoto.png'),
+                'first'     => ''
+            ],
+            [
+                'msg'       => "After adding your photo, your plan will be active",
+                'photoPath' => baseUrlConcat('/images/activeplan.png'),
+                'first'     => ''
+            ],
+            [
+                'msg'       => "Finally, here's what potential customers will see when they search for your service",
+                'photoPath' => baseUrlConcat('/images/searchview.png'),
+                'first'     => ''
+            ]
+        ];
+        return view('sell-your-services')->with('sections', $sections);
+    }
+});
+
+
 Route::post('/contactUs', 'HomeController@contactUs');
 
 Route::get('/log/out', function () {

@@ -81,12 +81,23 @@ body {
 }
 
 hr {
-    background-color: #4cb996;
+    /*background-color: #4cb996;*/
 }
 
 .error {
      color:red;
  }
+.p-20 {
+    font-size: 20px !important;
+}
+
+.p-24 {
+    font-size: 24px !important;
+}
+
+.p-26 {
+    font-size: 26px !important;
+}
 
 .text-white {
     color: whitesmoke !important;
@@ -386,4 +397,21 @@ textarea {
 /*for google location*/
 .pac-container {
     z-index: 1051 !important;
+}
+
+.sell-with-o-section:nth-child(odd) {
+    background: #4cb996;
+}
+
+.sell-with-o-section:nth-child(odd) .sect-message {
+    color: white;
+}
+
+.sell-with-o-section:nth-child(even) {
+    background: white;
+}
+
+
+.sell-with-o-section:nth-child(even) .sect-message {
+    color: #4cb996;
 }

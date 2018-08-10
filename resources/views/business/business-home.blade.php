@@ -40,7 +40,7 @@
         <a class="col-md-4" href="/plan/managePlans">
             <div class="card">
                 <span class="fa fa-shopping-cart fa-2x"></span>
-                <h3>Edit / Create Service Plans</h3>
+                <h3>Manage Services</h3>
             </div>
         </a>
 
