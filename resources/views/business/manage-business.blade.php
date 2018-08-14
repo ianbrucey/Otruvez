@@ -82,6 +82,7 @@
                                 </p>
                             @endif
                             {{--PRIMARY BUSINESS LOGO--}}
+                            <p class="text-center">*logo will appear in the store front*</p>
                         </div>
                         {{--<div class="col-md-6">--}}
                             {{--PRIMARY BUSINESS PHOTO--}}

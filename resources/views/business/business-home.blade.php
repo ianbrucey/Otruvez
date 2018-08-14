@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('body')
-<h3 class="text-center">Welcome {{$data['name']}}! Check your stats below</h3>
+    <h3 class="text-center"><p>Welcome <span class="theme-color">{{$data['name']}}</span>! Check your stats below</p></h3>
 
 <div class="container-fluid">
     <div class="row">
@@ -28,7 +28,7 @@
     <div class="row b-home-cards">
         <hr>
         <div class="col-md-12">
-            <h4 class="text-center"><u>Manage your account</u></h4>
+            <h4 class="text-center">Manage your account</h4>
         </div>
         <a class="col-md-4" href="/business/manageBusiness">
             <div class="card">
