@@ -230,6 +230,9 @@ class BusinessController extends Controller
 //        if ($user->business_account == 1)
 //        {
             try {
+                if(empty($request->city) || empty($request->state)) {
+                    return redirect('/business/manageBusiness')->with('warningMessage','Please add your location');
+                }
                 $newBusiness = new Business($request->all());
                 $newBusiness->user_id = Auth::id();
                 $newBusiness->api_key  = $this->generateApiKey($newBusiness->id);

@@ -71,7 +71,7 @@ function geolocate() {
 $('#autocomplete').parents('form').on('submit', function(e){
    if($('#locality').val() == '') {
        e.preventDefault();
-       alert('please enter an address');
+       sendWarning("please enter an address");
    }
 });
 

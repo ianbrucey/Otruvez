@@ -73,16 +73,7 @@ function triggerTargetSubmit(e, obj, ajaxSubmit = false) {
     }
     if(ajaxSubmit) {
         if(form.find('#subject').val() == '' || form.find('#body').val() == ''){
-            $.confirm({
-                icon: 'fa fa-warning text-danger',
-                title: '',
-                content: 'both fields are required',
-                buttons: {
-                    ok: {
-                        btnClass: 'theme-background',
-                    }
-                }
-            });
+            sendWarning("both fields are required");
             return;
         }
         $('#submitting').fadeIn(500);
@@ -309,4 +300,15 @@ $( window ).ready(function() {
 // When clicking here, we will trigger the dropzone that
 // lets us choose a NEW FEATURED PHOTO for the the PLAN
 
-
+function sendWarning(msg) {
+    return $.confirm({
+        icon: 'fa fa-warning text-danger',
+        title: '',
+        content: msg,
+        buttons: {
+            ok: {
+                btnClass: 'theme-background',
+            }
+        }
+    });
+}
