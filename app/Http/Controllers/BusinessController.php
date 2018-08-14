@@ -210,6 +210,18 @@ class BusinessController extends Controller
         return $path;
     }
 
+    public function updateApiKey(Request $request, $businessId)
+    {
+        $business = Business::find($businessId);
+        if($this->verifyBusinessToUser($business)) {
+            $business->api_key = $this->generateApiKey($businessId);
+            $business->save();
+            return redirect()->back()->with('successMessage',"Your API key was updated successfully");
+        } else {
+            return redirect()->back()->with('errorMessage',"You are not authorized to make this request");
+        }
+    }
+
 
     public function createBusiness(Request $request)
     {
@@ -220,6 +232,7 @@ class BusinessController extends Controller
             try {
                 $newBusiness = new Business($request->all());
                 $newBusiness->user_id = Auth::id();
+                $newBusiness->api_key  = $this->generateApiKey($newBusiness->id);
                 $newBusiness->active = "1";
                 $newBusiness->save();
                 $user->business_id = $newBusiness->id;
@@ -233,12 +246,6 @@ class BusinessController extends Controller
                 $message = $e->getMessage();
             }
 
-//        } elseif ($user->business_account == 2) {
-//            $message = 'Your account is suspended. Please bring your account to up to date';
-//        } else {
-//            throw new AccessDeniedException("You must have a business account to perform this action");
-//        }
-
         return redirect('/business')->with('successMessage', $message);
     }
 
@@ -247,7 +254,7 @@ class BusinessController extends Controller
         /** @var User $user */
         $user = Auth::user();
         $business = $this->findBusiness($id);
-        if($business && $user->business_account == 1)
+        if($business && $user->business_account == 1 && $this->verifyBusinessToUser($business))
         {
             $business->update($request->all());
             $subscriptions = \App\Subscription::where('business_id', $id)->get();
@@ -256,20 +263,9 @@ class BusinessController extends Controller
             {
                 $notification->sendNotifyBusinessModificationNotification($business, $subscription);
             }
-//            if($request->async)
-//            {
-//                echo "Business details updated successfully \n";
-//                return "1";
-//            }
 
             return redirect('/business/manageBusiness')->with('successMessage','Business details updated successfully');
         }
-
-//        if($request->async)
-//        {
-//            echo "Business details not updated \n";
-//            return "0";
-//        }
 
         return redirect('/business/manageBusiness')->with('warningMessage','Business does not exist or is inactive');
     }
@@ -523,6 +519,14 @@ class BusinessController extends Controller
     public function findUser($id)
     {
         return $this->getUserObject()->find($id);
+    }
+
+    private function verifyBusinessToUser($business) {
+        return $business->user_id == Auth::id();
+    }
+
+    private function generateApiKey($id) {
+        return sprintf('%s-%s-%s', uniqid("OV"),time()+rand(1,300),md5($id));
     }
 
 }

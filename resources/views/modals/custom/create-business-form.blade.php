@@ -27,7 +27,7 @@
 
                         <hr>
                         <h4 class="text-white"><u>Business hours</u>
-                            <label class=" pull-right checkbox-inline text-white"><input type="checkbox" class="has-business-hours "> Check to add hours</label>
+                            <label class=" pull-right checkbox-inline text-white"><input type="checkbox" class="has-business-hours "> Add store hours</label>
                         </h4>
                         <div class="business-hours">
                             @foreach($days as $day)
