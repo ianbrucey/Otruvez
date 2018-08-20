@@ -502,6 +502,11 @@ class BusinessController extends Controller
         return view('business.cancel-account')->with('businessId', $businessId);
     }
 
+    public function apiSetup() {
+        $business = (new Business())->where('user_id', Auth::id())->first();
+        return view('business.api-setup')->with('business', $business);
+    }
+
 
 
     private function getUserObject()

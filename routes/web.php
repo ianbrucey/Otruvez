@@ -135,6 +135,7 @@ Route::get('/business/checkins/{businessId}', 'BusinessController@showCheckinVie
 Route::get('/business/cancel', 'BusinessController@showCancelAccountView');
 Route::get('/business/notifyCustomers', 'BusinessController@showNotifyCustomersView');
 Route::get('/business/notifications/{businessId}', 'BusinessController@showBusinessNotificationView');
+Route::get('/business/apiSetup', 'BusinessController@apiSetup');
 Route::post('/business/notifyCustomers', 'BusinessController@notifyCustomers');
 Route::post('/business/deleteBusiness/{id}', 'BusinessController@deleteBusiness');
 Route::post('/business/createAccount', 'BusinessController@createBusinessAccount');
@@ -192,6 +193,7 @@ Route::post('/subscription/confirmCheckin/{subscriptionId}', 'SubscriptionContro
 Route::get('/plan/chooseAccountPlan', 'PlanController@showChooseAccountForm');
 Route::get('/plan/createAppPlans', 'PlanController@storeAppPlansLocally');
 Route::get('/plan/managePlans', 'PlanController@managePlans');
+Route::get('/plan/createService', 'PlanController@showCreateService');
 
 Route::post('/plan/createPlan', 'PlanController@createServicePlan');
 Route::post('/plan/featuredPhoto/{id}', 'PlanController@updateFeaturedPhoto');

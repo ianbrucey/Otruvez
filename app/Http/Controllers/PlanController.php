@@ -318,6 +318,11 @@ class PlanController extends Controller
         }
     }
 
+    public function showCreateService()
+    {
+        return view('plan.create-service');
+    }
+
 
 
 

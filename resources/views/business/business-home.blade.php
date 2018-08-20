@@ -44,6 +44,13 @@
             </div>
         </a>
 
+        <a class="col-md-4" href="/business/apiSetup">
+            <div class="card">
+                <span class="fa fa-laptop fa-2x"></span>
+                <h3>API Setup</h3>
+            </div>
+        </a>
+
         <a class="col-md-4" href="/business/viewStore/{{$data['businessId']}}">
             <div class="card">
                 <span class="fa fa-eye fa-2x"></span>
