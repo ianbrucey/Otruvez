@@ -8,7 +8,7 @@ $('.trigger-add-gallery-photos').click(function(e){
 
 let fileArray = {};
 
-function readFeaturedImg(input) {
+function readFeaturedImg(input, async = null) {
     console.log("got it");
     if(input.files[0]) {
         let reader = new FileReader();
@@ -23,6 +23,19 @@ function readFeaturedImg(input) {
             fileArray[img.attr('id')] = res;
             clearImgBtn.show();
             placeHolder.hide();
+
+            if(async) {
+                let form        = $('.featured-photo-form');
+                let url         = form.attr('action');
+                let postdata    = form.serialize();
+                $.post(url, postdata)
+                    .done(function (msg) {
+                        sendSuccess(msg);
+                    }).fail(function (msg) {
+                    clearImage(input);
+                    sendWarning(msg);
+                });
+            }
         };
 
         reader.readAsDataURL(input.files[0]);
@@ -31,7 +44,7 @@ function readFeaturedImg(input) {
     }
 }
 
-function readImg(input) {
+function readImages(input, async = null) {
 
     let queued = $('.queued');
     let empty  = $('.empty');
@@ -53,6 +66,19 @@ function readImg(input) {
             fileArray[currElement.attr('id')] = res;
             clearImgBtn.show();
             placeHolder.hide();
+
+            if(async) {
+                let form        = $('.gallery-photos-form');
+                let url         = form.attr('action');
+                let postdata    = form.serialize();
+                $.post(url, postdata)
+                  .done(function (data) {
+                    sendSuccess(data);
+                }).fail(function (data) {
+                    clearImage(input);
+                    sendWarning(data);
+                });
+            }
         };
 
         reader.readAsDataURL(input.files[t]);
@@ -62,7 +88,7 @@ function readImg(input) {
 
 }
 
-function clearImage(input) {
+function clearImage(input, async = null) {
     let imgId       = $(input).attr('data-target');
     let img         = $(imgId);
     let parent      = img.parent('div');
@@ -78,6 +104,17 @@ function clearImage(input) {
     placeHolder.show();
     clearImgBtn.hide();
     console.log(fileArray);
+
+    if(async) {
+        let targetForm  = $(input).attr('target-form');
+        let postdata    = targetForm.serialize();
+        let url         = targetForm.attr('action');
+        $.post(url, postdata).done(function (data) {
+            sendSuccess(data);
+        }).fail(function (data) {
+            sendWarning(data);
+        });
+    }
 }
 
 let step1 = $('#create-service-step1');

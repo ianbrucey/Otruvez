@@ -312,3 +312,16 @@ function sendWarning(msg) {
         }
     });
 }
+
+function sendSuccess(msg) {
+    return $.confirm({
+        icon: 'fa fa-star theme-color',
+        title: '',
+        content: msg,
+        buttons: {
+            ok: {
+                btnClass: 'theme-background',
+            }
+        }
+    });
+}

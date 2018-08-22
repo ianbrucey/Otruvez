@@ -286,17 +286,16 @@ label {
     display: block;
     background-repeat: no-repeat !important;
     background-size: cover !important;
-    width: 200px;
-    height: 200px;
+    width: 100px;
+    height: 100px;
     margin: auto;
-    border-radius: 50%;
-    border: .5px black solid;
+    /*border-radius: 50%;*/
+    /*border: .5px #4cb996 solid;*/
 }
 
 .gallery-photo {
-    width: 80px;
-    height: 80px;
-    margin-right: 10px;
+    width: 50px;
+    height: 50px;
 }
 
 .view-thumb,

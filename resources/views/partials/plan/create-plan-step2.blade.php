@@ -69,7 +69,7 @@
                         <button type="submit" class="btn theme-background">Submit</button>
                     </div>
                     <input type="file" name="featured_photo" id="featured-photo" onchange="readFeaturedImg(this)" style="display: none">
-                    <input type="file" name="gallery_photos[]" id="gallery-photos" onchange="readImg(this)" style="display: none" multiple>
+                    <input type="file" name="gallery_photos[]" id="gallery-photos" onchange="readImages(this)" style="display: none" multiple>
                 </form>
             </div>
         </div>
