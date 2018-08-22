@@ -12,7 +12,7 @@
                 @php $hasFeaturedPhoto = !empty($plan->featured_photo_path); @endphp
                 <p class="text-center">
                     <a class="text-primary" data-target="#plan-dropzone-{{$plan->id}}" onclick="triggerTargetClick(event, this)">update</a>
-                    <form method="POST" action="/plan/featuredPhoto/{{$plan->id}}" class="dropzone text-center hide" id="plan-dropzone-{{$plan->id}}" >
+                    <form method="POST" action="/plan/featuredPhoto/{{$plan->id}}" class="featured-photo-form text-center hide featured-photo-dz" id="plan-dropzone-{{$plan->id}}" >
                         <span data-dz-message class="fa fa-photo fa-1x dz-message"><br>Add a featured image</span>
                         {{csrf_field()}}
                     </form>
@@ -35,10 +35,10 @@
                         <div class="text-center">Gallery photos<br>
 
                             @if(count($plan->photos) < 4)
-                                <button class="btn theme-background text-center">
+                                <button class="btn-sm theme-background text-center">
                                     <a class="text-default" data-target="#gallery-dropzone-{{$plan->id}}" onclick="triggerTargetClick(event, this)">{{sprintf('choose up to %s more',4 - count($plan->photos))}}</a>
                                 </button>
-                                <form class="dropzone hide" id="gallery-dropzone-{{$plan->id}}" method="POST" action="/plan/galleryPhoto/{{$plan->id}}">
+                                <form class="gallery-photos-form hide" id="gallery-dropzone-{{$plan->id}}" method="POST" action="/plan/galleryPhoto/{{$plan->id}}">
                                     {{csrf_field()}}
                                 </form>
                             @endif

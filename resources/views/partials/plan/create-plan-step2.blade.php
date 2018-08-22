@@ -1,4 +1,4 @@
-<div id="create-service-step2" class="row"style="">
+<div id="create-service-step2" class="row"style="display: none">
     <div class="col-md-8 offset-md-2">
         <div class="text-center m-4"> <button class="btn btn-sm theme-background create-service-previous-step">Back to photos</button></div>
 
@@ -7,9 +7,8 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h4 class="modal-title">Service details</h4>
-                    <button type="button" class="btn-sm theme-background hide-sm-modal float-right" data-dismiss="modal">cancel</button>
                 </div>
-                <form method="post" action="/plan/createPlan" class="form-group-md" id="create-plan-form">
+                <form method="post" action="/plan/createPlan" class="form-group-md" id="create-plan-form" enctype="multipart/form-data">
                     <div class="modal-body">
                         <label>Plan Name</label>
                         <input type="text" name="stripe_plan_name" class="form-control" placeholder="Plan Name">
@@ -68,8 +67,9 @@
                     </div>
                     <div class="modal-footer">
                         <button type="submit" class="btn theme-background">Submit</button>
-                        <button type="button" class="btn btn-default pull-left hide-sm-modal" data-dismiss="modal">Cancel</button>
                     </div>
+                    <input type="file" name="featured_photo" id="featured-photo" onchange="readFeaturedImg(this)" style="display: none">
+                    <input type="file" name="gallery_photos[]" id="gallery-photos" onchange="readImg(this)" style="display: none" multiple>
                 </form>
             </div>
         </div>

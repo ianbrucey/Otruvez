@@ -1,7 +1,7 @@
 <div class="row" id="create-service-step1">
     <div class="col-md-8 offset-md-2">
 
-        <div class="text-center m-4"> <button class="btn btn-sm theme-background create-service-next-step" data-hide="#create-service-step1" data-show="#create-service-step2" disabled>Next Step</button></div>
+        <div class="text-center m-4"> <button class="btn btn-sm theme-background create-service-next-step" data-hide="#create-service-step1" data-show="#create-service-step2" >Next Step</button></div>
 
         <div id="" class=" card" role="dialog">
             <!-- Modal content-->
@@ -44,8 +44,3 @@
         </div>
     </div>
 </div>
-
-<form id="create-service-form">
-    <input type="file" name="featured_photo" id="featured-photo" onchange="readFeaturedImg(this)" style="display: none">
-    <input type="file" name="gallery_photos" id="gallery-photos" onchange="readImg(this)" style="display: none" multiple>
-</form>
