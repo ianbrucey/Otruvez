@@ -190,6 +190,41 @@ class PlanController extends Controller
         ], 400);
     }
 
+    public function updateGalleryPhotos(Request $request, $id) {
+
+        $plan = Plan::find($id);
+        $galleryCount = count($plan->photos);
+        if($galleryCount >= self::MAX_GALLERY_COUNT) {
+            return Response::create([
+                'msg'   => 'Max uploads exceeded. Please remove a photo to add more '
+            ], 400);
+        }
+
+        $photo = $request->file('gallery_photos');
+        try {
+                $path = $this->photoClient->store($photo, S3FolderTypes::PLAN_GALLERY_PHOTO);
+
+                DB::table('photos')->insert([
+                    'plan_id'   => $plan->id,
+                    'user_id'   => Auth::id(),
+                    'type'      => self::PHOTO_TYPE,
+                    'path'      => $path
+                ]);
+
+                return Response::create([
+                    'path' => getImage($path),
+                    'msg'   => 'upload successful'
+                ], 200);
+
+        } catch (Exception $e) {
+            $this->photoClient->unlink($path);
+            return Response::create([
+                'msg'   => 'upload not successful: ' . $e->getMessage()
+            ], 400);
+        }
+
+    }
+
     public function updatePlan(Request $request, $id)
     {
         $smPlan = Plan::find($id);
@@ -291,39 +326,7 @@ class PlanController extends Controller
         return redirect("/plan/managePlans")->with('infoMessage',"Image removed successfully");
     }
 
-    public function updateGalleryPhotos(Request $request, $id) {
-        echo 1; return;
-        $plan = Plan::find($id);
-        $galleryCount = count($plan->photos);
-        if($galleryCount >= self::MAX_GALLERY_COUNT) {
-            return redirect("/plan/managePlans")->with('warningMessage',"Max uploads exceeded. Please remove a photo to add more ");
-        }
 
-        $photos = $request->file('gallery_photos');
-
-        try
-        {
-            $path = '';
-            foreach ($photos as $photo)
-            {
-                $path = $this->photoClient->store($photo, S3FolderTypes::PLAN_GALLERY_PHOTO);
-
-                DB::table('photos')->insert([
-                    'plan_id'   => $plan->id,
-                    'user_id'   => Auth::id(),
-                    'type'      => self::PHOTO_TYPE,
-                    'path'      => $path
-                ]);
-            }
-
-        } catch (Exception $e) {
-            $this->photoClient->unlink($path);
-            return redirect("/plan/managePlans")->with('errorMessage',"Unsuccessful upload");
-        }
-
-
-        return redirect("/plan/managePlans")->with('infoMessage', " out of 4 were successfully uploaded");
-    }
 
 
     public function deleteGalleryPhoto(Request $request, $id)

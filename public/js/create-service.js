@@ -1,4 +1,4 @@
-$('#trigger-add-featured-photo').click(function(e){
+$('#trigger-add-featured-photo, .trigger-add-featured-photo').click(function(e){
     $('#featured-photo').trigger('click');
 });
 
@@ -36,6 +36,7 @@ function readFeaturedImg(input, async = null) {
 
                 ajaxPost(url, postdata, clearImgBtn.get(0)).done(function () {
                     img.attr('src', res).width(30);
+                    parent.children('.fa-check').show(1000);
                 });
 
 
@@ -54,9 +55,10 @@ function readFeaturedImg(input, async = null) {
 
 function readImages(input, async = null) {
 
-    let queued = $('.queued');
-    let empty  = $('.empty');
+    let queued      = $('.queued');
+    let empty       = $('.empty');
     let uploadLimit = queued.length === 0 ? 4 : 4 - queued.length;
+    let backend     = {success: true, msg: ''};
 
     for(let t = 0; t < uploadLimit; t++) {
         let reader = new FileReader();
@@ -66,9 +68,9 @@ function readImages(input, async = null) {
             let parent      = currElement.parent('div');
             let placeHolder = parent.children('.placeholder');
             let clearImgBtn = parent.children('.remove');
-            currElement
-                .attr('src', res)
-                .width(30);
+            // currElement
+            //     .attr('src', res)
+            //     .width(30);
 
             parent.removeClass('empty').addClass('queued');
             fileArray[currElement.attr('id')] = res;
@@ -79,8 +81,9 @@ function readImages(input, async = null) {
             let url         = form.attr('action');
             let postdata = new FormData(form[0]);
 
-            ajaxPost(url, postdata, clearImgBtn.get(0)).done(function () {
-                img.attr('src', res).width(30);
+            ajaxPost(url, postdata, clearImgBtn.get(0), backend).done(function (data) {
+                currElement.attr('src', data.path).width(30);
+                parent.find('.check-mark').show(500);
             });
 
             uploadContainer.addClass("refresh");
@@ -90,6 +93,8 @@ function readImages(input, async = null) {
 
 
     }
+
+
 
 }
 
@@ -124,6 +129,7 @@ function clearImage(input, async = null) {
     fileArray[img.attr('id')] = null;
     placeHolder.show();
     clearImgBtn.hide();
+    parent.children('.fa-check').hide(1000);
 
 
     if(async) {
@@ -150,8 +156,7 @@ $('.create-service-previous-step').on('click', function () {
     step2.fadeOut(500);
 });
 
-function ajaxPost(route, formDataObj, clearImageObj) {
-    loadingPhoto.show(500);
+function ajaxPost(route, formDataObj, clearImageObj, backend = null) {
     return $.ajax({
         url: route,
         type: 'POST',
@@ -159,9 +164,13 @@ function ajaxPost(route, formDataObj, clearImageObj) {
         async: true,
         success: function (data, status, xhr) {
             loadingPhoto.hide();
-            sendSuccess(xhr.responseJSON.msg);
+            if(!backend) {
+                sendSuccess(xhr.responseJSON.msg);
+            }
         },
         error: function (xhr, status, msg) {
+            backend.success = false;
+            backend.msg     = xhr.responseJSON.msg;
             loadingPhoto.hide();
             clearImage(clearImageObj);
             sendWarning(xhr.responseJSON.msg);
