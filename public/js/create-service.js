@@ -8,9 +8,12 @@ $('.trigger-add-gallery-photos').click(function(e){
 
 let fileArray = {};
 
+let uploadContainer = $('.photo-upload-container');
+
 function readFeaturedImg(input, async = null) {
-    console.log("got it");
+
     if(input.files[0]) {
+        console.log("got it");
         let reader = new FileReader();
         reader.onload = function (e) {
             let res         = reader.result;
@@ -18,29 +21,34 @@ function readFeaturedImg(input, async = null) {
             let parent      = img.parent('div');
             let placeHolder = parent.children('.placeholder');
             let clearImgBtn = parent.children('.remove');
-            img.attr('src', res).width(30);
+            if(!async) {
+                img.attr('src', res).width(30);
+            }
 
             fileArray[img.attr('id')] = res;
             clearImgBtn.show();
             placeHolder.hide();
 
             if(async) {
-                let form        = $('.featured-photo-form');
+                let form        = $(input).parent('form');
                 let url         = form.attr('action');
-                let postdata    = form.serialize();
-                $.post(url, postdata)
-                    .done(function (msg) {
-                        sendSuccess(msg);
-                    }).fail(function (msg) {
-                    clearImage(input);
-                    sendWarning(msg);
+                let postdata = new FormData(form[0]);
+
+                ajaxPost(url, postdata, clearImgBtn.get(0)).done(function () {
+                    img.attr('src', res).width(30);
                 });
+
+
             }
+
+            uploadContainer.addClass("refresh");
         };
 
         reader.readAsDataURL(input.files[0]);
 
         $('.create-service-next-step').prop('disabled', false);
+    } else {
+        console.log("nope");
     }
 }
 
@@ -67,18 +75,15 @@ function readImages(input, async = null) {
             clearImgBtn.show();
             placeHolder.hide();
 
-            if(async) {
-                let form        = $('.gallery-photos-form');
-                let url         = form.attr('action');
-                let postdata    = form.serialize();
-                $.post(url, postdata)
-                  .done(function (data) {
-                    sendSuccess(data);
-                }).fail(function (data) {
-                    clearImage(input);
-                    sendWarning(data);
-                });
-            }
+            let form        = $(input).parent('form');
+            let url         = form.attr('action');
+            let postdata = new FormData(form[0]);
+
+            ajaxPost(url, postdata, clearImgBtn.get(0)).done(function () {
+                img.attr('src', res).width(30);
+            });
+
+            uploadContainer.addClass("refresh");
         };
 
         reader.readAsDataURL(input.files[t]);
@@ -89,11 +94,27 @@ function readImages(input, async = null) {
 }
 
 function clearImage(input, async = null) {
-    let imgId       = $(input).attr('data-target');
+    let dis         = $(input);
+    let imgId       = dis.attr('data-target');
     let img         = $(imgId);
     let parent      = img.parent('div');
     let placeHolder = parent.children('.placeholder');
     let clearImgBtn = parent.children('.remove');
+    if(dis.hasClass('remove-featured-photo')) {
+        let fpFormInput = document.getElementById('featured-photo');
+        fpFormInput.value = '';
+        if(fpFormInput.value){
+            fpFormInput.type = "text";
+            fpFormInput.type = "file";
+        }
+    } else if(dis.hasClass('remove-gallery-photo')) {
+        let gpFormInput = document.getElementById('gallery-photos');
+        gpFormInput.value = '';
+        if(gpFormInput.value){
+            gpFormInput.type = "text";
+            gpFormInput.type = "file";
+        }
+    }
     if(!img.hasClass('featured-photo-temp')) {
         parent.removeClass('queued').addClass('empty');
     } else {
@@ -103,7 +124,7 @@ function clearImage(input, async = null) {
     fileArray[img.attr('id')] = null;
     placeHolder.show();
     clearImgBtn.hide();
-    console.log(fileArray);
+
 
     if(async) {
         let targetForm  = $(input).attr('target-form');
@@ -128,3 +149,25 @@ $('.create-service-previous-step').on('click', function () {
     step1.fadeIn(700);
     step2.fadeOut(500);
 });
+
+function ajaxPost(route, formDataObj, clearImageObj) {
+    loadingPhoto.show(500);
+    return $.ajax({
+        url: route,
+        type: 'POST',
+        data: formDataObj,
+        async: true,
+        success: function (data, status, xhr) {
+            loadingPhoto.hide();
+            sendSuccess(xhr.responseJSON.msg);
+        },
+        error: function (xhr, status, msg) {
+            loadingPhoto.hide();
+            clearImage(clearImageObj);
+            sendWarning(xhr.responseJSON.msg);
+        },
+        cache: false,
+        contentType: false,
+        processData: false
+    });
+}

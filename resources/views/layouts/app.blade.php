@@ -9,7 +9,7 @@
     <title>Otruvez</title>
 
     <!-- PLUGINS CSS STYLE -->
-    <script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
+    {{--<script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>--}}
     <!-- Bootstrap -->
     <link href="{{baseUrlConcat('/classimax/plugins/bootstrap/dist/css/bootstrap.min.css')}}" rel="stylesheet">
     <!-- Font Awesome -->

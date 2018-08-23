@@ -1,11 +1,8 @@
 /**
  * Created by macbook on 11/9/17.
  */
-$('.show-sm-modal').on('click', function(){
-    var target = $(this).attr('data-modal-target');
-    $(target).fadeIn(500);
-    console.log(target);
-});
+let currentLocation = window.location.href;
+let loadingPhoto = $('#loading-photo');
 
 $('#searchField').keyup(function(event) {
     if($(this).val().trim() == '' || $(this).val().length < 2) {
@@ -19,8 +16,18 @@ $('#searchField').keyup(function(event) {
     }
 });
 
+$('.show-sm-modal').on('click', function(){
+    var target = $(this).attr('data-modal-target');
+    $(target).fadeIn(500);
+    console.log(target);
+});
+
 $('.hide-sm-modal').on('click', function(){
     $('.sm-modal').hide(500);
+
+    if($(this).parents('.sm-modal').hasClass('refresh')) {
+        window.location.href = currentLocation;
+    }
 });
 
 $('.sm-modal').on('click', function(e){
@@ -28,6 +35,9 @@ $('.sm-modal').on('click', function(e){
         return;
     }
     $(this).hide(500);
+    if($(this).hasClass('refresh')) {
+        window.location.href = currentLocation;
+    }
 });
 
 $('.has-business-hours').on('change', function(){

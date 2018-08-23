@@ -12,9 +12,11 @@ use App\Rating;
 use App\S3FolderTypes;
 use App\Subscription;
 use App\User;
+use Elasticsearch\Common\Exceptions\BadRequest400Exception;
 use Exception;
 use Faker\Provider\cs_CZ\DateTime;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Elasticsearch\Client;
@@ -159,9 +161,8 @@ class PlanController extends Controller
 
     }
 
-    public function updateFeaturedPhoto(Request $request, $id, $firstTime = null)
+    public function updateFeaturedPhoto(Request $request, $id)
     {
-        var_dump($request->all()); return;
         if(!empty($request)) {
             $file = $request->file('featured_photo');
             $path = $this->photoClient->store($file, S3FolderTypes::PLAN_FEATURED_PHOTO);
@@ -174,12 +175,19 @@ class PlanController extends Controller
                 $plan->save();
             } catch (Exception $e) {
                 $this->photoClient->unlink($path);
+                return Response::create([
+                    'msg' => sprintf("Upload failed: %s", $e->getMessage())
+                ], 400);
             }
 
-            return $firstTime ? true : redirect("/plan/managePlans")->with('successMessage',"Image uploaded successfully!");
+            return Response::create([
+                'msg' => sprintf("Upload successful")
+            ], 200);
         }
 
-        return $firstTime ? false : redirect("/plan/managePlans")->with('warningMessage',"Empty request");
+        return Response::create([
+            'msg' => sprintf("Upload failed: Request is empty")
+        ], 400);
     }
 
     public function updatePlan(Request $request, $id)
@@ -284,6 +292,7 @@ class PlanController extends Controller
     }
 
     public function updateGalleryPhotos(Request $request, $id) {
+        echo 1; return;
         $plan = Plan::find($id);
         $galleryCount = count($plan->photos);
         if($galleryCount >= self::MAX_GALLERY_COUNT) {
