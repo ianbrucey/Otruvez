@@ -21,7 +21,7 @@
                                 <span class="fa fa-photo fa-2x placeholder" id="trigger-add-featured-photo" data-target="#featured-photo-{{$plan->id}}" style="display: {{!empty($plan->featured_photo_path) ? 'none' : ''}}"></span>
                                 <img src="{{!empty($plan->featured_photo_path) ? getImage($plan->featured_photo_path) : ''}}" id="featured-photo-temp-{{$plan->id}}" class="featured-photo-temp-{{$plan->id}}" width="40" data-lity>
                                 <br>
-                                <span class="fa fa-close remove text-danger remove-featured-photo {{!empty($plan->featured_photo_path) ? '' : 'hide'}}" data-target="#featured-photo-temp" onclick="clearImage(this)">
+                                <span class="fa fa-close remove text-danger remove-featured-photo {{!empty($plan->featured_photo_path) ? '' : 'hide'}}" data-target="#featured-photo-temp->{{$plan->id}}" onclick="clearImage(this)">
                                     <span class="theme-color"></span>
                                 </span>
                             </div>

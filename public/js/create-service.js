@@ -67,7 +67,7 @@ function readImages(input, async = null) {
         let reader = new FileReader();
         reader.onload = function (e) {
             let res         = reader.result;
-            let currElement = empty.eq(t).children('img');
+            let currElement = empty.eq(t).children('img'); // gotta look here to fix the bug
             let parent      = currElement.parent('div');
             let placeHolder = parent.children('.placeholder');
             let clearImgBtn = parent.children('.remove');
@@ -134,7 +134,7 @@ function clearImage(input, async = false) {
             gpFormInput.type = "file";
         }
     }
-    if(!img.hasClass('featured-photo-temp')) {
+    if(!img.hasClass('featured-photo-temp-' + planId)) {
         parent.removeClass(queuedClass).addClass(emptyClass);
     } else {
         $('.create-service-next-step').prop('disabled', true);
