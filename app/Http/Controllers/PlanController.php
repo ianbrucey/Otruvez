@@ -204,7 +204,7 @@ class PlanController extends Controller
         try {
                 $path = $this->photoClient->store($photo, S3FolderTypes::PLAN_GALLERY_PHOTO);
 
-                DB::table('photos')->insert([
+                $newPhoto = Photo::create([
                     'plan_id'   => $plan->id,
                     'user_id'   => Auth::id(),
                     'type'      => self::PHOTO_TYPE,
@@ -212,8 +212,9 @@ class PlanController extends Controller
                 ]);
 
                 return Response::create([
-                    'path' => getImage($path),
-                    'msg'   => 'upload successful'
+                    'path'          => getImage($path),
+                    'deleteRoute'   => sprintf("/plan/galleryPhoto/%s",$newPhoto->id),
+                    'msg'           => 'upload successful'
                 ], 200);
 
         } catch (Exception $e) {
@@ -331,10 +332,18 @@ class PlanController extends Controller
 
     public function deleteGalleryPhoto(Request $request, $id)
     {
-        $photo = Photo::find($id);
-        $this->photoClient->unlink($photo->path);
-        $photo->delete();
-        return redirect("/plan/managePlans")->with('infoMessage',"Image removed successfully");
+        try {
+            $photo = Photo::find($id);
+            $this->photoClient->unlink($photo->path);
+            $photo->delete();
+        } catch (Exception $e) {
+            return Response::create([
+                'msg'   => 'Delete unsuccessful.'
+            ], 400);
+        }
+        return Response::create([
+            'msg'           => 'image deleted successfully'
+        ], 201);
     }
 
     public function updateEsIndex(Plan $plan, Client $es)

@@ -418,3 +418,7 @@ textarea {
 .sell-with-o-section:nth-child(even) .sect-message {
     color: #4cb996;
 }
+
+.small-spinner, .check-mark {
+    display: none;
+}
