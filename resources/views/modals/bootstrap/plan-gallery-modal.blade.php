@@ -12,19 +12,18 @@
                     <div class="modal-body">
                         <div class="plan-preview-photo">
                             <p class="text-center">*click photos to enlarge*</p>
-                            <div class="text-center">Featured photo<br><p class="text-danger">*required*</p></div>
+                            <div class="text-center">Featured photo</div>
                             {{--FEATURED PHOTO START--}}
-                            <div class="text-center p-3" data-id="{{$plan->id}}" style="border-radius: .3em;">
-                                <p class="theme-color trigger-add-featured-photo hide">update</p>
+                            <div class="text-center p-2" data-id="{{$plan->id}}" style="border-radius: .3em;">
+
                                 <span class="fa fa-spinner fa-spin theme-color small-spinner"></span>
                                 <span class="fa fa-check theme-color check-mark"></span><br>
                                 <span class="fa fa-photo fa-2x placeholder" id="trigger-add-featured-photo" data-target="#featured-photo-{{$plan->id}}" style="display: {{!empty($plan->featured_photo_path) ? 'none' : ''}}"></span>
                                 <img src="{{!empty($plan->featured_photo_path) ? getImage($plan->featured_photo_path) : ''}}" id="featured-photo-temp-{{$plan->id}}" class="featured-photo-temp-{{$plan->id}}" width="40" data-lity>
-                                <br>
-                                <span class="fa fa-close remove text-danger remove-featured-photo {{!empty($plan->featured_photo_path) ? '' : 'hide'}}" data-target="#featured-photo-temp->{{$plan->id}}" onclick="clearImage(this)">
-                                    <span class="theme-color"></span>
-                                </span>
+                                <br><br>
+                                <p class="trigger-add-featured-photo" data-target="#featured-photo-{{$plan->id}}"> <u>update</u></p>
                             </div>
+
 
                             <hr>
                             {{--FEATURED PHOTO END--}}

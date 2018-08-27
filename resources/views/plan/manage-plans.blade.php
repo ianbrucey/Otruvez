@@ -34,18 +34,21 @@
                             <h6><strong>{{$plan->stripe_plan_name}}</strong></h6>
                             {!! $plan->featured_photo_path == null ? '<p class="text-danger"><span class="fa fa-warning text-danger"></span> Service inactive. please add a featured photo</p>' : '<p class="text-info">active</p>'!!}
                             {{--If photo is null, show span element, else show the actual photo--}}
-                            <div class="featured-photo-container">
+                            <div class="general-photo-container">
                                 <button class="btn-sm theme-background text-white show-sm-modal m-1" data-toggle="modal" data-modal-target="#plan-gallery-{{$plan->id}}" >Edit Photos</button>
                                 <p>Featured Photo</p>
                                 @if(!$plan->featured_photo_path)
                                     <span class="fa fa-photo fa-3x text-danger"></span>
                                 @else
-                                    <img src="{{getImage($plan->featured_photo_path)}}" width="48" height="48" style="display: inline-block" href="{{getImage($plan->featured_photo_path)}}" data-lity>
+                                    {{--<img src="{{getImage($plan->featured_photo_path)}}" width="48" height="48" style="display: inline-block" href="{{getImage($plan->featured_photo_path)}}" data-lity>--}}
+                                    <div class="photo-preview">
+                                        <img src="{{getImage($plan->featured_photo_path)}}"  style="width: 100%; vertical-align: middle !important;" href="" data-lity>
+                                    </div>
                                 @endif
                             </div>
 
                             {{--The div below should either show a photo, or the span element--}}
-                            <div class=" featured-photo-container" style="margin-bottom: -10px">
+                            <div class="general-photo-container" style="margin-bottom: -10px">
                                 {{--<hr>--}}
                                 <p>{{count($plan->photos)}}/4 gallery photos</p>
                                 @for($i = 0; $i < $maxGalleryCount; $i++)
@@ -54,7 +57,12 @@
                                         $path    = $hasGalleryPhoto ? $plan->photos[$i]->path : '';
                                     @endphp
                                     @if($hasGalleryPhoto)
-                                        <img src="{{getImage($path)}}" width="40" height="40" style="display: inline-block; margin-top: -25px" href="{{ getImage($path) }}" data-lity>
+                                        {{--<div style="width: 40px; height: 40px; background: url({{getImage($path)}}) no-repeat; background-size: contain; vertical-align: middle !important; border-radius: 5%; border: 1px solid purple; display: inline-block" href="{{getImage($path)}}" data-lity>--}}
+
+                                        {{--</div>--}}
+                                        <div class="photo-preview">
+                                            <img src="{{ getImage($path) }}"  style="width: 100%; vertical-align: middle !important;" href="" data-lity>
+                                        </div>
                                     @else
                                         <span class="fa fa-2x fa-picture-o"></span>
                                     @endif
