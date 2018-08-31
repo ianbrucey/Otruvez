@@ -21,7 +21,7 @@
                                 <span class="fa fa-photo fa-2x placeholder" id="trigger-add-featured-photo" data-target="#featured-photo-{{$plan->id}}" style="display: {{!empty($plan->featured_photo_path) ? 'none' : ''}}"></span>
                                 <img src="{{!empty($plan->featured_photo_path) ? getImage($plan->featured_photo_path) : ''}}" id="featured-photo-temp-{{$plan->id}}" class="featured-photo-temp-{{$plan->id}}" width="40" data-lity>
                                 <br><br>
-                                <p class="trigger-add-featured-photo" data-target="#featured-photo-{{$plan->id}}"> <u>update</u></p>
+                                <span class="trigger-add-featured-photo btn-sm btn-danger" data-target="#featured-photo-{{$plan->id}}"> change featured photo</span>
                             </div>
 
 
@@ -72,5 +72,5 @@
 </div>
 
 @section('footer')
-    <script src="{{ baseUrlConcat('/js/create-service.js') }}"></script>
+    <script src="{{ baseUrlConcat('/js/edit-service.js') }}"></script>
 @endsection

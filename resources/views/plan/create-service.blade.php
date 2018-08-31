@@ -13,7 +13,5 @@
 
 
 @section('footer')
-    <script src="{{ baseUrlConcat('/js/index.js') }}"></script>
-    <script src="{{ baseUrlConcat('/js/dropzone.js') }}"></script>
     <script src="{{ baseUrlConcat('/js/create-service.js') }}"></script>
 @endsection

@@ -87,19 +87,9 @@ class PlanController extends Controller
     public function createServicePlan(Request $request)
     {
 
-//        $galleryPhotos = $request->file('gallery_photos');
-//        $featuredPhoto = $request->file('featured_photo');
-
-//        if(!$request->hasFile('featured_photo')){
-//            return redirect('/plan/managePlans')->with('errorMessage',"Featured photo is required");
-//        }
-//        foreach($request->file('gallery_photos') as $file)
-//        {
-//            $name = $file->getClientOriginalName();
-//            echo sprintf("%s <br>", $name);
-//        }
-//        return "<br> done.";
-
+        $galleryPhotos = $request->file('gallery_photos');
+        $featuredPhoto = $request->file('featured_photo');
+        
         setStripeApiKey('secret');
         $es = $this->esClient;
 
@@ -152,20 +142,28 @@ class PlanController extends Controller
             'featured_photo_path' => null,
         ]);
 
-//         $this->updateFeaturedPhoto($request, $plan->id, true);
-//         $this->updateGalleryPhotos();
+        $msg = 'Service created successfully! ';
+        try {
+            $this->updateFeaturedPhoto($request, $plan->id, $featuredPhoto);
+
+            foreach ($galleryPhotos as $file) {
+                $this->updateGalleryPhotos($request, $plan->id, $file);
+            }
+        } catch (Exception $e) {
+            $msg .= " Warning: there was a problem with one or more of your uploads";
+        }
 
         $this->updateEsIndex($plan, $es);
 
-        return redirect('/plan/managePlans')->with('successMessage','Service created successfully!');
+        return redirect('/plan/managePlans')->with('successMessage',$msg);
 
     }
 
-    public function updateFeaturedPhoto(Request $request, $id)
+    public function updateFeaturedPhoto(Request $request, $id, $file = null)
     {
         if(!empty($request)) {
-            $file = $request->file('featured_photo');
-            $path = $this->photoClient->store($file, S3FolderTypes::PLAN_FEATURED_PHOTO);
+            $photo = $file ?: $request->file('featured_photo');
+            $path = $this->photoClient->store($photo, S3FolderTypes::PLAN_FEATURED_PHOTO);
             try {
                 $plan = Plan::where('user_id', Auth::id())->where('id',$id)->first();
                 if ($plan->featured_photo_path) {
@@ -190,7 +188,7 @@ class PlanController extends Controller
         ], 400);
     }
 
-    public function updateGalleryPhotos(Request $request, $id) {
+    public function updateGalleryPhotos(Request $request, $id, $file = null) {
 
         $plan = Plan::find($id);
         $galleryCount = count($plan->photos);
@@ -200,7 +198,7 @@ class PlanController extends Controller
             ], 400);
         }
 
-        $photo = $request->file('gallery_photos');
+        $photo = $file ?: $request->file('gallery_photos');
         try {
                 $path = $this->photoClient->store($photo, S3FolderTypes::PLAN_GALLERY_PHOTO);
 

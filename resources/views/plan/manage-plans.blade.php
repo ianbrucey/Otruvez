@@ -17,10 +17,10 @@
     <div class="container">
         <div class="row">
             @if(count($plans) < 10 || true)
-                <div class="col-md-6 offset-md-3 plan-preview-card my-3 new-plan-card show-sm-modal" data-modal-target="#createPlan">
-                    <h4><strong>Click here to create a new service</strong></h4>
-                    <span class="fa fa-plus fa-2x"></span>
-                </div>
+                <a class="col-md-6 offset-md-3 plan-preview-card my-3 new-plan-card" href="/plan/createService">
+                    <p class="text-white">Create a new service</p>
+                    <span class="fa fa-plus"></span>
+                </a>
             @endif
         </div>
     </div>
