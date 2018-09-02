@@ -1,3 +1,5 @@
+
+
 $('#trigger-add-featured-photo').click(function(e){
     $('#featured-photo').trigger('click');
 });
@@ -9,23 +11,27 @@ $('.trigger-add-gallery-photos').click(function(e){
 let fileArray = {};
 
 function readFeaturedImg(input) {
-    console.log("got it");
-    if(input.files[0]) {
+    let file = input.files[0];
+    if(file) {
         let reader = new FileReader();
-        reader.onload = function (e) {
-            let res         = reader.result;
+        reader.onloadend = function (e) {
+            let res         = e.currentTarget .result;
             let img         = $('#featured-photo-temp');
             let parent      = img.parent('div');
             let placeHolder = parent.children('.placeholder');
             let clearImgBtn = parent.children('.remove');
-            img.attr('src', res).width(30);
 
+            if(!isValidImage(file)) {
+                return false;
+            }
+
+            img.attr('src', res).width(30);
             fileArray[img.attr('id')] = res;
             clearImgBtn.show();
             placeHolder.hide();
         };
 
-        reader.readAsDataURL(input.files[0]);
+        reader.readAsDataURL(file);
 
         $('.create-service-next-step').prop('disabled', false);
     }
@@ -39,15 +45,20 @@ function readImages(input) {
 
     for(let t = 0; t < uploadLimit; t++) {
         let reader = new FileReader();
+        let currFile = input.files[t];
+
         reader.onload = function (e) {
             let res         = reader.result;
             let currElement = empty.eq(t).children('img');
             let parent      = currElement.parent('div');
             let placeHolder = parent.children('.placeholder');
             let clearImgBtn = parent.children('.remove');
-            currElement
-                .attr('src', res)
-                .width(30);
+
+            if(!isValidImage(currFile)) {
+                return false;
+            }
+
+            currElement.attr('src', res).width(30);
 
             parent.removeClass('empty').addClass('queued');
             fileArray[currElement.attr('id')] = res;
@@ -55,7 +66,7 @@ function readImages(input) {
             placeHolder.hide();
         };
 
-        reader.readAsDataURL(input.files[t]);
+        reader.readAsDataURL(currFile);
 
 
     }

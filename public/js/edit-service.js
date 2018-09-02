@@ -7,11 +7,10 @@ $('.trigger-add-gallery-photos, #trigger-add-featured-photo, .trigger-add-featur
 let fileArray = {};
 
 let uploadContainer = $('.photo-upload-container');
-let deleteAction    = "/plan/galleryPhoto/";
 
 function readFeaturedImg(input, async = null, planId) {
-
-    if(input.files[0]) {
+    let file = input.files[0];
+    if(file) {
         let reader = new FileReader();
         reader.onload = function (e) {
             let res         = reader.result;
@@ -19,6 +18,11 @@ function readFeaturedImg(input, async = null, planId) {
             let parent      = img.parent('div');
             let placeHolder = parent.children('.placeholder');
             let clearImgBtn = parent.children('.remove');
+
+            if(!isValidImage(file)) {
+                return false;
+            }
+
             if(!async) {
                 img.attr('src', res).width(30);
             }
@@ -43,7 +47,7 @@ function readFeaturedImg(input, async = null, planId) {
             uploadContainer.addClass("refresh");
         };
 
-        reader.readAsDataURL(input.files[0]);
+        reader.readAsDataURL(file);
 
         $('.create-service-next-step').prop('disabled', false);
     } else {
@@ -61,7 +65,8 @@ function readImages(input, async = null) {
     let backend     = {success: false, msg: ''};
 
     for(let t = 0; t < uploadLimit; t++) {
-        if(!input.files[t]) {
+        let currFile = input.files[t];
+        if(!currFile) {
             continue;
         }
         let reader = new FileReader();
@@ -72,6 +77,11 @@ function readImages(input, async = null) {
             let placeHolder = parent.children('.placeholder');
             let clearImgBtn = parent.children('.remove');
             let deleteForm  = parent.children('form');
+
+            if(!isValidImage(currFile)) {
+                return false;
+            }
+
             currElement.attr('src', res).width(30);
 
             parent.removeClass(emptyClass).addClass(queuedClass);
@@ -80,14 +90,16 @@ function readImages(input, async = null) {
             placeHolder.hide();
 
             if(async) {
-                let form        = $(input).parent('form');
-                let url         = form.attr('action');
+                let form     = $(input).parent('form');
+                let url      = form.attr('action');
                 let postdata = new FormData(form[0]);
-                postdata.append("gallery_photos", input.files[t]);
-                parent.find('.small-spinner').css('display','inline-block');
+                let spinner  =  parent.find('.small-spinner');
+
+                postdata.append("gallery_photos", currFile);
+                spinner.css('display','inline-block');
                 ajaxPost(url, postdata, clearImgBtn.get(0), backend).done(function (data) {
                     deleteForm.attr('action', data.deleteRoute);
-                    parent.find('.small-spinner').hide();
+                    spinner.hide();
                     parent.find('.check-mark').show(500);
                 });
 
@@ -95,8 +107,7 @@ function readImages(input, async = null) {
             uploadContainer.addClass("refresh");
         };
 
-        reader.readAsDataURL(input.files[t]);
-
+        reader.readAsDataURL(currFile);
 
     }
 

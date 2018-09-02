@@ -8,12 +8,14 @@
                 <div class="modal-header">
                     <h4 class="modal-title">Service details</h4>
                 </div>
-                <form method="post" action="/plan/createPlan" class="form-group-md" id="create-plan-form" enctype="multipart/form-data">
+                <form method="post" action="/plan/createPlan" class="form-group-md validate-create-service" id="create-plan-form" enctype="multipart/form-data">
                     <div class="modal-body">
                         <label>Plan Name</label>
                         <input type="text" name="stripe_plan_name" class="form-control" placeholder="Plan Name">
+
+                        <hr>
                         <label>
-                            <a data-toggle="collapse" data-target="#pricing-info" class="text-danger">*pricing is final. click here for more info*</a>
+                            <a data-toggle="collapse" data-target="#pricing-info" id="#pricing-info" class="text-danger">*Pricing is final. At least one price required.<br> click here for more info*</a>
                         </label><br>
                         <p id="pricing-info" class="collapse">
                             To protect our customers, we do not allow businesses to update the pricing of their services.
@@ -21,9 +23,9 @@
                             customers of the coming update and to then create a new plan to replace the old one.
                         </p>
                         <label>Monthly Price</label>
-                        <input type="number" name="month_price" class="form-control" placeholder="Monthly Price">
+                        <input type="number" name="month_price" id="month_price" class="form-control" placeholder="Monthly Price">
                         <label>Annual Price</label>
-                        <input type="number" name="year_price" class="form-control" placeholder="Annual Price">
+                        <input type="number" name="year_price" id="year_price" class="form-control" placeholder="Annual Price">
 
 
 

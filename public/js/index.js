@@ -3,6 +3,9 @@
  */
 let currentLocation = window.location.href;
 let loadingPhoto = $('#loading-photo');
+let submittingLoader = $('#submitting');
+const validFileExtensions = ['jpeg' , 'jpg', 'png', 'bmp', 'gif'];
+const maxUploadSize = 1024000;
 
 $('#searchField').keyup(function(event) {
     if($(this).val().trim() == '' || $(this).val().length < 2) {
@@ -300,6 +303,56 @@ $(document).ready(function () {
         }
     });
 
+    $('.validate-create-service').validate({
+        rules: {
+            stripe_plan_name: {
+                required: true
+            },
+            month_price: {
+                digits: true
+            },
+            year_price: {
+                digits: true
+            },
+            description: {
+                required: true,
+                minlength: 10
+            }
+        },
+        invalidHandler: function(event, validator) {
+            // 'this' refers to the form
+            var errors = validator.numberOfInvalids();
+            if (errors) {
+                var message = errors == 1
+                    ? 'You missed 1 field. It has been highlighted'
+                    : 'You missed ' + errors + ' fields. They have been highlighted';
+                $("div.error span").html(message);
+                $("div.error").show().css('color','red');
+            } else {
+                $("div.error").hide();
+            }
+        },
+        submitHandler: function (form) {
+            $('#submitting').fadeIn(500);
+            if(!$('#month_price').val() && !$('#year_price').val()) {
+                alert("At least one price is required");
+                submittingLoader.hide();
+                $("#price-msg").removeClass("theme-color").addClass("text-danger");
+                scrollToElement('#pricing-info');
+                return false;
+            }
+            if(!$('#featured-photo').val()) {
+                sendWarning("A featured photo is required. Please add one to proceed.");
+                $('#create-service-step1').show();
+                $('#create-service-step2').hide();
+                $('.create-service-next-step').prop('disabled', true);
+                submittingLoader.hide();
+                return false;
+            }
+            form.submit();
+        }
+    });
+
 });
 
 // may keep for smoother transition
@@ -334,4 +387,24 @@ function sendSuccess(msg) {
             }
         }
     });
+}
+
+function scrollToElement(elId) {
+    $('html, body').animate({
+        scrollTop: ($(elId).offset().top)
+    },500);
+}
+
+function isValidImage(file) {
+    let valid = true;
+    let t = file.type.split('/').pop().toLowerCase();
+    if ($.inArray(t, validFileExtensions) < 0) {
+        sendWarning('Please select a valid image file: <b class="text-danger">' + file.name + '<b>');
+        valid = false;
+    }
+    if (file.size > maxUploadSize) {
+        sendWarning('Max Upload size is 1MB only: <b class="text-danger">' + file.name + '<b>');
+        valid = false;
+    }
+    return valid;
 }

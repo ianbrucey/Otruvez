@@ -16,8 +16,8 @@
     <!-- Font Awesome -->
     <link href="{{baseUrlConcat('/classimax/plugins/font-awesome/css/font-awesome.min.css')}}" rel="stylesheet">
     <!-- Owl Carousel -->
-    <link href="{{baseUrlConcat('/classimax/plugins/slick-carousel/slick/slick.css')}}" rel="stylesheet">
-    <link href="{{baseUrlConcat('/classimax/plugins/slick-carousel/slick/slick-theme.css')}}" rel="stylesheet">
+{{--    <link href="{{baseUrlConcat('/classimax/plugins/slick-carousel/slick/slick.css')}}" rel="stylesheet">--}}
+{{--    <link href="{{baseUrlConcat('/classimax/plugins/slick-carousel/slick/slick-theme.css')}}" rel="stylesheet">--}}
     <!-- Fancy Box -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/lity/2.3.0/lity.min.css">
     <!-- CUSTOM CSS -->
