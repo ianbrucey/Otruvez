@@ -1,9 +1,18 @@
 <div class="row" id="create-service-step1">
     <div class="col-md-8 offset-md-2">
 
-        <div class="text-center m-4"> <button class="btn btn-sm theme-background create-service-next-step" data-hide="#create-service-step1" data-show="#create-service-step2" disabled>Next Step</button></div>
+        <div class="text-center m-4"> <button class="btn btn-sm theme-background create-service-next-step" data-hide="#create-service-step1" data-show="#create-service-step2" >Next Step</button></div>
 
         <div id="" class=" card" role="dialog">
+            @if ($errors->any())
+                <div class="alert alert-danger">
+                    <ul>
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
             <!-- Modal content-->
             <div class="modal-content col-md-10 offset-md-1">
                 <div class="modal-header">

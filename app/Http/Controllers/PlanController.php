@@ -89,7 +89,14 @@ class PlanController extends Controller
 
         $galleryPhotos = $request->file('gallery_photos');
         $featuredPhoto = $request->file('featured_photo');
-        
+
+        $this->validate($request, [
+            'stripe_plan_name'  => 'required',
+            'description'       => 'required',
+            'featured_photo'    => 'required|image',
+            'gallery_photos.*'  => 'nullable|image'
+        ]);
+
         setStripeApiKey('secret');
         $es = $this->esClient;
 
@@ -162,6 +169,11 @@ class PlanController extends Controller
     public function updateFeaturedPhoto(Request $request, $id, $file = null)
     {
         if(!empty($request)) {
+
+            $this->validate($request, [
+                'featured_photo'    => 'required|image'
+            ]);
+
             $photo = $file ?: $request->file('featured_photo');
             $path = $this->photoClient->store($photo, S3FolderTypes::PLAN_FEATURED_PHOTO);
             try {
@@ -198,7 +210,19 @@ class PlanController extends Controller
             ], 400);
         }
 
-        $photo = $file ?: $request->file('gallery_photos');
+        if(!$file) {
+            $this->validate($request, [
+                'gallery_photos'  => 'image'
+            ]);
+
+            $photo = $request->file('gallery_photos');
+        } else {
+            // in this case, its coming from createService and has already been validated
+            $photo = $file;
+        }
+
+
+
         try {
                 $path = $this->photoClient->store($photo, S3FolderTypes::PLAN_GALLERY_PHOTO);
 

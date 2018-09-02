@@ -36,7 +36,7 @@ function readFeaturedImg(input, async = null, planId) {
                 let url         = form.attr('action');
                 let postdata = new FormData(form[0]);
                 parent.children('.small-spinner').css('display','inline-block');
-                ajaxPost(url, postdata, clearImgBtn.get(0)).done(function () {
+                ajaxPost(url, postdata, clearImgBtn.get(0), true).done(function () {
                     img.attr('src', res).width(30);
                     parent.children('.fa-check').show(1000);
                 });
@@ -62,7 +62,6 @@ function readImages(input, async = null) {
     let queued      = $('.'+queuedClass);
     let empty       = $('.'+emptyClass);
     let uploadLimit = queued.length === 0 ? 4 : 4 - queued.length;
-    let backend     = {success: false, msg: ''};
 
     for(let t = 0; t < uploadLimit; t++) {
         let currFile = input.files[t];
@@ -97,7 +96,7 @@ function readImages(input, async = null) {
 
                 postdata.append("gallery_photos", currFile);
                 spinner.css('display','inline-block');
-                ajaxPost(url, postdata, clearImgBtn.get(0), backend).done(function (data) {
+                ajaxPost(url, postdata, clearImgBtn.get(0), false).done(function (data) {
                     deleteForm.attr('action', data.deleteRoute);
                     spinner.hide();
                     parent.find('.check-mark').show(500);
@@ -167,7 +166,7 @@ function clearImage(input, async = false) {
     }
 }
 
-function ajaxPost(route, formDataObj, clearImageObj, backend = null) {
+function ajaxPost(route, formDataObj, clearImageObj, featured = true) {
     $.ajaxSetup({
         headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -184,11 +183,9 @@ function ajaxPost(route, formDataObj, clearImageObj, backend = null) {
             $('.small-spinner').hide();
         },
         error: function (xhr, status, msg) {
-            backend.success = false;
-            backend.msg     = xhr.responseJSON.msg;
             loadingPhoto.hide();
             clearImage(clearImageObj);
-            sendWarning(xhr.responseJSON.msg);
+            sendWarning(featured ? xhr.responseJSON.featured_photo[0] : xhr.responseJSON.gallery_photos[0]);
             $('.small-spinner').hide();
         },
         cache: false,
