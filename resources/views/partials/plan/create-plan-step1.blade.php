@@ -11,25 +11,26 @@
                 </div>
                 <div class="modal-body">
                     <div class="plan-preview-photo">
+                        <p class="text-center"><label >*click photos to preview after uploading*</label></p>
                         <div class="text-center">Featured photo<br><p class="text-danger">*required*</p></div>
                         {{--FEATURED PHOTO START--}}
                         <div class="text-center p-3"  style="border-radius: .3em;">
                             <span class="fa fa-photo fa-2x placeholder" id="trigger-add-featured-photo" style=""></span>
-                            <img src="" id="featured-photo-temp" class="featured-photo-temp">
-                            <br>
+                            <img src="" id="featured-photo-temp" class="featured-photo-temp" data-lity>
+                            <br><br>
                             <span class="fa fa-close remove text-danger" data-target="#featured-photo-temp" onclick="clearImage(this)" style="display: none"></span>
                         </div>
 
                         <hr>
                         {{--FEATURED PHOTO END--}}
                         <div class="col-md-8 offset-md-2 p-0">
-                            <p class="text-center">Gallery photos<br>up to 4</p>
+                            <p class="text-center">Gallery photos<br>up to 4 at a time</p>
                             <div class="row">
                                 @for($i=0; $i < 4; $i++)
                                     <div class="col-3 text-center empty ">
                                         <span class="fa fa-2x fa-photo placeholder trigger-add-gallery-photos" style=""></span>
-                                        <img src="" id="gallery-photo-temp-{{$i}}">
-                                        <br>
+                                        <img src="" id="gallery-photo-temp-{{$i}}" data-lity>
+                                        <br><br>
                                         <span class="fa fa-close remove text-danger" data-target="#gallery-photo-temp-{{$i}}" onclick="clearImage(this)" style="display: none"></span>
                                     </div>
                                 @endfor

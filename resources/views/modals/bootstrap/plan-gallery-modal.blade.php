@@ -1,6 +1,6 @@
 <div id="plan-gallery-{{$plan->id}}" class="sm-modal autoscroll photo-upload-container" role="dialog">
 
-    <div class="row" id="create-service-step1">
+    <div class="row" id="">
         <div class="col-md-8 offset-md-2">
 
             <div id="" class=" card" role="dialog">
@@ -37,7 +37,7 @@
                                             <span class="fa fa-check theme-color check-mark"></span><br>
                                             <span class="fa fa-2x fa-photo placeholder trigger-add-gallery-photos" data-target="#gallery-photos-{{$plan->id}}" style="display: {{ $hasPhoto ? 'none' : ''}}"></span>
                                             <img src="{{$hasPhoto ? getImage($plan->photos[$i]->path) : ''}}" id="gallery-photo-temp-{{$i}}" width="40" data-lity>
-                                            <br>
+                                            <br><br>
                                             <span class="fa fa-close remove text-danger remove-gallery-photo" data-target="#gallery-photo-temp-{{$i}}" onclick="clearImage(this, true)" style="display: {{isset($plan->photos[$i]) ? '' : 'none'}}"></span>
                                             <form class="hide" method="post" action="{{ $hasPhoto ? "/plan/galleryPhoto/".$plan->photos[$i]->id : ''}}">
                                                 {{csrf_field()}}
@@ -58,13 +58,13 @@
     </div>
 
     <form method="post" action="/plan/featuredPhoto/{{$plan->id}}" class="featured-photo-form text-center hide featured-photo-dz" id="plan-dropzone-{{$plan->id}}">
-        <input type="file" name="featured_photo" id="featured-photo-{{$plan->id}}" onchange="readFeaturedImg(this, true, {{$plan->id}})" style="visibility: hidden">
+        <input type="file" name="featured_photo" id="featured-photo-{{$plan->id}}" onchange="readFeaturedImg(this, true, {{$plan->id}})" accept="image/*" style="visibility: hidden">
         {{csrf_field()}}
         {{method_field("post")}}
     </form>
 
     <form class="gallery-photos-form hide" id="gallery-dropzone-{{$plan->id}}" method="post" action="/plan/galleryPhoto/{{$plan->id}}">
-        <input type="file" name="gallery_photos" id="gallery-photos-{{$plan->id}}" data-image-container="gallery-photo-container-{{$plan->id}}-" onchange="readImages(this, true)" style="visibility: hidden" multiple>
+        <input type="file" name="gallery_photos" id="gallery-photos-{{$plan->id}}" data-image-container="gallery-photo-container-{{$plan->id}}-" accept="image/*" min="1" max="4"  onchange="readImages(this, true)" style="visibility: hidden" multiple>
         {{csrf_field()}}
         {{method_field("post")}}
     </form>
