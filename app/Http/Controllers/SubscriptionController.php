@@ -104,6 +104,10 @@ class SubscriptionController extends Controller
         $business = Business::find($businessId);
         (new Notification())->sendSubscribedUserNotification($user,$business, $newStripeSubscription);
 
+        if($request->has('apiKey') && validatePortalParams($businessId, $smPlanId, $request->get('apiKey')) != null) {
+            return redirect()->to("https://www.google.com");
+        }
+
         return redirect('/subscription/subscribed')
             ->with('interval', $interval)
             ->with('price', $price)

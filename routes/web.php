@@ -237,3 +237,9 @@ Route::post('/account/deleteAccount', 'AccountController@deleteAccount');
 /** WEBHOOK ROUTES */
 Route::post('/stripeWebhook/failedPayment', 'WebhookController@failedPayment'); // [charge.failed , invoice.payment_failed]
 /** WEBHOOK ROUTES END */
+
+/** PORTAL ROUTES */
+Route::get('/portal/login/{businessId}/{stripeId}/{apiKey}/{customerEmail?}', 'PortalController@showLogin');
+Route::get('/portal/register/{businessId}/{stripeId}/{apiKey}/{customerEmail?}', 'PortalController@showRegister');
+Route::get('/portal/viewService/{businessId}/{stripeId}/{apiKey}', 'PortalController@showService');
+/** PORTAL ROUTES END */

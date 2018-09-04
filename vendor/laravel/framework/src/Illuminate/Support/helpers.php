@@ -1,5 +1,7 @@
 <?php
 
+use App\Business;
+use App\Plan;
 use Illuminate\Support\Arr;
 use Illuminate\Support\HtmlString;
 use Illuminate\Support\Str;
@@ -1251,6 +1253,25 @@ function truncateCardTitle($str){
 
 function baseUrlConcat($str) {
     return sprintf("%s%s",env('APP_URL'),$str);
+}
+
+function validatePortalParams($businessId ,$stripeId ,$apiKey) {
+
+    $arr = [];
+    $business = (new Business())->find($businessId);
+    $arr['business'] = $business;
+
+    if($business && $business->api_key == $apiKey) {
+        $plan = (new Plan())->find($stripeId);
+        $arr['plan'] = $plan;
+        if($plan && $plan->business_id == $business->id) {
+            return $arr;
+        } else {
+            return null;
+        }
+    } else {
+        return null;
+    }
 }
 
 const CUSTOMER_SERVICE_CONTACT_LIMIT = 5;

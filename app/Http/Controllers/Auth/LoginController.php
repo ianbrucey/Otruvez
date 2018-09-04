@@ -4,9 +4,14 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Illuminate\Http\Request;
 
 class LoginController extends Controller
 {
+    protected $redirectTo   = '/account';
+    protected $hasApiKey      = false;
+
+
     /*
     |--------------------------------------------------------------------------
     | Login Controller
@@ -20,20 +25,34 @@ class LoginController extends Controller
 
     use AuthenticatesUsers;
 
+
     /**
      * Where to redirect users after login.
      *
      * @var string
      */
-    protected $redirectTo = '/home';
+
 
     /**
      * Create a new controller instance.
      *
-     * @return void
+     * @param Request $request
      */
-    public function __construct()
+    public function __construct(Request $request)
     {
+
         $this->middleware('guest')->except('logout');
+
+        if($request->has('apiKey')) {
+            $businessId = $request->get('businessId');
+            $stripeId   = $request->get('stripeId');
+            $apiKey     = $request->get('apiKey');
+            $this->hasApiKey = true;
+            $paramsAreValid = validatePortalParams($businessId,$stripeId,$apiKey);
+            if($paramsAreValid) {
+                $this->redirectTo = sprintf("/portal/viewService/%s/%s/%s",$businessId,$stripeId,$apiKey);
+            }
+        }
+
     }
 }
