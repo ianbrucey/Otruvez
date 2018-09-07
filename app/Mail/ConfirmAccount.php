@@ -37,10 +37,10 @@ class ConfirmAccount extends Mailable
     public function build()
     {
 
-        $activateUrl = "/user/activateUserAccount";
-        $confirmAccountURL = sprintf("%s%s?email=%s&token=%s",env('APP_URL'),$activateUrl, $this->email,$this->token);
+//        $activateUrl = "/user/activateUserAccount";
+//        $confirmAccountURL = sprintf("%s%s?email=%s&token=%s",env('APP_URL'),$activateUrl, $this->email,$this->token);
         return $this->markdown('emails.account.confirm-account')
             ->with('name', $this->fname)
-            ->with('url', $confirmAccountURL);
+            ->with('token', $this->token);
     }
 }

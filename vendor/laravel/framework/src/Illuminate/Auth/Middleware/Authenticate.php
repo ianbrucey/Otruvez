@@ -38,7 +38,11 @@ class Authenticate
      */
     public function handle($request, Closure $next, ...$guards)
     {
-        $this->authenticate($guards);
+        $user = $this->authenticate($guards);
+
+        if ($user->activated != "1") {
+            return redirect('/registered');
+        }
 
         return $next($request);
     }

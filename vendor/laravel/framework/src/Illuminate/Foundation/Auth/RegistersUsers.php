@@ -30,9 +30,9 @@ trait RegistersUsers
     {
         $this->validator($request->all())->validate();
 
-        event(new Registered($user = $this->create($request->all())));
+        event(new Registered($user = $this->create($request->all(), $request)));
 
-//        $this->guard()->login($user);
+        $this->guard()->login($user);
 
         return $this->registered($request, $user)
                         ?: redirect($this->redirectPath());
@@ -57,6 +57,11 @@ trait RegistersUsers
      */
     protected function registered(Request $request, $user)
     {
-        //
+
+        if($user->activated != "1") {
+            return redirect('/registered');
+        }
+
+        return redirect('/home')->with("successMessage", "Registration successful! Now get subscribing");
     }
 }

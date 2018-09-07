@@ -23,7 +23,7 @@ class HomeController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth', ['except' => ['contactUs']]);
+        $this->middleware('auth', ['except' => ['contactUs', 'showRegistered']]);
     }
 
     private $maxResults = 25;
@@ -133,5 +133,14 @@ class HomeController extends Controller
 
         return redirect()->back()->with('successMessage', "Your message was sent successfully. We will respond to $email within 24 to 48 hours");
 
+    }
+
+    public function showRegistered() {
+
+        if(Auth::user()->activated == "1") {
+            return redirect('/home');
+        }
+
+        return view('registered');
     }
 }

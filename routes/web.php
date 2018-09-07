@@ -107,9 +107,7 @@ Route::post('/user/test', 'UserController@test');
 Route::get('/user/testView', 'UserController@testView');
 /** PLAN USER END */
 
-Route::get('/registered', function() {
-    return view('registered');
-});
+Route::get('/registered', 'HomeController@showRegistered');
 
 Route::get('/home', 'HomeController@index')->name('home');
 

@@ -34,7 +34,7 @@ trait AuthenticatesUsers
         $this->validateLogin($request);
 
         if($this->isAccountActive($request) == 0) {
-            return $this->sendFailedLoginResponse($request, false);
+            $this->redirectTo = "/registered";
         }
 
         // If the class is using the ThrottlesLogins trait, we can automatically throttle

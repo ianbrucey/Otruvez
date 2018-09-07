@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 
 class LoginController extends Controller
 {
-    protected $redirectTo   = '/account';
+    protected $redirectTo   = '/home';
     protected $hasApiKey      = false;
 
 

@@ -1,6 +1,27 @@
 @extends('layouts.app')
+@section('meta')
+    <script src="https://www.google.com/recaptcha/api.js?onload=onloadCallback&render=explicit"
+            async defer>
+    </script>
 
+@endsection
 @section('body')
+<script type="text/javascript">
+    let canSubmit = false;
+            window.onloadCallback = function() {
+                grecaptcha.render('recaptcha', {
+                    'sitekey' : '6LdhMW4UAAAAAFACdJlsLj3Z3bwoFgTScs2PjNqR',
+                    'callback' : recaptchaResponse
+                });
+            };
+
+            function recaptchaResponse(token) {
+                let data = {
+                    secret: '6LdhMW4UAAAAAGFcIO72FqWsyIThtH9MNpc6vCP9',
+                    response: token
+                };
+            }
+</script>
 <div class="container">
     <div class="row">
         <div class="col-md-8 offset-md-2">
@@ -23,8 +44,8 @@
 
                                 @if ($errors->has('first'))
                                     <span class="help-block">
-                                        <strong>{{ $errors->first('first') }}</strong>
-                                    </span>
+                                    <strong>{{ $errors->first('first') }}</strong>
+                                </span>
                                 @endif
                             </div>
                         </div>
@@ -37,8 +58,8 @@
 
                                 @if ($errors->has('last'))
                                     <span class="help-block">
-                                        <strong>{{ $errors->first('last') }}</strong>
-                                    </span>
+                                    <strong>{{ $errors->first('last') }}</strong>
+                                </span>
                                 @endif
                             </div>
                         </div>
@@ -82,15 +103,23 @@
 
                         <div class="form-group">
                             <div class="col-md-12">
+                                <div id="recaptcha"></div>
+                                <br/>
+                            </div>
+                            <div class="col-md-12">
                                 <button type="submit" class="btn theme-background float-left">
                                     Register
                                 </button>
+
                             </div>
                         </div>
+
                     </form>
                 </div>
             </div>
         </div>
     </div>
 </div>
+
+
 @endsection
