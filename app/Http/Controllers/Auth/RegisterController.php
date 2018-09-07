@@ -94,7 +94,7 @@ class RegisterController extends Controller
         // new validation 6 random digits
         $recapResponse = $this->postRecaptchaResponse($request);
 
-        $activationToken = rand(0,9).rand(0,9).rand(0,9).rand(0,9).rand(0,9).rand(0,9);
+        $activationToken = generateValidationToken();
 
         $user = User::create([
             'first' => $data['first'],

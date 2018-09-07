@@ -89,4 +89,32 @@ class UserController extends Controller
     {
         return $this->getUserObject()->find($id);
     }
+
+    public function validateToken(Request $request)
+    {
+        $validToken = 0;
+        if($request->has('token')) {
+            $user = (new User())->find(Auth::id());
+            if($request->get('token') == $user->token) {
+                $user->activated = "1";
+                $user->validation_tries = 0;
+                $user->lockout = 0;
+                $validToken = 1;
+            } else {
+                ++$user->validation_tries;
+                if($user->validation_tries == 4) {
+                    $user->lockout = 1;
+                    $validToken = 2;
+                }
+            }
+
+            $user->save();
+
+            return $validToken;
+
+        } else {
+            // some method to capture IP, location and other info
+            return -1;
+        }
+    }
 }
