@@ -34,6 +34,7 @@
 </head>
 
 <body class="body-wrapper">
+{{--<div style="position: absolute; top: 0; left: 0; width: 100%"></div>--}}
 @include("loading.loading")
 
 {{--NAV SECTION--}}

@@ -2,12 +2,15 @@
 
 namespace App\Http\Controllers;
 
+use App\Email;
 use App\Notification;
 use App\S3FolderTypes;
 use App\Subscription;
 use App\User;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
+use Mockery\CountValidator\Exception;
 use Mockery\Matcher\Not;
 use App\PhotoClient\AWSPhoto;
 
@@ -90,31 +93,51 @@ class UserController extends Controller
         return $this->getUserObject()->find($id);
     }
 
+    public function regenerateValidationToken(User $user)
+    {
+        $token = generateValidationToken();
+        $user->activation_token = $token;
+        $user->save();
+        Email::sendConfirmAccountEmail($user, $token);
+    }
+
     public function validateToken(Request $request)
     {
         $validToken = 0;
-        if($request->has('token')) {
-            $user = (new User())->find(Auth::id());
-            if($request->get('token') == $user->token) {
-                $user->activated = "1";
-                $user->validation_tries = 0;
-                $user->lockout = 0;
-                $validToken = 1;
-            } else {
-                ++$user->validation_tries;
-                if($user->validation_tries == 4) {
-                    $user->lockout = 1;
-                    $validToken = 2;
+        $save = true;
+        if($request->has('activation_token')) {
+            $user = Auth::user();
+            if ($user->lockout != 1) {
+                if ($request->get('activation_token') == $user->activation_token) {
+                    $user->activated = "1";
+                    $user->validation_tries = 0;
+                    $user->lockout = 0;
+                    $validToken = 1;
+                } else {
+                    ++$user->validation_tries;
+                    if ($user->validation_tries > 3) {
+                        $user->lockout = 1;
+                        $validToken = 2;
+                    } else {
+                        $this->regenerateValidationToken($user);
+                        $save = false;
+                    }
                 }
+
+                if($save) {
+                    $user->save();
+                }
+
+            } else {
+                $validToken = 2; // turn these numbers into constants
             }
 
-            $user->save();
 
-            return $validToken;
+            return Response::create(['tokenStatus' => $validToken], 201);
 
         } else {
             // some method to capture IP, location and other info
-            return -1;
+            return Response::create(['tokenStatus' => -1], 201);;
         }
     }
 }

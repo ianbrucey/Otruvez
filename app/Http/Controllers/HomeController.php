@@ -136,6 +136,9 @@ class HomeController extends Controller
     }
 
     public function showRegistered() {
+        if(!Auth::check()) {
+            return redirect('/');
+        }
 
         if(Auth::user()->activated == "1") {
             return redirect('/home');

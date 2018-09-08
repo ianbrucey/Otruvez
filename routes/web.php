@@ -105,6 +105,7 @@ Auth::routes();
 Route::get('/user/activateUserAccount', 'UserController@activateUserAccount');
 Route::post('/user/test', 'UserController@test');
 Route::get('/user/testView', 'UserController@testView');
+Route::post('/validateToken', 'UserController@validateToken');
 /** PLAN USER END */
 
 Route::get('/registered', 'HomeController@showRegistered');

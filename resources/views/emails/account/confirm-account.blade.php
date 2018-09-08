@@ -5,7 +5,7 @@ Thank you for registering. Please go back and enter the 6 digit code below to co
 <br>
 <h1>{{$token}}</h1>
 
-@component('mail::button')
+@component('mail::button', ['url' => ""])
 Thanks for choosing Otruvez
 @endcomponent
 
