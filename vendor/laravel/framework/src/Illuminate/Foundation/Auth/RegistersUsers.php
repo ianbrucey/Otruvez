@@ -62,6 +62,10 @@ trait RegistersUsers
             return redirect('/registered');
         }
 
+        if($request->has('business_owner') && $request->get('business_owner') == true) {
+            return redirect('/business');
+        }
+
         return redirect('/home')->with("successMessage", "Registration successful! Now get subscribing");
     }
 }

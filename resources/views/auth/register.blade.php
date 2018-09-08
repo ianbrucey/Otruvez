@@ -47,6 +47,21 @@
                 <div class="card-body">
                     <form class="form-horizontal validate-register" method="POST" action="{{ route('register') }}">
                         {{ csrf_field() }}
+                        <div class="form-group{{ $errors->has('first') ? ' has-error' : '' }}">
+
+                            <label for="business_owner" class="col-md-12 text-left control-label">Business owner? Click here</label>
+                            <div class="col-md-12">
+
+                                <input id="business_owner" type="checkbox" class="form-control" name="business_owner" value=true autofocus>
+
+                                @if ($errors->has('business_owner'))
+                                    <span class="help-block">
+                                    <strong>{{ $errors->first('business_owner') }}</strong>
+                                </span>
+                                @endif
+                            </div>
+                        </div>
+                        <hr style="background-color: #4cb996 !important;">
 
                         <div class="form-group{{ $errors->has('first') ? ' has-error' : '' }}">
                             <label for="first" class="col-md-4 text-left control-label">First</label>
