@@ -58,8 +58,12 @@ trait RegistersUsers
     protected function registered(Request $request, $user)
     {
 
-        if($user->activated != "1") {
-            return redirect('/registered');
+        if($user->activated != "1" && $request->has('apiKey')) {
+            return redirect($this->confirmAccountRoute);
+        } elseif($user->activated != "1") {
+            return redirect('/confirmAccount');
+        } elseif($request->has('apiKey')) {
+            return redirect($this->viewServiceRoute);
         }
 
         if($request->has('business_owner') && $request->get('business_owner') == true) {

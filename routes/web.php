@@ -108,7 +108,7 @@ Route::get('/user/testView', 'UserController@testView');
 Route::post('/validateToken', 'UserController@validateToken');
 /** PLAN USER END */
 
-Route::get('/registered', 'HomeController@showRegistered');
+Route::get('/confirmAccount', 'HomeController@showConfirmAccount');
 
 Route::get('/home', 'HomeController@index')->name('home');
 
@@ -241,4 +241,5 @@ Route::post('/stripeWebhook/failedPayment', 'WebhookController@failedPayment'); 
 Route::get('/portal/login/{businessId}/{stripeId}/{apiKey}/{customerEmail?}', 'PortalController@showLogin');
 Route::get('/portal/register/{businessId}/{stripeId}/{apiKey}/{customerEmail?}', 'PortalController@showRegister');
 Route::get('/portal/viewService/{businessId}/{stripeId}/{apiKey}', 'PortalController@showService');
+Route::get('/portal/confirmAccount/{businessId}/{stripeId}/{apiKey}', 'PortalController@showConfirmAccount');
 /** PORTAL ROUTES END */

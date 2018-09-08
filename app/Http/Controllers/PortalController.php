@@ -12,6 +12,11 @@ use Illuminate\Support\Facades\Auth;
 class PortalController extends Controller
 {
     private $params;
+    protected $portalRouteExtension = '';
+    protected $loginRoute;
+    protected $registerRoute;
+    protected $viewServiceRoute;
+    protected $confirmAccountRoute;
 
     public function __construct(Request $request)
     {
@@ -24,13 +29,22 @@ class PortalController extends Controller
 
         ];
 
+        $this->portalRouteExtension = sprintf("/%s/%s/%s",$this->params['businessId'],$this->params['stripeId'],$this->params['apiKey']);
+        $this->loginRoute = sprintf("/portal/login%s",$this->portalRouteExtension);
+        $this->registerRoute = sprintf("/portal/register%s",$this->portalRouteExtension);
+        $this->viewServiceRoute = sprintf("/portal/viewService%s",$this->portalRouteExtension);
+        $this->confirmAccountRoute = sprintf("/portal/confirmAccount%s",$this->portalRouteExtension);
+
     }
 
     public function showLogin($businessId ,$stripeId ,$apiKey, $customerEmail = null) {
 
+        if(Auth::check()) {
+            return redirect($this->viewServiceRoute);
+        }
 
         if(validatePortalParams($businessId ,$stripeId ,$apiKey)) {
-            return view('portal/auth/portal-login')->with($this->params);
+            return view('portal/auth/portal-login')->with($this->params)->with('registerRoute', $this->registerRoute);
         } else {
             return "Not authorized";
         }
@@ -39,10 +53,12 @@ class PortalController extends Controller
     }
 
     public function showRegister($businessId ,$stripeId ,$apiKey) {
-
+        if(Auth::check()) {
+            return redirect($this->viewServiceRoute);
+        }
 
         if(validatePortalParams($businessId ,$stripeId ,$apiKey)) {
-            return view('portal/auth/portal-register')->with($this->params);
+            return view('portal/auth/portal-register')->with($this->params)->with('loginRoute', $this->loginRoute);
         } else {
             return "Not authorized";
         }
@@ -50,7 +66,16 @@ class PortalController extends Controller
     }
 
     public function showService($businessId ,$stripeId ,$apiKey) {
-
+        if(!Auth::check()) {
+            $this->loginRoute = sprintf('/portal/login/%s/%s/%s',$businessId ,$stripeId ,$apiKey);
+            return redirect($this->loginRoute);
+        }
+        
+        $user = Auth::user();
+        
+        if($user->activated != "1") {
+            return redirect($this->confirmAccountRoute);
+        }
 
         if($objArray = validatePortalParams($businessId ,$stripeId ,$apiKey)) {
             $plan               = $objArray['plan'];
@@ -79,6 +104,18 @@ class PortalController extends Controller
         } else {
             return "Not authorized";
         }
+    }
+
+    public function showConfirmAccount() {
+        if(!Auth::check()) {
+            return redirect($this->loginRoute);
+        }
+
+        if(Auth::user()->activated == "1") {
+            return redirect($this->viewServiceRoute);
+        }
+
+        return view('confirm-account');
     }
 
 

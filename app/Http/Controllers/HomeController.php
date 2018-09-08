@@ -135,7 +135,7 @@ class HomeController extends Controller
 
     }
 
-    public function showRegistered() {
+    public function showConfirmAccount() {
         if(!Auth::check()) {
             return redirect('/');
         }
@@ -144,6 +144,6 @@ class HomeController extends Controller
             return redirect('/home');
         }
 
-        return view('registered');
+        return view('confirm-account');
     }
 }

@@ -56,10 +56,14 @@
                         </div>
 
                         <div class="form-group">
-                            <div class="col-md-8">
+                            <div class="col-md-12">
                                 <button type="submit" class="btn theme-background">
                                     Login
                                 </button>
+                                <a type="button" class="btn bg-white theme-color float-right" href="{{$registerRoute}}">
+                                    Register instead
+                                </a>
+                                <hr>
 
                                 <a class="btn btn-link theme-color" href="{{ route('password.request') }}">
                                     Forgot Your Password?

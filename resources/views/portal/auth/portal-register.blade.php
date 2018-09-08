@@ -1,6 +1,11 @@
 @extends('layouts.app')
-
+@section('meta')
+    <script src="https://www.google.com/recaptcha/api.js?onload=onloadCallback&render=explicit"
+            async defer>
+    </script>
+@endsection
 @section('body')
+<script src="{{ baseUrlConcat('/js/recaptcha.js') }}"></script>
 <div class="container">
     <div class="row">
         <div class="col-md-8 offset-md-2">
@@ -14,6 +19,9 @@
                 <div class="card-body">
                     <form class="form-horizontal validate-register" method="POST" action="{{ route('register') }}">
                         {{ csrf_field() }}
+                        <input type="hidden" name="businessId" value="{{$businessId}}">
+                        <input type="hidden" name="stripeId" value="{{$stripeId}}">
+                        <input type="hidden" name="apiKey" value="{{$apiKey}}">
 
                         <div class="form-group{{ $errors->has('first') ? ' has-error' : '' }}">
                             <label for="first" class="col-md-4 text-left control-label">First</label>
@@ -82,9 +90,18 @@
 
                         <div class="form-group">
                             <div class="col-md-12">
-                                <button type="submit" class="btn theme-background float-left">
+                                <div id="recaptcha"></div>
+                                <br/>
+                            </div>
+                            <div class="col-md-12">
+                                <button type="submit" class="btn theme-background float-left" style="display: none" id="register-button" disabled>
                                     Register
                                 </button>
+
+                                <a type="button" class="btn theme-color float-right" href="{{$loginRoute}}">
+                                    Login instead
+                                </a>
+
                             </div>
                         </div>
                     </form>

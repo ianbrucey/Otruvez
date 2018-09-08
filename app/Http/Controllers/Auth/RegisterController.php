@@ -26,6 +26,12 @@ class RegisterController extends Controller
     */
     private $secret = "6LdhMW4UAAAAAGFcIO72FqWsyIThtH9MNpc6vCP9";
     private $reCapUrl = "https://www.google.com/recaptcha/api/siteverify";
+    protected $hasApiKey   = false;
+    protected $portalRouteExtension = '';
+    protected $loginRoute;
+    protected $registerRoute;
+    protected $viewServiceRoute;
+    protected $confirmAccountRoute;
 
 
     use RegistersUsers;
@@ -35,16 +41,33 @@ class RegisterController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/registered';
+    protected $redirectTo = '/confirmAccount';
 
     /**
      * Create a new controller instance.
      *
      * @param Request $request
      */
-    public function __construct()
+    public function __construct(Request $request)
     {
         $this->middleware('guest');
+
+        if($request->has('apiKey')) {
+
+            $businessId = $request->get('businessId');
+            $stripeId   = $request->get('stripeId');
+            $apiKey     = $request->get('apiKey');
+            $this->portalRouteExtension = sprintf("/%s/%s/%s",$businessId,$stripeId,$apiKey);
+            $this->loginRoute = sprintf("/portal/login%s",$this->portalRouteExtension);
+            $this->registerRoute = sprintf("/portal/register%s",$this->portalRouteExtension);
+            $this->viewServiceRoute = sprintf("/portal/viewService%s",$this->portalRouteExtension);
+            $this->confirmAccountRoute = sprintf("/portal/confirmAccount%s",$this->portalRouteExtension);
+            $this->hasApiKey = true;
+            $paramsAreValid = validatePortalParams($businessId,$stripeId,$apiKey);
+            if($paramsAreValid) {
+                $this->redirectTo = sprintf("/portal/viewService%s",$this->portalRouteExtension);
+            }
+        }
     }
 
     /**
