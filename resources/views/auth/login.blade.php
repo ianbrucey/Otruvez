@@ -7,11 +7,18 @@
             <div class="card card-default">
                 <div class="card-header">
                     <h3 class="card-heading text-center"><img src="{{getOtruvezLogoImg()}}" width="100"></h3>
-                    <h3 class="card-heading text-center">Login</h3>
+                    {{--<h3 class="card-heading text-center">Login</h3>--}}
                 </div>
 
 
                 <div class="card-body">
+                    <div class="text-center">
+                        <p>Login with</p>
+                        <a href="{{ url('/auth/facebook') }}" class="btn text-white" style="background: #4267b2;"><i class="fa fa-facebook"></i> Facebook</a>
+                        <a href="{{ url('/auth/google') }}" class="btn btn-danger"><i class="fa fa-google"></i> Google</a>
+                        <a href="{{ url('/auth/twitter') }}" class="btn text-white" style="background: lightskyblue;"><i class="fa fa-google"></i> Twitter</a>
+                    </div>
+                    <hr>
                     <form class="form-horizontal validate-login" method="POST" action="{{ route('login') }}">
                         {{ csrf_field() }}
 

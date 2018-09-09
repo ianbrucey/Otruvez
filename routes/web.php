@@ -242,3 +242,9 @@ Route::get('/portal/register/{businessId}/{stripeId}/{apiKey}/{customerEmail?}',
 Route::get('/portal/viewService/{businessId}/{stripeId}/{apiKey}', 'PortalController@showService');
 Route::get('/portal/confirmAccount/{businessId}/{stripeId}/{apiKey}', 'PortalController@showConfirmAccount');
 /** PORTAL ROUTES END */
+
+
+/** SOCIAL AUTH ROUTES */
+Route::get('auth/{provider}/', 'Auth\AuthController@redirectToProvider');
+Route::get('auth/{provider}/callback/{portal?}', 'Auth\AuthController@handleProviderCallback');
+/** SOCIAL AUTH ROUTES END */
