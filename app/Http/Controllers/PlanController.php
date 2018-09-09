@@ -393,9 +393,11 @@ class PlanController extends Controller
     public function apiSetup(Request $request, $planId) {
         $plan     = (new Plan())->where('id', $planId)->first();
         $business = $plan->business;
+        $portalLink = sprintf("/portal/viewService/%s/%s/%s",$business->id,$plan->id,$business->api_key);
         return view('business.online-integration')->with([
             'business' => $business,
-            'plan' => $plan
+            'plan' => $plan,
+            'portalLink' => $portalLink
         ]);
     }
 
