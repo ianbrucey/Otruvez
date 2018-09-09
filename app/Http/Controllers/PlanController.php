@@ -390,6 +390,15 @@ class PlanController extends Controller
         return view('plan.create-service');
     }
 
+    public function apiSetup(Request $request, $planId) {
+        $plan     = (new Plan())->where('id', $planId)->first();
+        $business = $plan->business;
+        return view('business.online-integration')->with([
+            'business' => $business,
+            'plan' => $plan
+        ]);
+    }
+
 
 
 

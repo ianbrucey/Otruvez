@@ -30,10 +30,12 @@
             @if(count($plans))
                 @foreach($plans as $plan)
                     <div class="col-md-4 plan-preview-card">
-                        <div class="card-body">
+                        <div class="card-header">
                             <h6><strong>{{$plan->stripe_plan_name}}</strong></h6>
                             {!! $plan->featured_photo_path == null ? '<p class="text-danger"><span class="fa fa-warning text-danger"></span> Service inactive. please add a featured photo</p>' : '<p class="text-info">active</p>'!!}
                             {{--If photo is null, show span element, else show the actual photo--}}
+                        </div>
+                        <div class="card-body">
                             <div class="general-photo-container">
                                 <button class="btn-sm theme-background text-white show-sm-modal m-1" data-toggle="modal" data-modal-target="#plan-gallery-{{$plan->id}}" >Edit Photos</button>
                                 <p>Featured Photo</p>
@@ -91,6 +93,15 @@
                                     </div>
 
                                 {{--</div>--}}
+                        </div>
+
+                        <div class=" plan-preview-card-footer mt-4">
+
+
+                            {{--<div style="width: 100%" class="text-center">--}}
+                            <a href="/plan/apiSetup/{{$plan->id}}" class="btn theme-background" style="width: 100%;">API & Online Business integration</a>
+
+                            {{--</div>--}}
                         </div>
                     </div>
                     @include('modals.bootstrap.edit-plan-modal')
