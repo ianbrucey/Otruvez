@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\Auth;
 
 class PortalController extends Controller
 {
-    private $params;
+    private   $params;
     protected $portalRouteExtension = '';
     protected $loginRoute;
     protected $registerRoute;
@@ -20,6 +20,10 @@ class PortalController extends Controller
 
     public function __construct(Request $request)
     {
+        $this->middleware('portal-guest', ['except' => [
+            'showLogin',
+            'showRegister'
+        ]]);
 
         $this->params = [
             'businessId'    => $request->route('businessId'),
@@ -72,7 +76,7 @@ class PortalController extends Controller
         }
         
         $user = Auth::user();
-        
+
         if($user->activated != "1") {
             return redirect($this->confirmAccountRoute);
         }
