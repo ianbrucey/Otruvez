@@ -22,6 +22,7 @@
                 <div class="">
                     <textarea name="description" class="form-control">{{$plan->description}}</textarea>
                 </div>
+
                 <input name="_method" type="hidden" value="PUT">
 
             </div>
@@ -31,6 +32,5 @@
                 <button type="button" class="btn btn-default hide-sm-modal" data-dismiss="modal">Cancel</button>
             </div>
         </div>
-
     </form>
 </div>

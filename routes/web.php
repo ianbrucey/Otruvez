@@ -140,6 +140,7 @@ Route::post('/business/createAccount', 'BusinessController@createBusinessAccount
 Route::post('/business/create', 'BusinessController@createBusiness');
 Route::post('/business/updatePhoto/{businessId}', 'BusinessController@updateBusinessPhoto');
 Route::post('/business/updateLogo/{businessId}', 'BusinessController@updateBusinessLogo');
+Route::post('/business/updateRedirectTo', 'BusinessController@updateRedirectTo');
 Route::put('/business/update/{id}', 'BusinessController@updateBusiness');
 Route::put('/business/deactivate/{id}', 'BusinessController@deactivateBusiness');
 Route::put('/business/activate/{id}', 'BusinessController@activateBusiness');

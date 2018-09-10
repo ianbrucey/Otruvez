@@ -58,10 +58,11 @@ class PlanController extends Controller
 
     public function managePlans()
     {
-
-        $plans = Auth::user()->business->plansDescending;
+        $business = Auth::user()->business;
+        $plans = $business->plansDescending;
         return view('plan.manage-plans')
             ->with('plans',$plans)
+            ->with('business', $business)
             ->with('maxGalleryCount',self::MAX_GALLERY_COUNT);
     }
 
@@ -99,9 +100,9 @@ class PlanController extends Controller
 
         setStripeApiKey('secret');
         $es = $this->esClient;
-
+        $business             = Auth::user()->business;
         $planName             = $request->stripe_plan_name;
-        $businessId           = Auth::user()->business->id;
+        $businessId           = $business->id;
         $planIdentifier       = uniqid(sprintf("%u_%u",$businessId,Auth::id()));
         $useLimitMonth        = abs($request->use_limit_month);
         $useLimitYear         = abs($request->use_limit_year);
@@ -153,8 +154,10 @@ class PlanController extends Controller
         try {
             $this->updateFeaturedPhoto($request, $plan->id, $featuredPhoto);
 
-            foreach ($galleryPhotos as $file) {
-                $this->updateGalleryPhotos($request, $plan->id, $file);
+            if(count($galleryPhotos) > 0) {
+                foreach ($galleryPhotos as $file) {
+                    $this->updateGalleryPhotos($request, $plan->id, $file);
+                }
             }
         } catch (Exception $e) {
             $msg .= " Warning: there was a problem with one or more of your uploads";
@@ -277,8 +280,14 @@ class PlanController extends Controller
                 }
             }
 
+            if($request->has('redirect_to'))
+            {
+                $business->redirect_to = $request->get('redirect_to');
+                $business->save();
+            }
+
         } catch (Exception $exception) {
-            return redirect("/plan/managePlans")->with('successMessage','Could not update' . " $exception");
+            return redirect("/plan/managePlans")->with('successMessage','Could not update:' . " $exception");
         }
 
         return redirect("/plan/managePlans")->with('successMessage','Plan updated successfully!');

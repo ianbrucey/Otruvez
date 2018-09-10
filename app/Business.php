@@ -16,6 +16,7 @@ class Business extends Model
         'address',
         'city',
         'api_key',
+        'redirect_to',
         'state',
         'zip',
         'lat',

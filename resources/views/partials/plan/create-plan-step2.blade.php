@@ -15,7 +15,7 @@
 
                         <hr>
                         <label>
-                            <a data-toggle="collapse" data-target="#pricing-info" id="#pricing-info" class="text-danger">*Pricing is final. At least one price required.<br> click here for more info*</a>
+                            <a data-toggle="collapse" data-target="#pricing-info" id="#pricing-info" class="text-danger">*Pricing is final. At least one price required*<br> click here for more info</a>
                         </label><br>
                         <p id="pricing-info" class="collapse">
                             To protect our customers, we do not allow businesses to update the pricing of their services.

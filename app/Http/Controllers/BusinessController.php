@@ -15,9 +15,11 @@ use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Http\Request;
 use App\Business;
 use App\User;
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Bus;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Input;
 use Stripe\Stripe;
 use Stripe\Subscription;
 use Symfony\Component\Finder\Exception\AccessDeniedException;
@@ -227,12 +229,11 @@ class BusinessController extends Controller
     {
         /** @var User $user */
         $user = Auth::user();
-//        if ($user->business_account == 1)
-//        {
             try {
                 if(empty($request->city) || empty($request->state)) {
                     return redirect('/business/manageBusiness')->with('warningMessage','Please add your location');
                 }
+                $request = $this->formatRedirectToField($request);
                 $newBusiness = new Business($request->all());
                 $newBusiness->user_id = Auth::id();
                 $newBusiness->api_key  = $this->generateApiKey($newBusiness->id);
@@ -259,6 +260,7 @@ class BusinessController extends Controller
         $business = $this->findBusiness($id);
         if($business && $user->business_account == 1 && $this->verifyBusinessToUser($business))
         {
+            $request = $this->formatRedirectToField($request);
             $business->update($request->all());
             $subscriptions = \App\Subscription::where('business_id', $id)->get();
             $notification         = new Notification();
@@ -502,6 +504,23 @@ class BusinessController extends Controller
         return view('business.cancel-account')->with('businessId', $businessId);
     }
 
+    public function updateRedirectTo(Request $request) {
+        try {
+            $request = $this->formatRedirectToField($request);
+
+            $this->validate($request,[
+                'redirect_to' => 'required|url'
+            ]);
+
+            $business = (new Business())->where('user_id', Auth::id())->first();
+            $business->redirect_to = $request->get('redirect_to');
+            $business->save();
+            return Response::create("Your URL was saved successfully", 201);
+        } catch (Exception $e) {
+            return Response::create("Please enter a valid url", 400);
+        }
+    }
+
 
 
 
@@ -531,6 +550,21 @@ class BusinessController extends Controller
 
     private function generateApiKey($id) {
         return sprintf('%s-%s-%s', uniqid("OV"),time()+rand(1,300),md5($id));
+    }
+
+    /**
+     * This method is to ensure that all of the urls we get start with https://
+     * @param Request $request
+     *
+     */
+    private function formatRedirectToField(Request $request) {
+        if($request->has('redirect_to') && !empty($request->get('redirect_to'))) {
+            $url = str_replace("http://", "", $request->get('redirect_to'));
+            if(strpos($url, "https://") === false) {
+                $request->replace(['redirect_to' => "https://".$url]);
+            }
+        }
+        return $request;
     }
 
 }

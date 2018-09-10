@@ -51,16 +51,17 @@ $('.has-business-hours').on('change', function(){
         $('.business-hours').hide();
     }
 });
-//
-// $('#review-form').submit(function (event) {
-//     event.preventDefault();
-//     var reviewContainer = $('#review-container');
-//     var userName = $(this).children('.user-name').val();
-//     var reviewBody = $(this).children('.review-body').val();
-//     var date = $(this).children('.date').val();
-//     var review = $('<div class="review"><p>'+reviewBody+'</p><small class="text-muted">Posted by <b>'+userName+'</b> on '+date+'</small></div><hr>');
-//     reviewContainer.prepend(review);
-// });
+
+$('#redirect-to-form').on('submit', function (e) {
+    e.preventDefault();
+    let formData = $(this).serialize();
+    $.post('/business/updateRedirectTo', formData).done(function (data) {
+        sendSuccess(data)
+    }).fail(function (jqXHR, textStatus, errorThrown) {
+        sendWarning("Please enter a valid url");
+    });
+});
+
 
 
 function triggerTargetClick(e, obj) {

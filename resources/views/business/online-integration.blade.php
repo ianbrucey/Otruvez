@@ -16,15 +16,15 @@
         <p class="text-center"><span class="theme-color">Note*</span> you may style this this button however you like. as long as the href attribute is the same:<br>
             <span class="theme-color">{{env('APP_URL')}}{{$portalLink}}</span>
         </p>
-        <hr>
     </div>
 
     <div class="col-md-8 offset-md-2 p-3 mb-3 card" >
-        <p>2) After your customer subscribes, they will need a place to go. <span class="text-danger">Please provide us with a url </span>for your customer to be redirected to after they've signed up</p>
+        <p>2) After your customer subscribes, they will need a place to go. If you already haven't, <span class="text-danger">please provide us with a url </span>for your customer to be redirected to after they've signed up</p>
         <div class="text-center p-3">
-            <form>
-                <span>https://<input style="width: 80%; height: 40px" placeholder="www.example.com/thanks" type="text"></span>
-                <button type="button" class="btn theme-background m-3">Save redirect url</button>
+            <form id="redirect-to-form" action="/business/updateRedirectTo" method="post">
+                {{csrf_field()}}
+                <input class="form-control bg-white" value="{{$business->redirect_to ?: ''}}" placeholder="www.example.com/thanks" type="text" id="redirect-to-url" name="redirect_to">
+                <button type="submit" class="btn theme-background m-3">Save redirect url</button>
             </form>
         </div>
         <hr>

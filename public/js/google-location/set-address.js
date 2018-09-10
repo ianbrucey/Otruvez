@@ -69,9 +69,12 @@ function geolocate() {
 
 
 $('#autocomplete').parents('form').on('submit', function(e){
+    submittingLoader.fadeIn();
    if($('#locality').val() == '') {
        e.preventDefault();
+       $('#autocomplete').val('');
        sendWarning("please enter an address");
+       submittingLoader.hide();
    }
 });
 
