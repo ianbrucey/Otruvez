@@ -48,11 +48,11 @@ class RegisterController extends Controller
      *
      * @param Request $request
      */
-    public function __construct(Request $request)
+    public function __construct(Request $request = null)
     {
         $this->middleware('guest');
 
-        if($request->has('apiKey')) {
+        if(!empty($request) && $request->has('apiKey')) {
 
             $businessId = $request->get('businessId');
             $stripeId   = $request->get('stripeId');
@@ -91,10 +91,10 @@ class RegisterController extends Controller
      * Create a new user instance after a valid registration.
      *
      * @param  array $data
-     * @param Request|null $request
+     * @param Request $request
      * @return User
      */
-    protected function create(array $data, Request $request = null)
+    protected function create(array $data, Request $request)
     {
 
         $stripeSecretKey = config('services.stripe.secret');
@@ -106,27 +106,25 @@ class RegisterController extends Controller
             'email' => $data['email'],
             'description' => sprintf("account for %s %s | %s",$data['first'],$data['last'],$data['email']),
         ]);
-        /*
-         * OLD VALIDATION
-            $token  = rand(1,100)*rand(1,10) . time() . $data['email'];
-            $activationToken = md5($token);
-            $updatedAt = date("Y:m:d H:i:s");
-        * OLD VALIDATION
-        */
 
-        // new validation 6 random digits
-        $recapResponse = $this->postRecaptchaResponse($request);
+        // if we have a provider, we don't need to verify the user as a bot or not
+        $recapResponse = null;
+        if(!issetAndTrue($data['provider'])) {
+            $recapResponse = $this->postRecaptchaResponse($request);
+        }
 
         $activationToken = generateValidationToken();
 
-        $user = User::create([
+        $user = (new User())->create([
             'first' => $data['first'],
             'last' => $data['last'],
             'email' => $data['email'],
             'password' => bcrypt($data['password']),
             'stripe_id' => $stripeCustomer->id,
-            'activated' => $recapResponse->success == true ? "1" : "0",
-            'activation_token' => $activationToken
+            'activated' => ( issetAndTrue($data['provider']) || $recapResponse->success == true ) ? "1" : "0",
+            'activation_token' => $activationToken,
+            'provider' => issetAndTrue($data['provider']),
+            'provider_id' => issetAndTrue($data['provider_id'])
         ]);
 
         if($user->activated != 1) {

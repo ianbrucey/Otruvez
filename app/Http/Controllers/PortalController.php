@@ -48,7 +48,10 @@ class PortalController extends Controller
         }
 
         if(validatePortalParams($businessId ,$stripeId ,$apiKey)) {
-            return view('portal/auth/portal-login')->with($this->params)->with('registerRoute', $this->registerRoute);
+            return view('portal/auth/portal-login')->with($this->params)->with([
+                'registerRoute'         => $this->registerRoute,
+                'portalRouteExtension'  => $this->portalRouteExtension
+            ]);
         } else {
             return "Not authorized";
         }
@@ -62,7 +65,10 @@ class PortalController extends Controller
         }
 
         if(validatePortalParams($businessId ,$stripeId ,$apiKey)) {
-            return view('portal/auth/portal-register')->with($this->params)->with('loginRoute', $this->loginRoute);
+            return view('portal/auth/portal-register')->with($this->params)->with([
+                'loginRoute'            => $this->loginRoute,
+                'portalRouteExtension'  => $this->portalRouteExtension
+            ]);
         } else {
             return "Not authorized";
         }

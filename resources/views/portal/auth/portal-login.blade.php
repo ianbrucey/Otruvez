@@ -11,6 +11,8 @@
                 </div>
 
                 <div class="card-body">
+                    @include('partials.social.portal-auth-buttons')
+
                     <form class="form-horizontal validate-login" method="POST" action="{{ route('login') }}">
                         {{ csrf_field() }}
                         <input type="hidden" name="businessId" value="{{$businessId}}">

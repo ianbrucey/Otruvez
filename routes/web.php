@@ -245,6 +245,8 @@ Route::get('/portal/confirmAccount/{businessId}/{stripeId}/{apiKey}', 'PortalCon
 
 
 /** SOCIAL AUTH ROUTES */
-Route::get('auth/{provider}/', 'Auth\AuthController@redirectToProvider');
-Route::get('auth/{provider}/callback/{portal?}', 'Auth\AuthController@handleProviderCallback');
+Route::get('auth/{provider}/', 'Auth\SocialAuthController@redirectToProvider');
+Route::get('auth/{provider}/callback', 'Auth\SocialAuthController@handleProviderCallback');
+Route::get('portal/auth/{provider}/{businessId}/{stripeId}/{apiKey}', 'Auth\SocialAuthController@redirectToProviderPortal');
+Route::get('portal/auth/callback/{provider}/{businessId}/{stripeId}/{apiKey}', 'Auth\SocialAuthController@handleProviderCallbackPortal');
 /** SOCIAL AUTH ROUTES END */

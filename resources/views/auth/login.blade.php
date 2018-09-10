@@ -7,12 +7,12 @@
             <div class="card card-default">
                 <div class="card-header">
                     <h3 class="card-heading text-center"><img src="{{getOtruvezLogoImg()}}" width="100"></h3>
-                    {{--<h3 class="card-heading text-center">Login</h3>--}}
+                    <h3 class="card-heading text-center">Login</h3>
                 </div>
 
 
                 <div class="card-body">
-                    <div class="text-center">
+                    <div class="text-center auth-login-button-container">
                         <p>Login with</p>
                         <a href="{{ url('/auth/facebook') }}" class="btn text-white" style="background: #4267b2;"><i class="fa fa-facebook"></i> Facebook</a>
                         <a href="{{ url('/auth/google') }}" class="btn btn-danger"><i class="fa fa-google"></i> Google</a>

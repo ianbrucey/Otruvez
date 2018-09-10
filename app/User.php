@@ -31,7 +31,9 @@ class User extends Authenticatable
         'card_brand',
         'card_last_four',
         'trial_ends_at',
-        'password'
+        'password',
+        'provider',
+        'provider_id'
     ];
 
     /**
