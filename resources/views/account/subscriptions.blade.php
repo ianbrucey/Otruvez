@@ -2,9 +2,29 @@
 
 @section('body')
     @include('partials.account-back')
-    <h3 class="text-center"> My Subscriptions</h3>
+
     <div class="container">
         <div class="row">
+            <div class="col-12">
+                @if($portalBusiness)
+                    <div class="alert alert-success text-center">
+                        Success!
+                        <br>
+                        You can always manage your subscription here on Otruvez or at <b>{{ucfirst($portalBusiness->name)}}</b>
+                        <br>
+                        @if(!empty($portalBusiness->redirect_to))
+                            <a class="btn bg-white theme-color btn-sm m-auto" href="{{$portalBusiness->redirect_to}}">
+                                Click here to go back to {{ucfirst($portalBusiness->name)}}
+                            </a>
+                        @endif
+                    </div>
+
+
+                @endif
+            </div>
+            <div class="col-12">
+                <h3 class="text-center"> My Subscriptions</h3>
+            </div>
             <div class="col-12">
                 @if($mustUpdatePaymentMethod)
                     <div class="alert alert-danger">

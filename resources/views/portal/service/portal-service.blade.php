@@ -1,11 +1,11 @@
-@extends('layouts.app')
+@extends('layouts.portal-app')
 @section('body')
 
 @php
 $intervals = ['month','year'];
 @endphp
     <!-- Page Content -->
-@include('partials.base-theme.store-nav')
+    <h1 class="text-center">{{$business->name}}</h1>
     <div class="container">
 
         <div class="row">

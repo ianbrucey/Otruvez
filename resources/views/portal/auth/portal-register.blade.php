@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.portal-app')
 @section('meta')
     <script src="https://www.google.com/recaptcha/api.js?onload=onloadCallback&render=explicit"
             async defer>

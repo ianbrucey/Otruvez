@@ -24,10 +24,16 @@ class AccountController extends Controller
         return view('account.account-home');
     }
 
-    public function subscriptions()
-    {
+    public function subscriptions(Request $request, $portalBusinessId = null)
+    {   $portalBusiness = null;
+        if($portalBusinessId) {
+            $portalBusiness = Business::find($portalBusinessId);
+        }
         $subscriptions  = Subscription::where('user_id', Auth::id())->where('business_id',"!=",0)->get();
-        return view('account.subscriptions')->with('subscriptions', $subscriptions)->with('mustUpdatePaymentMethod', !Auth::user()->has_valid_payment_method);
+        return view('account.subscriptions')
+            ->with('subscriptions', $subscriptions)
+            ->with('portalBusiness', $portalBusiness)
+            ->with('mustUpdatePaymentMethod', !Auth::user()->has_valid_payment_method);
     }
     public function businessNotificationView($businessId){
         $businessEmail = (new Business())->where('id', $businessId)->value('email');

@@ -67,7 +67,7 @@ class SubscriptionController extends Controller
     }
 
 
-    public function createSubscription(Request $request)
+    public function createSubscription(Request $request, $portal = null)
     {
         /** @var User $user */
         if(Auth::id() <= 0 || Auth::id() != $request->user_id) {
@@ -105,7 +105,7 @@ class SubscriptionController extends Controller
         (new Notification())->sendSubscribedUserNotification($user,$business, $newStripeSubscription);
 
         if($request->has('apiKey') && validatePortalParams($businessId, $smPlanId, $request->get('apiKey')) != null) {
-            return redirect()->to("https://www.google.com");
+            return redirect()->to("/account/mysubscriptions/$businessId");
         }
 
         return redirect('/subscription/subscribed')

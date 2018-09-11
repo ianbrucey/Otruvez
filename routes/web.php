@@ -223,7 +223,7 @@ Route::post('/rating/rateService/{planId}', 'RatingController@rateService');
 
 /** NOTIFICATION ROUTES */
 Route::get('/account', 'AccountController@index');
-Route::get('/account/mysubscriptions', 'AccountController@subscriptions');
+Route::get('/account/mysubscriptions/{portalBusinessId?}', 'AccountController@subscriptions');
 Route::get('/account/notifications', 'AccountController@accountNotificationView');
 Route::get('/account/delete', 'AccountController@showDeleteAccountView');
 Route::get('/account/support', 'AccountController@showSupportView');

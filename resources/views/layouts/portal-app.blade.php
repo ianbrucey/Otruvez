@@ -50,49 +50,8 @@
             <button class="navbar-toggler theme-background" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 {!! hasNewNotifications() ? '<span class="fa fa-bell text-danger"></span>' : '<span class="navbar-toggler-icon"></span>' !!}
             </button>
-            @if(\Illuminate\Support\Facades\Auth::check())
-                <div class="collapse navbar-collapse" style="" id="navbarSupportedContent">
-                    <ul class="navbar-nav" >
-                        <li class="nav-item">
-                            <a class="nav-link" href="/home"><span class="fa fa-search "></span> Find Subscriptions </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link {{hasNewNotifications() ? "text-danger" : ''}}" href="/account"><span class="fa fa-user-circle "></span> My Account </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="/business"> <span class="fa fa-briefcase "></span> Business Account </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="/log/out"><span class="fa fa-sign-out "></span> Logout</a>
-                        </li>
-                    </ul>
-                </div>
-            @else
-                <div class="collapse navbar-collapse text-center" id="navbarSupportedContent">
-                    <ul class="navbar-nav ">
-                        <li class="nav-item">
-                            <a class="btn btn-lg white-bg theme-color  nav-link login-button" href="/">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="btn btn-lg white-bg theme-color  nav-link login-button" href="/contact">Contact</a>
-                        </li>
 
-                        <li class="nav-item">
-                            <a class="btn btn-lg white-bg theme-color  nav-link login-button" href="/register">Register</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="btn btn-lg white-bg theme-color  nav-link login-button" href="/login">Login</a>
-                        </li>
 
-                        <li class="nav-item">
-                            <a class="btn btn-lg white-bg theme-color  nav-link login-button" href="/sellYourServices"> <span class="fa fa-shopping-cart "></span> How to sell with Otruvez </a>
-                        </li>
-
-                    </ul>
-
-                </div>
-                <hr>
-            @endif
         </nav>
         {{--</div>--}}
 
