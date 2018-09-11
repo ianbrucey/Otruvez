@@ -69,9 +69,9 @@ POST
             <pre style=" background-color: lightgray" class="p-3">
 {
     'api_key': '{{$business->api_key}}',
-    'business_id': '{{$business->id}}',
-    'subscription_id: 'sub_id',
-    'user_email: 'user_email'
+    'entity_id': '{{$business->id}}',
+    'service_id: '{{$plan->id}}',
+    'customer_email: 'customer_email'
 }
             </pre>
             <h4 class="copy theme-color text-center" data-target-copy="#button-code"><span class="fa fa-copy float-right"></span></h4>
@@ -82,11 +82,8 @@ POST
             <pre style=" background-color: lightgray" class="p-3">
 {
     'account_status': paid|unpaid|error,
-    'http_status_code': [int],
-    'service_name: '{{$plan->stripe_plan_name}}',
-    'subscription_id: 'sub_id',
-    'user_email: 'user_email',
-    'error_message': [you will get this message if your request is malformed]
+    'customer_email: 'customer_email',
+    'service_name: '{{$plan->stripe_plan_name}}'
 }
             </pre>
         </div>
@@ -124,9 +121,9 @@ POST
             <pre style=" background-color: lightgray" class="p-3">
 {
     'api_key': '{{$business->api_key}}',
-    'business_id': '{{$business->id}}',
-    'subscription_id: 'sub_id',
-    'user_email: 'user_email',
+    'entity_id': '{{$business->id}}',
+    'service_id: '{{$plan->id}}',
+    'customer_email: 'customer_email',
     'unsubscribe': 'true'
 }
             </pre>
@@ -138,11 +135,9 @@ POST
             <pre style=" background-color: lightgray" class="p-3">
 {
     'account_status': 'deleted|error',
-    'http_status_code': [int],
     'service_name: '{{$plan->stripe_plan_name}}',
     'confirmation_id: 'sub_id',
-    'user_email: 'user_email',
-    'error_message': [you will get this message if your request is malformed or if there was a problem on our side]
+    'customer_email: 'customer_email'
 }
             </pre>
         </div>
