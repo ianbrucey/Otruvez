@@ -19,11 +19,15 @@ body {
 }
 
 
+.allowCopy {
+    position:absolute;
+    left:-9999px
+}
 
-/*.business-img-placeholder:hover {*/
-    /*color: whitesmoke;*/
-    /*background: #4cb996;*/
-/*}*/
+.copied-msg {
+    display: none;
+    font-family: "Muli", sans-serif !important;
+}
 
 .search-card-title {
     height: 50px;

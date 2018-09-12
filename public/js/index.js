@@ -409,3 +409,18 @@ function isValidImage(file) {
     }
     return valid;
 }
+
+function copyText(self) {
+    /* Get the text field */
+    let thisObj = $(self);
+    let copyText = thisObj.children('textarea');
+
+    /* Select the text field */
+    copyText.select();
+
+    /* Copy the text inside the text field */
+    document.execCommand("copy");
+    thisObj.find('.copied-msg').show();
+    thisObj.find('.copied-msg').fadeOut(1500);
+
+}
