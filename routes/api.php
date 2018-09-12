@@ -19,6 +19,6 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
 Route::post('status', 'ApiBusinessController@getStatus');
 
-Route::delete('cancel/{id}', 'ApiBusinessController@cancelSubscription');
+Route::delete('cancel', 'ApiBusinessController@cancelSubscription');
 
 
