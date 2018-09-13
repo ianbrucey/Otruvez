@@ -82,10 +82,8 @@ $intervals = ['month','year'];
                         </div>
                         <hr>
                         @if(!$hasReview && !$owner)
-                            <form method="post" action="/review/addReview/{{$business->id}}" class="form-group" id="review-form">
+                            <form method="post" action="/review/addReview/{{$business->id}}" class="form-group validate-review" id="review-form">
                                 <textarea name="body" placeholder="write your review here" class="form-control-lg review-body" id="review-body" required></textarea><br>
-                                <input type="hidden" name="user_id"   class="user-id" value="{{\Illuminate\Support\Facades\Auth::id()}}">
-                                <input type="hidden" name="user_name" class="user-name" value="{{authedUserFullName()}}">
                                 {{csrf_field()}}
                                 <br>
                                 <button type="submit" class="btn btn-success" id="service-review-button">Leave a Review</button>

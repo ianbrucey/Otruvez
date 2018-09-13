@@ -12,10 +12,12 @@ class ReviewController extends Controller
 {
     private function create(Request $request, $businessId)
     {
-
-        $body       = $request->get('body');
-        $userId     = $request->get('user_id');
-        $hasReview     = (new Review())->where('business_id', $businessId)->where('user_id', Auth::id() ?: $request->get('user_id'))->first();
+        $this->validate($request,[
+            'body' => 'required|'.ALPHANUMERIC_DASH_SPACE_DOT_REGEX
+        ]);
+        $body           = $request->get('body');
+        $userId         = Auth::id();
+        $hasReview      = (new Review())->where('business_id', $businessId)->where('user_id', $userId)->first();
         $reviewerHasSubscribed = (new Subscription())->where('business_id',$businessId)->where('user_id', $userId)->first();
         if($hasReview || !$reviewerHasSubscribed) {
             return 0;
