@@ -101,6 +101,9 @@ class AccountController extends Controller
 
     public function deleteAccount(Request $request)
     {
+        $this->validate($request, [
+            'email' => 'required|email'
+        ]);
         setStripeApiKey('secret');
         $email = $request->get('email');
         $user = Auth::user();

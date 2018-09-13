@@ -450,6 +450,32 @@ $(document).ready(function () {
         }
     });
 
+    $('.validate-delete-account').validate({
+        rules: {
+            email: {
+                required: true,
+                email: true
+            }
+        },
+        invalidHandler: function(event, validator) {
+            // 'this' refers to the form
+            var errors = validator.numberOfInvalids();
+            if (errors) {
+                var message = errors == 1
+                    ? 'You missed 1 field. It has been highlighted'
+                    : 'You missed ' + errors + ' fields. They have been highlighted';
+                $("div.error span").html(message);
+                $("div.error").show().css('color','red');
+            } else {
+                $("div.error").hide();
+            }
+        },
+        submitHandler: function (form) {
+            $('#submitting').fadeIn(500);
+            form.submit();
+        }
+    });
+
     $.validator.addMethod("alphaNumericSpace", function(value, element) {
         return this.optional(element) || /^[a-z0-9\-\s.]+$/i.test(value);
     }, "field must contain only letters, numbers, or dashes.");

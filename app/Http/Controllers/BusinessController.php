@@ -341,6 +341,10 @@ class BusinessController extends Controller
 
     public function deleteBusiness(Request $request, $businessId, $userDelete = null)
     {
+        $this->validate($request, [
+            'email' => 'required|email'
+        ]);
+
         setStripeApiKey('secret');
         $user = (new User())->find(Auth::id());
 
