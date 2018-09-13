@@ -249,7 +249,6 @@ class BusinessController extends Controller
     {
         $this->validate($request,$this->validationRules);
 
-        return redirect()->back()->with('successMessage', "successful submission");
         /** @var User $user */
         $user = Auth::user();
             try {
