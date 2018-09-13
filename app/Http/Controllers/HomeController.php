@@ -92,8 +92,8 @@ class HomeController extends Controller
 
     public function contactUs(Request $request){
         $this->validate($request,[
-            'subject'   => 'regex:/^[a-z0-9\-\s]+$/',
-            'body'      => 'regex:/^[a-z0-9\-\s]+$/',
+            'subject'   => 'required|'.ALPHANUMERIC_DASH_SPACE_DOT_REGEX,
+            'body'      => 'required|'.ALPHANUMERIC_DASH_SPACE_DOT_REGEX,
             'email'     => 'required|email',
         ]);
 

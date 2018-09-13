@@ -5,6 +5,15 @@
             <div class="theme-background" style="border-radius: 5%">
                 <div class="card-header">
                     <h4 class="text-white">Create Business</h4>
+                    @if ($errors->any())
+                        <div class="alert alert-danger">
+                            <ul>
+                                @foreach ($errors->all() as $error)
+                                    <li>{{ $error }}</li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    @endif
                 </div>
                 <form method="post" action="/business/create" class="form-group-md validate-create-business" id="create-business-form" >
                     <div class="card-body theme-form">

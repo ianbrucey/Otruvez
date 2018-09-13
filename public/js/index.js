@@ -288,7 +288,7 @@ $(document).ready(function () {
             name: {
                 required: true,
                 minlength: 3,
-                alphanumeric: true
+                alphaNumericSpace: true
             },
             email: {
                 required: true,
@@ -296,14 +296,47 @@ $(document).ready(function () {
                 minlength: 10
             },
             phone: {
-                required: true,
+                required: false,
                 minlength: 10,
                 phoneUS: true
             },
             description: {
                 required: true,
-                minlength: 10
+                minlength: 10,
+                alphaNumericSpace: true
             },
+            redirect_to: {
+                required: false,
+                url: true
+            },
+            monday: {
+                required: false,
+                alphaNumericSpace: true
+            },
+            tuesday: {
+                required: false,
+                alphaNumericSpace: true
+            },
+            wednesday: {
+                required: false,
+                alphaNumericSpace: true
+            },
+            thursday: {
+                required: false,
+                alphaNumericSpace: true
+            },
+            friday: {
+                required: false,
+                alphaNumericSpace: true
+            },
+            saturday: {
+                required: false,
+                alphaNumericSpace: true
+            },
+            sunday: {
+                required: false,
+                alphaNumericSpace: true
+            }
         },
         invalidHandler: function(event, validator) {
             // 'this' refers to the form
@@ -376,7 +409,7 @@ $(document).ready(function () {
     });
 
     $.validator.addMethod("alphaNumericSpace", function(value, element) {
-        return this.optional(element) || /^[a-z0-9\-\s]+$/i.test(value);
+        return this.optional(element) || /^[a-z0-9\-\s.]+$/i.test(value);
     }, "field must contain only letters, numbers, or dashes.");
 
     $.validator.addMethod("password", function(value, element) {

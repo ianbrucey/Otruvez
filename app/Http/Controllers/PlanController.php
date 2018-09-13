@@ -215,7 +215,7 @@ class PlanController extends Controller
 
         if(!$file) {
             $this->validate($request, [
-                'gallery_photos'  => 'image'
+                'gallery_photos'  => 'nullable|image'
             ]);
 
             $photo = $request->file('gallery_photos');

@@ -1283,4 +1283,6 @@ function issetAndTrue($array, $key) {
 }
 
 const CUSTOMER_SERVICE_CONTACT_LIMIT = 5;
+const ALPHANUMERIC_DASH_SPACE_REGEX = 'regex:/^[a-zA-Z0-9\-\s]+$/';
+const ALPHANUMERIC_DASH_SPACE_DOT_REGEX = 'regex:/^[a-zA-Z0-9\-\s.]+$/';
 // logo: <img src="{{getImage("logos/otruvez-logo.png")}}" style="width: 150px; height: auto;">
