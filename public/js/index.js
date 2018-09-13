@@ -250,15 +250,18 @@ $(document).ready(function () {
 
     $('.validate-contact-form').validate({
         rules: {
+            email: {
+                email: true
+            },
             subject: {
                 required: true,
                 minlength: 3,
-                alphanumeric: true
+                alphaNumericSpace: true
             },
             body: {
                 required: true,
                 minlength: 10,
-                alphanumeric: true
+                alphaNumericSpace: true
             }
         },
         invalidHandler: function(event, validator) {

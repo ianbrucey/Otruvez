@@ -292,6 +292,10 @@ class BusinessController extends Controller
     }
 
     public function notifyCustomers(Request $request){
+        $this->validate($request,[
+            'subject'   => 'regex:/^[a-z0-9\-\s]+$/',
+            'body'      => 'regex:/^[a-z0-9\-\s]+$/'
+        ]);
         $business = Business::find(Auth::user()->business_id);
         if(!$business) {
             return redirect('/business')->with('warningMessage', "You are not authorized to make this request");

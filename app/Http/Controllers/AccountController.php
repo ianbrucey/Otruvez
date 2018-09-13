@@ -52,6 +52,10 @@ class AccountController extends Controller
     }
 
     public function contactSupport(Request $request){
+        $this->validate($request,[
+            'subject'   => 'regex:/^[a-z0-9\-\s]+$/',
+            'body'      => 'regex:/^[a-z0-9\-\s]+$/'
+        ]);
         $subject = $request->get('subject');
         $body    = $request->get('body');
         $currentTimestamp   = date('Y-m-d G:i:s');

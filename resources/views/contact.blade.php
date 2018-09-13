@@ -6,6 +6,16 @@
                 <div class="card-header">
                     <h3 class="card-heading text-center"><img src="{{getOtruvezLogoImg()}}" width="100"></h3>
                     <h3 class="card-heading text-center">Contact us</h3>
+                    @if ($errors->any())
+                        <div class="alert alert-danger">
+                            <ul>
+                                @foreach ($errors->all() as $error)
+                                    <li>{{ $error }}</li>
+                                @endforeach
+                                    <li>No special characters may be entered</li>
+                            </ul>
+                        </div>
+                    @endif
                 </div>
                 <form class="form-group validate-contact-form" action="/contactUs" method="post">
                     {{csrf_field()}}

@@ -91,6 +91,12 @@ class HomeController extends Controller
     }
 
     public function contactUs(Request $request){
+        $this->validate($request,[
+            'subject'   => 'regex:/^[a-z0-9\-\s]+$/',
+            'body'      => 'regex:/^[a-z0-9\-\s]+$/',
+            'email'     => 'required|email',
+        ]);
+
         $subject  = $request->get('subject');
         $body     = $request->get('body');
         $email    = $request->get('email');
@@ -103,21 +109,21 @@ class HomeController extends Controller
 
 
         // here we will store somethings in the cache to prevent abuse
-//
-//        if(!$hasContacted) {
-//            Cache::forever('lastContactedDate', $currentTimestamp);
-//            Cache::forever('contactCount', 1);
-//        } elseif($contactCount == GENERAL_CUSTOMER_SERVICE_CONTACT_LIMIT ) {
-//            if($currentMonthAndDay == (new \DateTime($lastContactedDate))->format('m-d')) {
-//                return redirect('/')->with('infoMessage', "Request limit reached for the day. We will respond to your previous requests within 24-48 hours");
-//            } else {
-//                Cache::forever('contactCount', 1);
-//                Cache::forever('lastContactedDate', $currentTimestamp);
-//            }
-//
-//        } else {
-//            Cache::forever('contactCount', ++$contactCount);
-//        }
+
+        if(!$hasContacted) {
+            Cache::forever('lastContactedDate', $currentTimestamp);
+            Cache::forever('contactCount', 1);
+        } elseif($contactCount == GENERAL_CUSTOMER_SERVICE_CONTACT_LIMIT ) {
+            if($currentMonthAndDay == (new \DateTime($lastContactedDate))->format('m-d')) {
+                return redirect('/')->with('infoMessage', "Request limit reached for the day. We will respond to your previous requests within 24-48 hours");
+            } else {
+                Cache::forever('contactCount', 1);
+                Cache::forever('lastContactedDate', $currentTimestamp);
+            }
+
+        } else {
+            Cache::forever('contactCount', ++$contactCount);
+        }
 
         try {
             Email::sendMessageToOtruvezSupport($subject, $body, $email);
