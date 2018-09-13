@@ -165,15 +165,100 @@ $(document).find('.Button-animationWrapper-child--primary').on('click', function
 
 $(document).ready(function () {
 
-    $('.validate-message').validate({
+
+
+    // LOGIN VALIDATION
+    $('.validate-login').validate({
+        rules: {
+            email: {
+                required: true,
+                email: true
+            },
+            password: {
+                required: true,
+                minlength: 8,
+                password: true
+
+            }
+        },
+        invalidHandler: function(event, validator) {
+            // 'this' refers to the form
+            var errors = validator.numberOfInvalids();
+            if (errors) {
+                var message = errors == 1
+                    ? 'You missed 1 field. It has been highlighted'
+                    : 'You missed ' + errors + ' fields. They have been highlighted';
+                $("div.error span").html(message);
+                $("div.error").show().css('color','red');
+            } else {
+                $("div.error").hide();
+            }
+        },
+        submitHandler: function (form) {
+            $('#submitting').fadeIn(500);
+            form.submit();
+        }
+    });
+    // LOGIN VALIDATION
+
+    // REGISTER VALIDATION
+    $('.validate-register').validate({
+        rules: {
+            first: {
+                required: true,
+                lettersonly: true
+
+            },
+            last: {
+                required: true,
+                lettersonly: true
+            },
+            email: {
+                required: true,
+                email: true
+            },
+            password: {
+                required: true,
+                minlength: 8,
+                password: true
+            },
+            password_confirmation: {
+                required: true,
+                minlength: 8,
+                password: true
+            }
+        },
+        invalidHandler: function(event, validator) {
+            // 'this' refers to the form
+            let errors = validator.numberOfInvalids();
+            if (errors) {
+                let message = errors === 1
+                    ? 'You missed 1 field. It has been highlighted'
+                    : 'You missed ' + errors + ' fields. They have been highlighted';
+                $("div.error span").html(message);
+                $("div.error").show().css('color','red');
+            } else {
+                $("div.error").hide();
+            }
+        },
+        submitHandler: function (form) {
+            $('#submitting').fadeIn(500);
+            form.submit();
+        }
+    });
+    // REGISTER VALIDATION
+
+    $('.validate-contact-form').validate({
         rules: {
             subject: {
                 required: true,
-                minlength: 3
+                minlength: 3,
+                alphanumeric: true
             },
             body: {
                 required: true,
-                minlength: 10
+                minlength: 10,
+                alphanumeric: true
             }
         },
         invalidHandler: function(event, validator) {
@@ -199,7 +284,8 @@ $(document).ready(function () {
         rules: {
             name: {
                 required: true,
-                minlength: 3
+                minlength: 3,
+                alphanumeric: true
             },
             email: {
                 required: true,
@@ -208,7 +294,8 @@ $(document).ready(function () {
             },
             phone: {
                 required: true,
-                minlength: 10
+                minlength: 10,
+                phoneUS: true
             },
             description: {
                 required: true,
@@ -234,75 +321,6 @@ $(document).ready(function () {
         }
     });
 
-    $('.validate-login').validate({
-        rules: {
-            email: {
-                required: true,
-                email: true
-            },
-            password: {
-                required: true,
-                minlength: 8
-            }
-        },
-        invalidHandler: function(event, validator) {
-            // 'this' refers to the form
-            var errors = validator.numberOfInvalids();
-            if (errors) {
-                var message = errors == 1
-                    ? 'You missed 1 field. It has been highlighted'
-                    : 'You missed ' + errors + ' fields. They have been highlighted';
-                $("div.error span").html(message);
-                $("div.error").show().css('color','red');
-            } else {
-                $("div.error").hide();
-            }
-        },
-        submitHandler: function (form) {
-            $('#submitting').fadeIn(500);
-            form.submit();
-        }
-    });
-
-    $('.validate-register').validate({
-        rules: {
-            first: {
-                required: true
-            },
-            last: {
-                required: true
-            },
-            email: {
-                required: true,
-                email: true
-            },
-            password: {
-                required: true,
-                minlength: 8
-            },
-            password_confirmation: {
-                required: true,
-                minlength: 8
-            }
-        },
-        invalidHandler: function(event, validator) {
-            // 'this' refers to the form
-            var errors = validator.numberOfInvalids();
-            if (errors) {
-                var message = errors == 1
-                    ? 'You missed 1 field. It has been highlighted'
-                    : 'You missed ' + errors + ' fields. They have been highlighted';
-                $("div.error span").html(message);
-                $("div.error").show().css('color','red');
-            } else {
-                $("div.error").hide();
-            }
-        },
-        submitHandler: function (form) {
-            $('#submitting').fadeIn(500);
-            form.submit();
-        }
-    });
 
     $('.validate-create-service').validate({
         rules: {
@@ -353,6 +371,14 @@ $(document).ready(function () {
             form.submit();
         }
     });
+
+    $.validator.addMethod("alphaNumericSpace", function(value, element) {
+        return this.optional(element) || /^[a-z0-9\-\s]+$/i.test(value);
+    }, "field must contain only letters, numbers, or dashes.");
+
+    $.validator.addMethod("password", function(value, element) {
+        return this.optional(element) || /^(?=.*[\d])(?=.*[A-Z])(?=.*[a-z])(?=.*[!@#$%^&*])[\w!@#$%^&*]{8,}$/i.test(value);
+    }, "Your password does not meet our requirements");
 
 });
 

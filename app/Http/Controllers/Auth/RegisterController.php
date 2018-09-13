@@ -82,7 +82,12 @@ class RegisterController extends Controller
             'first' => 'required|string|max:255',
             'last' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users',
-            'password' => 'required|string|min:8|confirmed',
+            'password' => [
+                'required',
+                'min:8',
+                'regex:/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*(_|[^\w])).+$/',
+                'confirmed'
+            ],
             'g-recaptcha-response' => 'required|min:10'
         ]);
     }
@@ -109,7 +114,7 @@ class RegisterController extends Controller
 
         // if we have a provider, we don't need to verify the user as a bot or not
         $recapResponse = null;
-        if(!issetAndTrue($data['provider'])) {
+        if(!issetAndTrue($data,'provider')) {
             $recapResponse = $this->postRecaptchaResponse($request);
         }
 
@@ -121,10 +126,10 @@ class RegisterController extends Controller
             'email' => $data['email'],
             'password' => bcrypt($data['password']),
             'stripe_id' => $stripeCustomer->id,
-            'activated' => ( issetAndTrue($data['provider']) || $recapResponse->success == true ) ? "1" : "0",
+            'activated' => ( issetAndTrue($data,'provider') || $recapResponse->success == true ) ? "1" : "0",
             'activation_token' => $activationToken,
-            'provider' => issetAndTrue($data['provider']),
-            'provider_id' => issetAndTrue($data['provider_id'])
+            'provider' => issetAndTrue($data,'provider'),
+            'provider_id' => issetAndTrue($data,'provider_id')
         ]);
 
         if($user->activated != 1) {

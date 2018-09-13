@@ -82,7 +82,7 @@ class SocialAuthController extends Controller
         $nameArray = explode(" ", $user->name);
         $data = [];
         $data['first']      = $nameArray[0];
-        $data['last']       = $nameArray[1];
+        $data['last']       = $nameArray[count($nameArray) - 1];
         $data['email']      = $user->email;
         $data['provider']   = $provider;
         $data['provider_id'] = $user->id;

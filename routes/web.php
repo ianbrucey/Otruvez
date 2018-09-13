@@ -14,12 +14,15 @@
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Log;
+
 Route::get('/', function () {
     if(Auth::check()) {
         return redirect('/home');
     } else {
         return view('index');
     }
+
 });
 
 Route::get('/contact', function () {

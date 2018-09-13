@@ -68,7 +68,11 @@ trait AuthenticatesUsers
     {
         $this->validate($request, [
             $this->username() => 'required|email',
-            'password' => 'required|string|min:8',
+            'password' => [
+                'required',
+                'min:8',
+                'regex:/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*(_|[^\w])).+$/'
+            ]
         ]);
     }
 

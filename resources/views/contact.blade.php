@@ -7,7 +7,7 @@
                     <h3 class="card-heading text-center"><img src="{{getOtruvezLogoImg()}}" width="100"></h3>
                     <h3 class="card-heading text-center">Contact us</h3>
                 </div>
-                <form class="form-group validate-message" action="/contactUs" method="post">
+                <form class="form-group validate-contact-form" action="/contactUs" method="post">
                     {{csrf_field()}}
                     <label for="subject">Your email</label>
                     <input type="email"  class="form-control bg-white" name="email" placeholder="you@domain.com">

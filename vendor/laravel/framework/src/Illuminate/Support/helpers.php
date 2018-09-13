@@ -1278,8 +1278,8 @@ function generateValidationToken() {
     return rand(0,9).rand(0,9).rand(0,9).rand(0,9).rand(0,9).rand(0,9);
 }
 
-function issetAndTrue($object) {
-    return isset($object) && $object ? $object : null;
+function issetAndTrue($array, $key) {
+    return isset($array[$key]) && $array[$key] ? $array[$key] : null;
 }
 
 const CUSTOMER_SERVICE_CONTACT_LIMIT = 5;

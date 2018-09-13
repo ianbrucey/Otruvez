@@ -8,7 +8,7 @@
                 <div class="card-header">
                     <h4>Send a message to your customers</h4>
                 </div>
-                <form class="form-group validate-message" action="/business/notifyCustomers" method="post" id="notify-customer-form">
+                <form class="form-group validate-contact-form" action="/business/notifyCustomers" method="post" id="notify-customer-form">
                     {{csrf_field()}}
                     <label for="subject">Subject</label>
                     <input type="text"  class="form-control bg-white" name="subject" id="subject" placeholder="">
