@@ -42,12 +42,12 @@ class BusinessController extends Controller
         'phone'         => 'nullable|numeric',
         'description'   => 'required|'.ALPHANUMERIC_DASH_SPACE_DOT_REGEX,
         'redirect_to'   => 'nullable|url',
-        'city'          => 'required|'.ALPHANUMERIC_DASH_SPACE_DOT_REGEX,
-        'state'         => 'required|'.ALPHANUMERIC_DASH_SPACE_DOT_REGEX,
-        'zip'           => 'required|'.ALPHANUMERIC_DASH_SPACE_DOT_REGEX,
-        'country'       => 'required|'.ALPHANUMERIC_DASH_SPACE_DOT_REGEX,
-        'lat'           => 'required|'.ALPHANUMERIC_DASH_SPACE_DOT_REGEX,
-        'lng'           => 'required|'.ALPHANUMERIC_DASH_SPACE_DOT_REGEX,
+        'city'          => 'nullable|'.ALPHANUMERIC_DASH_SPACE_DOT_REGEX,
+        'state'         => 'nullable|'.ALPHANUMERIC_DASH_SPACE_DOT_REGEX,
+        'zip'           => 'nullable|'.ALPHANUMERIC_DASH_SPACE_DOT_REGEX,
+        'country'       => 'nullable|'.ALPHANUMERIC_DASH_SPACE_DOT_REGEX,
+        'lat'           => 'nullable|'.ALPHANUMERIC_DASH_SPACE_DOT_REGEX,
+        'lng'           => 'nullable|'.ALPHANUMERIC_DASH_SPACE_DOT_REGEX,
         'monday'        => 'nullable|'.ALPHANUMERIC_DASH_SPACE_DOT_REGEX,
         'tuesday'       => 'nullable|'.ALPHANUMERIC_DASH_SPACE_DOT_REGEX,
         'wednesday'     => 'nullable|'.ALPHANUMERIC_DASH_SPACE_DOT_REGEX,
@@ -277,6 +277,7 @@ class BusinessController extends Controller
 
     public function updateBusiness(Request $request, $id)
     {
+        $this->validate($request,$this->validationRules);
         /** @var User $user */
         $user = Auth::user();
         $business = $this->findBusiness($id);

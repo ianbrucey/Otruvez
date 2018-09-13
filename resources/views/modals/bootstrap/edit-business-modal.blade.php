@@ -1,5 +1,5 @@
 <div id="business-details-{{$business->id}}" class="sm-modal " style="overflow: scroll">
-    <form method="post" action="/business/update/{{$business->id}}" id="edit-business-details-form">
+    <form method="post" action="/business/update/{{$business->id}}" id="edit-business-details-form" class="validate-create-business">
 
         <!-- Modal content-->
         <div class="modal-content col-md-8 offset-md-2">
