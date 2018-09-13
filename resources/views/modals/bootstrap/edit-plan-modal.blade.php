@@ -1,5 +1,5 @@
 <div id="plan-edit-{{$plan->id}}" class="sm-modal autoscroll">
-    <form method="POST" action="/plan/update/{{$plan->id}}">
+    <form method="POST" action="/plan/update/{{$plan->id}}" class="validate-edit-plan">
         {{csrf_field()}}
         <!-- Modal content-->
         <div class="modal-content col-md-8 offset-md-2">

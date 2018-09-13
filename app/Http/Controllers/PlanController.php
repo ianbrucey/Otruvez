@@ -257,6 +257,10 @@ class PlanController extends Controller
 
     public function updatePlan(Request $request, $id)
     {
+        $this->validate($request,[
+            'stripe_plan_name'   => 'required|'.ALPHANUMERIC_DASH_SPACE_DOT_REGEX,
+            'description'        => 'required|'.ALPHANUMERIC_DASH_SPACE_DOT_REGEX
+        ]);
         $smPlan = Plan::find($id);
 
         if($smPlan && $smPlan->user_id != Auth::id()) {
