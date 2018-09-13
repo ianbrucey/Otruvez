@@ -92,10 +92,14 @@ class PlanController extends Controller
         $featuredPhoto = $request->file('featured_photo');
 
         $this->validate($request, [
-            'stripe_plan_name'  => 'required',
-            'description'       => 'required',
+            'stripe_plan_name'  => 'required|'.ALPHANUMERIC_DASH_SPACE_DOT_REGEX,
+            'description'       => 'required|'.ALPHANUMERIC_DASH_SPACE_DOT_REGEX,
             'featured_photo'    => 'required|image',
-            'gallery_photos.*'  => 'nullable|image'
+            'gallery_photos.*'  => 'nullable|image',
+            'use_limit_month'   => 'nullable|integer',
+            'use_limit_year'    => 'nullable|integer',
+            'month_price'       => 'nullable|integer',
+            'year_price'        => 'nullable|integer'
         ]);
 
         setStripeApiKey('secret');

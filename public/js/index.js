@@ -361,17 +361,27 @@ $(document).ready(function () {
     $('.validate-create-service').validate({
         rules: {
             stripe_plan_name: {
-                required: true
+                required: true,
+                alphaNumericSpace: true
             },
             month_price: {
-                digits: true
+                digits: true,
             },
             year_price: {
                 digits: true
             },
+            use_limit_month: {
+                digits: true,
+                required: false
+            },
+            use_limit_year: {
+                digits: true,
+                required: false
+            },
             description: {
                 required: true,
-                minlength: 10
+                minlength: 10,
+                alphaNumericSpace: true
             }
         },
         invalidHandler: function(event, validator) {
