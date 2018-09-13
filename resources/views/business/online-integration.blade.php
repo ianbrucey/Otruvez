@@ -24,7 +24,7 @@
     <div class="col-md-8 offset-md-2 p-3 mb-3 card" >
         <p>2) After your customer subscribes, they will need a place to go. If you haven't already, <span class="text-danger">please provide us with a url </span>for your customer to be redirected to after they've signed up, then hit the save button</p>
         <div class="text-center p-3">
-            <form id="redirect-to-form" action="/business/updateRedirectTo" method="post">
+            <form id="redirect-to-form" action="/business/updateRedirectTo" method="post" class="validate-redirect">
                 {{csrf_field()}}
                 <input class="form-control bg-white" value="{{$business->redirect_to ?: ''}}" placeholder="www.example.com/thanks" type="text" id="redirect-to-url" name="redirect_to">
                 <button type="submit" class="btn theme-background m-3">Save redirect url</button>
