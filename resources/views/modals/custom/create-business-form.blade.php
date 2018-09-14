@@ -31,16 +31,7 @@
                             <input class="form-control" placeholder="www.example.com/thanks" type="text" id="redirect-to-url" name="redirect_to">
                         </div>
                         <hr>
-                        <h4 class="text-white"><u>Address</u></h4>
-                        <input id="autocomplete" placeholder="Enter your address"
-                                   onFocus="geolocate()" class="form-control" type="text" autocomplete="new-address">
-                        <input type="hidden" class="field" id="address" name="address">
-                        <input type="hidden" class="field" id="locality" name="city">
-                        <input type="hidden" class="field" id="administrative_area_level_1" name="state">
-                        <input type="hidden" class="field" id="postal_code" name="zip">
-                        <input type="hidden" class="field" id="country" name="country">
-                        <input type="hidden" class="field" id="lat" name="lat">
-                        <input type="hidden" class="field" id="lng" name="lng">
+                        @include('partials.location.set-address')
 
                         <hr>
                         <h4 class="text-white"><u>Business hours</u>

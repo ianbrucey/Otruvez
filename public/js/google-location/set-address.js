@@ -26,21 +26,36 @@ function initAutocomplete() {
 function fillInAddress() {
     // Get the place details from the autocomplete object.
     // console.log("filling address...");
-    var place = autocomplete.getPlace();
+    let place = autocomplete.getPlace();
+    let addressLabel = $(".address-selected-label");
+    let city = '';
+    let state = '';
+    const g_city_type = "locality";
+    const g_state_type = "administrative_area_level_1";
 
-    for (var component in componentForm) {
+    for (let component in componentForm) {
         document.getElementById(component).value = '';
         document.getElementById(component).disabled = false;
     }
 
     // Get each component of the address from the place details
     // and fill the corresponding field on the form.
-    for (var i = 0; i < place.address_components.length; i++) {
-        var addressType = place.address_components[i].types[0];
+    for (let i = 0; i < place.address_components.length; i++) {
+        let addressType = place.address_components[i].types[0];
+        let val = null;
         if (componentForm[addressType]) {
-            var val = place.address_components[i][componentForm[addressType]];
+            let val = place.address_components[i][componentForm[addressType]];
             document.getElementById(addressType).value = val;
+            console.log(val);
+            if(addressType === g_city_type) {
+                city = val;
+            } else if(addressType === g_state_type) {
+                state = val;
+            }
         }
+
+
+        addressLabel.text("You've selected: " + city + ", " + state);
     }
 
     $('#lat').val(place.geometry.location.lat());
@@ -69,13 +84,10 @@ function geolocate() {
 
 
 $('#autocomplete').parents('form').on('submit', function(e){
-    submittingLoader.fadeIn();
-   if($('#locality').val() == '') {
-       e.preventDefault();
-       $('#autocomplete').val('');
-       sendWarning("please enter an address");
-       submittingLoader.hide();
-   }
+    if(e.keyCode === 13) {
+        event.preventDefault();
+        return false;
+    }
 });
 
 $(document).ready(function () {

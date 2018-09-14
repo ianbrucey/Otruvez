@@ -252,9 +252,7 @@ class BusinessController extends Controller
         /** @var User $user */
         $user = Auth::user();
             try {
-                if(empty($request->city) || empty($request->state)) {
-                    return redirect('/business/manageBusiness')->with('warningMessage','Please add your location');
-                }
+
                 $request = $this->formatRedirectToField($request);
                 $newBusiness = new Business($request->all());
                 $newBusiness->user_id = Auth::id();
