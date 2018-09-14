@@ -88,9 +88,6 @@ class PlanController extends Controller
     public function createServicePlan(Request $request)
     {
 
-        $galleryPhotos = $request->file('gallery_photos');
-        $featuredPhoto = $request->file('featured_photo');
-
         $this->validate($request, [
             'stripe_plan_name'  => 'required|'.ALPHANUMERIC_DASH_SPACE_DOT_REGEX,
             'description'       => 'required|'.ALPHANUMERIC_DASH_SPACE_DOT_REGEX,
@@ -101,6 +98,9 @@ class PlanController extends Controller
             'month_price'       => 'nullable|integer',
             'year_price'        => 'nullable|integer'
         ]);
+
+        $galleryPhotos = $request->file('gallery_photos');
+        $featuredPhoto = $request->file('featured_photo');
 
         setStripeApiKey('secret');
         $es = $this->esClient;
@@ -158,7 +158,7 @@ class PlanController extends Controller
         try {
             $this->updateFeaturedPhoto($request, $plan->id, $featuredPhoto);
 
-            if(count($galleryPhotos) > 0) {
+            if($galleryPhotos != null && count($galleryPhotos) > 0) {
                 foreach ($galleryPhotos as $file) {
                     $this->updateGalleryPhotos($request, $plan->id, $file);
                 }
