@@ -2,7 +2,9 @@
 
 @section('body')
 
-<h3 class="text-center">Create a Service<hr></h3>
+<h3 class="text-center">Create a Service<hr>
+    @include('errors.request-errors')
+</h3>
 
 @include('partials.plan.create-plan-step1')
 

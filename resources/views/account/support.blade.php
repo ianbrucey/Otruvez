@@ -6,16 +6,7 @@
             <div class="card">
                 <div class="card-header">
                     <h4>Customer Support</h4>
-                    @if ($errors->any())
-                        <div class="alert alert-danger">
-                            <ul>
-                                @foreach ($errors->all() as $error)
-                                    <li>{{ $error }}</li>
-                                @endforeach
-                                <li>No special characters may be entered</li>
-                            </ul>
-                        </div>
-                    @endif
+                    @include('errors.request-errors')
                 </div>
                     <form class="form-group validate-contact-form" action="/account/contactSupport" method="post">
                         {{csrf_field()}}

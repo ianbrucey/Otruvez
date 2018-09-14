@@ -12,6 +12,7 @@
     <div class="container">
         <div class="row "><br><br>
             <h3 class="text-center col-12">Manage your services</h3>
+            @include('errors.request-errors')
         </div>
     </div>
     <div class="container">

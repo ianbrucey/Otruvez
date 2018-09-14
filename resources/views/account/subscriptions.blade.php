@@ -24,6 +24,7 @@
             </div>
             <div class="col-12">
                 <h3 class="text-center"> My Subscriptions</h3>
+                @include('errors.request-errors')
             </div>
             <div class="col-12">
                 @if($mustUpdatePaymentMethod)

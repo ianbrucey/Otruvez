@@ -26,12 +26,12 @@
                            <span class="theme-color">{{removeLastWord($checkin->name)}}</span></h4>
                        <div class="alert alert-danger checkin-error-message" style="display: none"></div>
                        <div class="card-body">
-                           <form class="confirm-checkin-form-{{$checkin->id}}">
+                           <form class="confirm-checkin-form-{{$checkin->id}} validate-checkin">
                                <input class="bg-white theme-color form-control text-center" placeholder="ENTER CHECK-IN CODE" name="checkin_code" id="checkin-code">
                            </form>
                        </div>
                        <div class="card-body text-center">
-                           <button type="button" class="theme-background btn show-sm-modal confirm-checkin" data-subscription-id="{{$checkin->id}}" data-modal-target="#confirm-checkin-modal-{{$checkin->id}}">Confirm Check-in</button>
+                           <button type="button" class="theme-background btn show-sm-modal confirm-checkin" id="confirm-checkin-btn" data-subscription-id="{{$checkin->id}}" data-modal-target="#confirm-checkin-modal-{{$checkin->id}}">Confirm Check-in</button>
                        </div>
                    </div>
                    <br><br>
