@@ -196,7 +196,7 @@ Route::post('/subscription/confirmCheckin/{subscriptionId}', 'SubscriptionContro
 
 
 /** PLAN ROUTES */
-Route::get('/plan/chooseAccountPlan', 'PlanController@showChooseAccountForm');
+//Route::get('/plan/chooseAccountPlan', 'PlanController@showChooseAccountForm');
 Route::get('/plan/createAppPlans', 'PlanController@storeAppPlansLocally');
 Route::get('/plan/managePlans', 'PlanController@managePlans');
 Route::get('/plan/createService', 'PlanController@showCreateService');

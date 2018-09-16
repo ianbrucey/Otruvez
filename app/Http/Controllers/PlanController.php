@@ -58,7 +58,10 @@ class PlanController extends Controller
 
     public function managePlans()
     {
-        $business = Auth::user()->business;
+        $business = getAuthedBusiness();
+        if(!$business) {
+            return redirect("/business");
+        }
         $plans = $business->plansDescending;
         return view('plan.manage-plans')
             ->with('plans',$plans)
@@ -67,27 +70,28 @@ class PlanController extends Controller
     }
 
 
-    public function storeAppPlansLocally() {
+//    public function storeAppPlansLocally() {
+        // this is for charging businesses to us otruvez. probably wont use this though
+//        /** @var \Stripe\Plan $plan */
+//            $query = Plan::insert([
+//                'stripe_plan_id' => 'sm_standard',
+//                'stripe_plan_name' => 'Standard Plan',
+//                'year_price' => 10000,
+//                'month_price' => 100,
+//                'o_interval' => null,
+//                'use_limit' => "0",
+//                'is_app_plan' => "1",
+//                'created_at' => date("Y-m-d H:i:s"),
+//                'updated_at' => date("Y-m-d H:i:s")
+//            ]);
 
-        /** @var \Stripe\Plan $plan */
-            $query = Plan::insert([
-                'stripe_plan_id' => 'sm_standard',
-                'stripe_plan_name' => 'Standard Plan',
-                'year_price' => 10000,
-                'month_price' => 100,
-                'o_interval' => null,
-                'use_limit' => "0",
-                'is_app_plan' => "1",
-                'created_at' => date("Y-m-d H:i:s"),
-                'updated_at' => date("Y-m-d H:i:s")
-            ]);
-
-        return;
-    }
+//        return;
+//    }
 
     public function createServicePlan(Request $request)
     {
-
+        $business = getAuthedBusiness();
+        noEntityAbort($business, 403);
         $this->validate($request, [
             'stripe_plan_name'  => 'required|'.ALPHANUMERIC_DASH_SPACE_DOT_REGEX,
             'description'       => 'required|'.ALPHANUMERIC_DASH_SPACE_DOT_REGEX,
@@ -104,7 +108,6 @@ class PlanController extends Controller
 
         setStripeApiKey('secret');
         $es = $this->esClient;
-        $business             = Auth::user()->business;
         $planName             = $request->stripe_plan_name;
         $businessId           = $business->id;
         $planIdentifier       = uniqid(sprintf("%u_%u",$businessId,Auth::id()));
@@ -129,15 +132,29 @@ class PlanController extends Controller
         /**
          * NOTE: We need to validate the request before we create the stripe plans
          */
+        $plansCreated = [];
         foreach($intervals as $interval)
         {
-            \Stripe\Plan::create(array(
-                "name"      => sprintf("%s %s",$planName,$interval),
-                "id"        => sprintf('%s_%s',$planIdentifier,$interval), // makes it unique in stripes DB
-                "interval"  => $interval,
-                "currency"  => self::STANDARD_CURRENCY,
-                "amount"    => $interval == 'month' ? $monthPrice ?: 0 : $yearPrice ?: 0
-            ));
+            $stripeIdentifier = sprintf('%s_%s', $planIdentifier, $interval);
+            try {
+                \Stripe\Plan::create(array(
+                    "name"      => sprintf("%s %s", $planName, $interval),
+                    "id"        => $stripeIdentifier, // makes it unique in stripes DB
+                    "interval"  => $interval,
+                    "currency"  => self::STANDARD_CURRENCY,
+                    "amount"    => $interval == 'month' ? $monthPrice ?: 0 : $yearPrice ?: 0
+                ));
+            } catch (Exception $e) {
+                if(count($plansCreated) > 0) {
+                    foreach ($plansCreated as $identifier) {
+                        $stripeplan = \Stripe\Plan::retrieve($identifier);
+                        $stripeplan->delete();
+                    }
+                }
+                return redirect('/plan/managePlans')->with('successMessage',"We apologize, we are having technical difficulties. Please contact us about your issue");
+            }
+
+            $plansCreated[] = $stripeIdentifier;
         }
 
         $plan = Plan::create([
@@ -153,6 +170,17 @@ class PlanController extends Controller
             'description'       => $description,
             'featured_photo_path' => null,
         ]);
+
+        if($plan == null) {
+            if(count($plansCreated) > 0) {
+                foreach ($plansCreated as $identifier) {
+                    $stripeplan = \Stripe\Plan::retrieve($identifier);
+                    $stripeplan->delete();
+                }
+            }
+
+            return redirect('/plan/managePlans')->with('successMessage',"We apologize, we are having technical difficulties. Please contact us about your issue");
+        }
 
         $msg = 'Service created successfully! ';
         try {
@@ -216,6 +244,11 @@ class PlanController extends Controller
     public function updateGalleryPhotos(Request $request, $id, $file = null) {
 
         $plan = Plan::find($id);
+        if(!$plan) {
+            return Response::create([
+                'msg'   => 'The entity you are updating does not exists'
+            ], 404);
+        }
         $galleryCount = count($plan->photos);
         if($galleryCount >= self::MAX_GALLERY_COUNT) {
             return Response::create([
@@ -268,6 +301,7 @@ class PlanController extends Controller
             'description'        => 'required|'.ALPHANUMERIC_DASH_SPACE_DOT_REGEX
         ]);
         $smPlan = Plan::find($id);
+        noEntityAbort($smPlan,404);
 
         if($smPlan && $smPlan->user_id != Auth::id()) {
             return redirect("/plan/managePlans")->with('errorMessage','YOU ARE NOT AUTHORIZED TO DO THIS! PLEASE DON\'T!');
@@ -311,10 +345,10 @@ class PlanController extends Controller
     {
         // in the future, i'd like to obfuscate the plan id to prevent data mining
         $smPlan = Plan::find($id);
+        noEntityAbort($smPlan,404);
         $business = $smPlan->business;
         $planName = $smPlan->stripe_plan_name;
         $subscriptions = Subscription::where('plan_id', $id)->get();
-        $refundStatus =
         $notification         = new Notification();
         if($subscriptions) {
             foreach ($subscriptions as $subscription) {
@@ -365,6 +399,7 @@ class PlanController extends Controller
     public function deleteFeaturedPhoto(Request $request, $id)
     {
         $plan = Plan::find($id);
+        noEntityAbort($plan, 404);
         $this->photoClient->unlink(getFullPathToImage($plan->featured_photo_path));
         $plan->featured_photo_path = null;
         $plan->save();
@@ -379,6 +414,11 @@ class PlanController extends Controller
     {
         try {
             $photo = Photo::find($id);
+            if(!$photo) {
+                return Response::create([
+                    'msg'   => 'Image does not exist'
+                ], 400);
+            }
             $this->photoClient->unlink($photo->path);
             $photo->delete();
         } catch (Exception $e) {

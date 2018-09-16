@@ -9,6 +9,9 @@ use Illuminate\Support\Facades\Log;
 
 class LocationController extends Controller
 {
+    /**
+     * NOT USING THIS, USING GOOGLE API
+     */
     public function getLocations(Request $request) {
         $queryString = $request->location."%";
         $locations = Location::where('city', 'like',"$queryString")
