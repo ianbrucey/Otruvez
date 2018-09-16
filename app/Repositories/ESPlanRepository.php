@@ -61,11 +61,11 @@ class ESPlanRepository extends ESRepository implements RepositoryInterface
                                 ]
                             ]
                         ],
-//                        'must' => [
-//                            'exists' => [
-//                                'field' => 'featured_photo_path'
-//                            ],
-//                        ],
+                        'must' => [
+                            'exists' => [
+                                'field' => 'featured_photo_path'
+                            ],
+                        ],
                         "minimum_should_match" => 1,
                         "filter" => [
                             'geo_distance' => [
