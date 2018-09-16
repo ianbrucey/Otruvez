@@ -18,7 +18,7 @@ use Illuminate\Support\Facades\Log;
 
 Route::get('/', function () {
     if(Auth::check()) {
-        return redirect('/home');
+//        return redirect('/home');
     } else {
         return view('index');
     }
@@ -27,7 +27,7 @@ Route::get('/', function () {
 
 Route::get('/contact', function () {
     if(Auth::check()) {
-        return redirect('/home');
+//        return redirect('/home');
     } else {
         return view('contact');
     }
@@ -35,7 +35,7 @@ Route::get('/contact', function () {
 
 Route::get('/sellYourServices', function () {
     if(Auth::check()) {
-        return redirect('/home');
+//        return redirect('/home');
     } else {
         $sections = [
             [
@@ -111,9 +111,13 @@ Route::get('/user/testView', 'UserController@testView');
 Route::post('/validateToken', 'UserController@validateToken');
 /** PLAN USER END */
 
-Route::get('/confirmAccount', 'HomeController@showConfirmAccount');
 
-Route::get('/home', 'HomeController@index')->name('home');
+
+/** BUSINESS ROUTES */
+Route::get('/confirmAccount', 'HomeController@showConfirmAccount');
+Route::get('/home', 'HomeController@index');
+Route::post('/home/findServices', 'HomeController@findServices');
+/** BUSINESS ROUTES */
 
 
 

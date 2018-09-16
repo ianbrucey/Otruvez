@@ -1282,6 +1282,28 @@ function issetAndTrue($array, $key) {
     return isset($array[$key]) && $array[$key] ? $array[$key] : null;
 }
 
+function curlRequest($url, $post = null) {
+
+    $ch = curl_init();
+
+    curl_setopt($ch, CURLOPT_URL, $url);
+
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+    curl_setopt($ch, CURLOPT_TIMEOUT, 3);
+    $content = trim(curl_exec($ch));
+    curl_close($ch);
+    var_dump($content);
+    print $content;
+}
+
+function jsonToObject($json) {
+    return json_decode($json);
+}
+
+function objectToJson($object) {
+    return json_encode($object);
+}
+
 const CUSTOMER_SERVICE_CONTACT_LIMIT = 5;
 const ALPHANUMERIC_DASH_SPACE_REGEX = 'regex:/^[a-zA-Z0-9\-\s]+$/';
 const ALPHANUMERIC_DASH_SPACE_DOT_REGEX = 'regex:/^[a-zA-Z0-9\-\s.]+$/';

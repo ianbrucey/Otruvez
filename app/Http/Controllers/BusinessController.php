@@ -28,7 +28,7 @@ class BusinessController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth');
+        $this->middleware('auth')->except(['viewStore','viewService', 'contact', 'about']);
         $this->photoClient = new AWSPhoto();
     }
 
@@ -79,57 +79,72 @@ class BusinessController extends Controller
     }
 
     public function viewStore(Request $request, $id) {
-        $business = Business::find($id);
-        $owner = $business->user ? $business->user->id == Auth::id() : false;
+        $business   = Business::find($id);
+        $owner      = Auth::check()  ? $business->user->id == Auth::id() : false;
         $hasPhoto   = !empty($business->photo_path);
         $haslogo    = !empty($business->logo_path);
+        $guest              = !Auth::check();
         return view('themes.base-theme.store-front')
             ->with('business',$business)
             ->with('hasPhoto',$hasPhoto)
             ->with('haslogo',$haslogo)
             ->with('showCarousel',false)
             ->with('photoActive',0)
+            ->with('guest',$guest)
             ->with('active',"home")
             ->with('owner',$owner);
     }
 
     public function about(Request $request, $id) {
-        $business = Business::find($id);
-        $owner = $business->user ? $business->user->id == Auth::id() : false;
+        $business   = Business::find($id);
+        $owner      = Auth::check()  ? $business->user->id == Auth::id() : false;
         $hasPhoto   = !empty($business->photo_path);
         $haslogo    = !empty($business->logo_path);
+        $guest              = !Auth::check();
         return view('themes.base-theme.about')
             ->with('business',$business)
             ->with('hasPhoto',$hasPhoto)
             ->with('haslogo',$haslogo)
+            ->with('guest',$guest)
             ->with('active',"about")
             ->with('owner',$owner);
     }
 
     public function contact(Request $request, $id) {
-        $business = Business::find($id);
-        $owner = $business->user ? $business->user->id == Auth::id() : false;
+
+        $business   = Business::find($id);
+        $owner      = Auth::check() ? $business->user->id == Auth::id() : false;
         $hasPhoto   = !empty($business->photo_path);
         $haslogo    = !empty($business->logo_path);
+        $guest              = !Auth::check();
         return view('themes.base-theme.contact')
             ->with('business',$business)
             ->with('hasPhoto',$hasPhoto)
             ->with('haslogo',$haslogo)
+            ->with('guest',$guest)
             ->with('active',"contact")
             ->with('owner',$owner);
     }
 
+
+    /**
+     * @param Request $request
+     * @param $planId
+     * @return mixed
+     * todo: this should
+     */
     public function viewService(Request $request,$planId) {
         $plan               = Plan::find($planId);
         $business           = $plan->business;
         $hasPhoto           = !empty($business->photo_path);
         $haslogo            = !empty($business->logo_path);
-        $alreadySubscribed  = (new \App\Subscription())->where('user_id', Auth::id())->where('plan_id', $planId)->exists();
-        $owner              = $business->user ? $business->user->id == Auth::id() : false;
+        $alreadySubscribed  = Auth::check() ?: (new \App\Subscription())->where('user_id', Auth::id())->where('plan_id', $planId)->exists();
+        $owner              = Auth::check() ? $business->user->id == Auth::id() : false;
         $publicStripeKey    = getPublicStripeKey();
         $rating             = (new Rating())->where('plan_id', $planId)->avg('rate_number');
         $reviews            = (new Review())->where('business_id', $business->id)->orderBy('id','desc')->get();
-        $hasReview          = (new Review())->where('business_id', $business->id)->where('user_id', Auth::id() ?: $request->get('user_id'))->first();
+        $hasReview          = Auth::check() ?: (new Review())->where('business_id', $business->id)->where('user_id', Auth::id() ?: $request->get('user_id'))->first();
+        $guest              = !Auth::check();
         return view('themes.base-theme.service')
             ->with('hasPhoto',$hasPhoto)
             ->with('haslogo',$haslogo)
@@ -137,6 +152,7 @@ class BusinessController extends Controller
             ->with('hasReview',$hasReview)
             ->with('reviews',$reviews)
             ->with('rating',$rating)
+            ->with('guest',$guest)
             ->with('alreadySubscribed',$alreadySubscribed)
             ->with('active','')
             ->with('publicStripeKey',$publicStripeKey)

@@ -197,6 +197,8 @@ class PlanController extends Controller
                 ], 400);
             }
 
+            $this->updateEsIndex($plan, $this->esClient);
+
             return Response::create([
                 'msg' => sprintf("Upload successful")
             ], 200);

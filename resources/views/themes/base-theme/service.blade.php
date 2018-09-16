@@ -81,7 +81,9 @@ $intervals = ['month','year'];
                             @endforelse
                         </div>
                         <hr>
-                        @if(!$hasReview && !$owner)
+                        @if(!\Illuminate\Support\Facades\Auth::check())
+                            <p class="theme-color">You must be logged in to write a review</p>
+                        @elseif(!$hasReview && !$owner)
                             <form method="post" action="/review/addReview/{{$business->id}}" class="form-group validate-review" id="review-form">
                                 <textarea name="body" placeholder="write your review here" class="form-control-lg review-body" id="review-body" required></textarea><br>
                                 {{csrf_field()}}
@@ -101,7 +103,11 @@ $intervals = ['month','year'];
                         Subscribe
                     </div>
                     <div class="list-group">
-                            @if($alreadySubscribed)
+                            @if(!\Illuminate\Support\Facades\Auth::check())
+                            <div class="list-group-item text-center ">
+                                <p class="theme-color"> You must be logged in to purchase a subscription</p>
+                            </div>
+                            @elseif($alreadySubscribed)
                                 <div class="list-group-item text-center ">
                                     <a href="/account/mysubscriptions#subscription-details-{{$plan->id}}" class="btn-sm theme-background"><span class="fa fa-star"></span> Use this subscription </a>
                                 </div>

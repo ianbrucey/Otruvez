@@ -2,21 +2,47 @@
  * Created by macbook on 11/9/17.
  */
 // alert('set address');
-var placeSearch, autocomplete;
-var componentForm = {
+let placeSearch, autocomplete;
+let componentForm = {
     locality: 'long_name',
     administrative_area_level_1: 'short_name',
     country: 'long_name',
     postal_code: 'short_name'
 };
 
-function initAutocomplete() {
+// let options = {
+//     types: ['geocode'],
+//     componentRestrictions: {country: "us"}
+// };
+
+function initAutocompleteCities() {
+    let options = {
+        types: ['(cities)'],
+        componentRestrictions: {country: "us"}
+    };
     // Create the autocomplete object, restricting the search to geographical
     // location types.
     // console.log("initing autocomplete...");
     autocomplete = new google.maps.places.Autocomplete(
         /** @type {!HTMLInputElement} */(document.getElementById('autocomplete')),
-        {types: ['geocode']});
+        options);
+
+    // When the user selects an address from the dropdown, populate the address
+    // fields in the form.
+    autocomplete.addListener('place_changed', fillInAddress);
+}
+
+function initAutocomplete() {
+    let options = {
+            types: ['geocode']
+        };
+
+    // Create the autocomplete object, restricting the search to geographical
+    // location types.
+    // console.log("initing autocomplete...");
+    autocomplete = new google.maps.places.Autocomplete(
+        /** @type {!HTMLInputElement} */(document.getElementById('autocomplete')),
+        options);
 
     // When the user selects an address from the dropdown, populate the address
     // fields in the form.
@@ -69,16 +95,19 @@ function geolocate() {
     console.log("geolocating...");
     if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(function(position) {
-            var geolocation = {
+            console.log(position);
+            let geolocation = {
                 lat: position.coords.latitude,
                 lng: position.coords.longitude
             };
-            var circle = new google.maps.Circle({
+            let circle = new google.maps.Circle({
                 center: geolocation,
                 radius: position.coords.accuracy
             });
             autocomplete.setBounds(circle.getBounds());
         });
+    } else {
+        console.log("no");
     }
 }
 
