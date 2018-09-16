@@ -31,6 +31,7 @@ class ReindexCommand extends Command
 
 
         $this->info('Indexing all plans. Might take a while...');
+        $this->output->write(sprintf("there are %s plans", count(Plan::cursor())));
         foreach (Plan::cursor() as $model) {
 
             if($model->business) {

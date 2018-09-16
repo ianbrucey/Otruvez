@@ -156,7 +156,9 @@ class PlanController extends Controller
 
         $msg = 'Service created successfully! ';
         try {
-            $this->updateFeaturedPhoto($request, $plan->id, $featuredPhoto);
+            $photoUpdate = $this->updateFeaturedPhoto($request, $plan->id, $featuredPhoto);
+            $obj = jsonToObject($photoUpdate->getContent());
+            $plan->featured_photo_path = $obj->path;
 
             if($galleryPhotos != null && count($galleryPhotos) > 0) {
                 foreach ($galleryPhotos as $file) {
@@ -175,6 +177,7 @@ class PlanController extends Controller
 
     public function updateFeaturedPhoto(Request $request, $id, $file = null)
     {
+        $path = '';
         if(!empty($request)) {
 
             $this->validate($request, [
@@ -200,7 +203,8 @@ class PlanController extends Controller
             $this->updateEsIndex($plan, $this->esClient);
 
             return Response::create([
-                'msg' => sprintf("Upload successful")
+                'msg' => sprintf("Upload successful"),
+                'path' => $path
             ], 200);
         }
 

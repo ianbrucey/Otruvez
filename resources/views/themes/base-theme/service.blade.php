@@ -24,7 +24,7 @@ $intervals = ['month','year'];
                         </ul>
                     </div>
                     @if($plan->featured_photo_path)
-                        <div class="hd-img-top img-fluid" style="background: url({{getImage($plan->featured_photo_path)}}) no-repeat black; height: 320px; max-height: 320px; background-size: contain; background-position: center; "> </div>
+                        <div class="hd-img-top img-fluid" style="background: url({{getImage($plan->featured_photo_path)}}) no-repeat black; height: 320px; max-height: 320px; background-size: contain; background-position: center; " href="{{getImage($plan->featured_photo_path)}}" data-lity> </div>
                     @else
                         <hr>
                     @endif
