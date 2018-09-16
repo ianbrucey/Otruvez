@@ -36,11 +36,6 @@ class AccountController extends Controller
             ->with('portalBusiness', $portalBusiness)
             ->with('mustUpdatePaymentMethod', !Auth::user()->has_valid_payment_method);
     }
-    public function businessNotificationView($businessId){
-        $businessEmail = (new Business())->where('id', $businessId)->value('email');
-        $notifications = (new Notification())->getNotifications('business', $businessEmail, $businessId);
-        return view('business.business-notifications')->with('notifications', $notifications);
-    }
 
     public function accountNotificationView(){
         $notifications = (new Notification())->getNotifications(Auth::id());
@@ -111,10 +106,10 @@ class AccountController extends Controller
         if($email !=  $user->email) {
             return redirect()->back()->with("errorMessage","Not authorized to make this request");
         }
-
-        if($user->business_id) {
+        $business = getAuthedBusiness();
+        if($business != null) {
             $businessController = new BusinessController();
-            $businessController->deleteBusiness( $request, $user->business_id, true);
+            $businessController->deleteBusiness( $request, $business->id, true);
         }
 
         $localSubscriptions = (new Subscription())->where('user_id', Auth::id())->get();
