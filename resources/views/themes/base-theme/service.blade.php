@@ -105,7 +105,8 @@ $intervals = ['month','year'];
                     <div class="list-group">
                             @if(!\Illuminate\Support\Facades\Auth::check())
                             <div class="list-group-item text-center ">
-                                <p class="theme-color"> You must be logged in to purchase a subscription</p>
+                                <p class="theme-color"> You must be signed in to purchase a subscription</p>
+                                <a class="btn theme-background" href="/portal/login/{{$business->id}}/{{$plan->id}}/{{$business->api_key}}">Login or Register</a>
                             </div>
                             @elseif($alreadySubscribed)
                                 <div class="list-group-item text-center ">

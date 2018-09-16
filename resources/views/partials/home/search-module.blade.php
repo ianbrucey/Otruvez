@@ -1,9 +1,10 @@
 <div class="row page-search">
     <!-- Store Search -->
-    <form action="/home/findServices" method="post" class="col-md-5 offset-md-1" id="search-form">
+    <form action="/home/findServices" method="post" class="col-md-5 offset-md-1" id="search-form" autocomplete="off">
         {{csrf_field()}}
         <div class="block d-flex">
             <input type="hidden" name="submitted"  value=true>
+            <input autocomplete="false" name="hidden" type="text" style="display:none;">
             <input type="hidden" class="field" id="address" name="address">
             <input type="hidden" class="field" id="locality" name="city" value="{{$location->city}}">
             <input type="hidden" class="field" id="administrative_area_level_1" name="state" value="{{$location->state}}">
@@ -27,7 +28,7 @@
     <div class="col-md-3 col-sm-12" id="location-form">
         <div class="block d-flex location-label-container">
             <input id="autocomplete" placeholder="Enter your city"
-                   onFocus="geolocate()" class="form-control" type="text" autocomplete="new-address" style="background: white" value="{{$location->city}}, {{strtoupper(substr($location->state,0,2))}}">
+                   onFocus="geolocate()" class="form-control" type="text" style="background: white" value="{{$location->city}}, {{strtoupper(substr($location->state,0,2))}}" autocomplete="offsakdjhfjkads fhsd fk">
         </div>
 
         <div id="location-list-container" class="col-md-8 card">
