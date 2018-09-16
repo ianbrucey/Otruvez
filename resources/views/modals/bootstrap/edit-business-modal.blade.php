@@ -1,6 +1,6 @@
 <div id="business-details-{{$business->id}}" class="sm-modal " style="overflow: scroll">
     <form method="post" action="/business/update/{{$business->id}}" id="edit-business-details-form" class="validate-create-business">
-
+        <input type="text" name="name" class="form-control" value="{{$business->name}}">
         <!-- Modal content-->
         <div class="modal-content col-md-8 offset-md-2">
             <div class="modal-header">
@@ -20,7 +20,7 @@
                     <label>Phone: </label>
                 </div>
                 <div class="edit-input-div">
-                    <input type="text" name="tel" class="form-control" value="{{$business->phone}}">
+                    <input type="tel" name="phone" class="form-control" value="{{$business->phone}}">
                 </div>
 
                 <div class="edit-label-div">

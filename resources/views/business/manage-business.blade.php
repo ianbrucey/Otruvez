@@ -5,7 +5,7 @@
 @endsection
 
 @section('body')
-    @if(!count($businesses))
+    @if($business == null)
         <h2 class="text-center">Merchant center</h2>
         <h4 class="text-center">To start selling subscriptions, enter your business's details</h4>
 
@@ -17,9 +17,9 @@
         <div class="row">
             <div class="col-md-12" href="#">
                 <h3 class="text-center">Your Business Details</h3>
+                @include("errors.request-errors")
             </div>
-            @if(count($businesses))
-                @foreach($businesses as $business)
+
                     @php
                         $hasPhoto   = !empty($business->photo_path);
                         $haslogo    = !empty($business->logo_path);
@@ -61,7 +61,7 @@
                             {{--PRIMARY BUSINESS LOGO--}}
                             <p class="text-center">
                                 <a class="text-primary btn theme-background" id="update-business-logo" data-target="#business-logo-dropzone" onclick="triggerTargetClick(event, this)">update logo</a>
-                            <form action="/business/updateLogo/{{$business->id}}" class="dropzone hide" id="business-logo-dropzone">
+                            <form action="/business/updateLogo/{{$business->id}}" class="dropzone business-logo-dropzone hide" id="business-logo-dropzone">
                                 {{ csrf_field() }}
                                 {{ form_method_field("POST") }}
                                 <div class="fallback">
@@ -133,7 +133,7 @@
                         <div class="card-body">
                             <hr>
                             <h3 class="text-justify" data-toggle="collapse" data-target="#redirect-url-info">Redirect Url: <span class="float-right theme-color">What's this?</span> </h3>
-                            <p class="theme-color collapse" id="redirect-url-info" >This field is for online businesses who want to use our portal to sell their subscriptions. After a customer completes the process, they will be redirected to this URL. You can also set this field in the <b>API & Online Business Integration</b> Page for any of the services you offer.</p>
+                            <p class="theme-color collapse" id="redirect-url-info" >This field is for online business who want to use our portal to sell their subscriptions. After a customer completes the process, they will be redirected to this URL. You can also set this field in the <b>API & Online Business Integration</b> Page for any of the services you offer.</p>
                             <p>{{$business->redirect_to ?: 'No url provided'}}</p>
                         </div>
 
@@ -146,12 +146,6 @@
                             @include('modals.bootstrap.edit-business-modal')
 
                     </div>
-                @endforeach
-            @else
-                <h2 class="text-center text-white">
-                    No active businesses. Click the button above to create one.
-                </h2>
-            @endif
         </div>
     </div>
 

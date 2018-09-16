@@ -1304,6 +1304,26 @@ function objectToJson($object) {
     return json_encode($object);
 }
 
+function noEntityAbort($entity, $code) {
+    if($entity == null) {
+        abort($code);
+    }
+}
+
+function serverError500() {
+    abort(500);
+}
+
+function notYourEntityAbort403(\Illuminate\Database\Eloquent\Model $entity) {
+    if($entity->user_id != Auth::id()) {
+        abort(403);
+    }
+}
+
+function getAuthedBusiness() {
+    return Business::where('user_id', Auth::id())->first();
+}
+
 const CUSTOMER_SERVICE_CONTACT_LIMIT = 5;
 const ALPHANUMERIC_DASH_SPACE_REGEX = 'regex:/^[a-zA-Z0-9\-\s]+$/';
 const ALPHANUMERIC_DASH_SPACE_DOT_REGEX = 'regex:/^[a-zA-Z0-9\-\s.]+$/';

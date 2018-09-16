@@ -25,7 +25,8 @@ class AccountController extends Controller
     }
 
     public function subscriptions(Request $request, $portalBusinessId = null)
-    {   $portalBusiness = null;
+    {
+        $portalBusiness = null;
         if($portalBusinessId) {
             $portalBusiness = Business::find($portalBusinessId);
         }
