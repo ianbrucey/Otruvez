@@ -243,12 +243,14 @@ class PlanController extends Controller
 
     public function updateGalleryPhotos(Request $request, $id, $file = null) {
 
-        $plan = Plan::find($id);
+        $plan = Plan::where('user_id', Auth::id())->where('id',$id)->first();
+
         if(!$plan) {
             return Response::create([
                 'msg'   => 'The entity you are updating does not exists'
             ], 404);
         }
+
         $galleryCount = count($plan->photos);
         if($galleryCount >= self::MAX_GALLERY_COUNT) {
             return Response::create([
@@ -300,12 +302,9 @@ class PlanController extends Controller
             'stripe_plan_name'   => 'required|'.ALPHANUMERIC_DASH_SPACE_DOT_REGEX,
             'description'        => 'required|'.ALPHANUMERIC_DASH_SPACE_DOT_REGEX
         ]);
-        $smPlan = Plan::find($id);
-        noEntityAbort($smPlan,404);
+        $smPlan = Plan::where('user_id', Auth::id())->where('id',$id)->first();
 
-        if($smPlan && $smPlan->user_id != Auth::id()) {
-            return redirect("/plan/managePlans")->with('errorMessage','YOU ARE NOT AUTHORIZED TO DO THIS! PLEASE DON\'T!');
-        }
+        noEntityAbort($smPlan,404);
 
         $business   = $smPlan->business;
         $data       = [
@@ -344,7 +343,7 @@ class PlanController extends Controller
     public function deletePlan(Request $request, $id)
     {
         // in the future, i'd like to obfuscate the plan id to prevent data mining
-        $smPlan = Plan::find($id);
+        $smPlan = Plan::where('user_id', Auth::id())->where('id',$id)->first();
         noEntityAbort($smPlan,404);
         $business = $smPlan->business;
         $planName = $smPlan->stripe_plan_name;
@@ -398,7 +397,7 @@ class PlanController extends Controller
 
     public function deleteFeaturedPhoto(Request $request, $id)
     {
-        $plan = Plan::find($id);
+        $plan = Plan::where('user_id', Auth::id())->where('id',$id)->first();
         noEntityAbort($plan, 404);
         $this->photoClient->unlink(getFullPathToImage($plan->featured_photo_path));
         $plan->featured_photo_path = null;
@@ -413,7 +412,7 @@ class PlanController extends Controller
     public function deleteGalleryPhoto(Request $request, $id)
     {
         try {
-            $photo = Photo::find($id);
+            $photo = Photo::where('user_id', Auth::id())->where('id',$id)->first();
             if(!$photo) {
                 return Response::create([
                     'msg'   => 'Image does not exist'
@@ -454,7 +453,8 @@ class PlanController extends Controller
     }
 
     public function apiSetup(Request $request, $planId) {
-        $plan     = (new Plan())->where('id', $planId)->first();
+        $plan = Plan::where('user_id', Auth::id())->where('id',$planId)->first();
+        noEntityAbort($plan,404);
         $business = $plan->business;
         $portalLink = sprintf("/portal/viewService/%s/%s/%s",$business->id,$plan->id,$business->api_key);
         return view('business.online-integration')->with([
