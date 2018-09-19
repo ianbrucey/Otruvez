@@ -26,7 +26,7 @@ class UserController extends Controller
 
     public function activateBusinessAccount($id, $accountPlan, $subscriptionId)
     {
-        $user = $this->findUser($id);
+        $user = Auth::user();
         if ($user)
         {
             $user->business_account = "1";
@@ -42,6 +42,11 @@ class UserController extends Controller
 
     public function activateUserAccount(Request $request)
     {
+        $this->validate($request,[
+           'email' => 'required|email',
+           'token' => 'required|'.ALPHANUMERIC_DASH_SPACE_DOT_REGEX
+        ]);
+
         $user = (new User())->where('email', $request->query('email'))->first();
 
         if($user && $user->activated == 0 && $user->activation_token == $request->query('token')) {
@@ -59,30 +64,15 @@ class UserController extends Controller
 
     public function updateBusinessAccount($id, $accountPlan = null)
     {
-        $user = $this->findUser($id);
-        if ($user)
-        {
-            $user->business_account = "1";
-            $user->business_account_plan = $accountPlan;
-            $user->save();
-            return $user;
-        }
+        $user = Auth::user();
 
-        return 'success';
+        $user->business_account = "1";
+        $user->business_account_plan = $accountPlan;
+        $user->save();
+        return $user;
 
     }
 
-    public function test(Request $request) {
-
-        $file = $request->file('file');
-        $this->s3->store($file, S3FolderTypes::BUSINESS_LOGO);
-        return redirect()->back()->with('successMessage',"it worked!");
-    }
-
-    public function testView() {
-        $this->s3->unlink("business-logo/22baaed9cb5ab368245aadb077a90e6e7553f6ca.jpg");
-        return view('test-view');
-    }
 
     private function getUserObject()
     {
@@ -103,6 +93,9 @@ class UserController extends Controller
 
     public function validateToken(Request $request)
     {
+        $this->validate($request,[ // may need to test
+            'activation_token' => 'required|integer'
+        ]);
         $validToken = 0;
         $save = true;
         if($request->has('activation_token')) {
