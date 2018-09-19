@@ -18,7 +18,7 @@ use Illuminate\Support\Facades\Log;
 
 Route::get('/', function () {
     if(Auth::check()) {
-//        return redirect('/home');
+        return redirect('/home');
     } else {
         return view('index');
     }
