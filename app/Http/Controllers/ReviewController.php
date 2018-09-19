@@ -36,7 +36,7 @@ class ReviewController extends Controller
 
     private function delete(Request $request, $reviewId)
     {
-        $review = Review::find($reviewId);
+        $review = Review::where('id', $reviewId)->where('user_id', Auth::id())->first();
 
         if($review) {
             $review->delete();

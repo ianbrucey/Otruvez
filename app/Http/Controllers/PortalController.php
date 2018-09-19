@@ -53,7 +53,7 @@ class PortalController extends Controller
                 'portalRouteExtension'  => $this->portalRouteExtension
             ]);
         } else {
-            return "Not authorized";
+            return abort(404);
         }
 
 
@@ -70,7 +70,7 @@ class PortalController extends Controller
                 'portalRouteExtension'  => $this->portalRouteExtension
             ]);
         } else {
-            return "Not authorized";
+            return abort(404);
         }
 
     }
@@ -112,7 +112,7 @@ class PortalController extends Controller
                 ->with('owner',$owner)
                 ->with($this->params);
         } else {
-            return "Not authorized";
+            return abort(404);
         }
     }
 
