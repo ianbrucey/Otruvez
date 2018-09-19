@@ -197,7 +197,20 @@ class PlanController extends Controller
             $msg .= " Warning: there was a problem with one or more of your uploads";
         }
 
-        $this->updateEsIndex($plan, $es);
+
+        try {
+            $this->updateEsIndex($plan, $es);
+        } catch (Exception $e) {
+            $plan->delete();
+            if(count($plansCreated) > 0) {
+                foreach ($plansCreated as $identifier) {
+                    $stripeplan = \Stripe\Plan::retrieve($identifier);
+                    $stripeplan->delete();
+                }
+            }
+
+            return redirect('/plan/managePlans')->with('errorMessage',"We could not complete this request. Please contact us if you experience this issue further.");
+        }
 
         return redirect('/plan/managePlans')->with('successMessage',$msg);
 
@@ -438,12 +451,16 @@ class PlanController extends Controller
             $body['location'] = $location;
             $body['rating'] = (new Rating())->where('plan_id', $plan->id)->avg('rate_number') ?: 0;
 
-            $es->index([
-                'index' => $plan->getSearchIndex(),
-                'type' => $plan->getSearchType(),
-                'id' => $plan->id,
-                'body' => $body,
-            ]);
+            try {
+                $es->index([
+                    'index' => $plan->getSearchIndex(),
+                    'type' => $plan->getSearchType(),
+                    'id' => $plan->id,
+                    'body' => $body,
+                ]);
+            } catch (Exception $e) {
+                throw new BadRequest400Exception($e->getMessage());
+            }
         }
     }
 

@@ -33,7 +33,7 @@ $(function() {
             }
         },
         sending: function () {
-            // loadingPhoto.fadeIn();
+            loadingPhoto.fadeIn();
         },
         success: function () {
             successful = true;
@@ -43,6 +43,7 @@ $(function() {
             // console.log(xhr);
             successful = false;
             console.log("error");
+            loadingPhoto.fadeOut();
         }
     });
 
