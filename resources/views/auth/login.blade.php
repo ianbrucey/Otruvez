@@ -12,13 +12,7 @@
 
 
                 <div class="card-body">
-                    <div class="text-center auth-login-button-container">
-                        <p>Login with</p>
-                        <a href="{{ url('/auth/facebook') }}" class="btn text-white" style="background: #4267b2;"><i class="fa fa-facebook"></i> Facebook</a>
-                        <a href="{{ url('/auth/google') }}" class="btn btn-danger"><i class="fa fa-google"></i> Google</a>
-                        <a href="{{ url('/auth/twitter') }}" class="btn text-white" style="background: lightskyblue;"><i class="fa fa-google"></i> Twitter</a>
-                    </div>
-                    <hr>
+                        @include('partials.social.auth-buttons')
                     <form class="form-horizontal validate-login" method="POST" action="{{ route('login') }}">
                         {{ csrf_field() }}
 
