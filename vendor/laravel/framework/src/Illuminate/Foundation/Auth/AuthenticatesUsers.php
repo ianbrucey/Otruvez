@@ -34,7 +34,7 @@ trait AuthenticatesUsers
         $this->validateLogin($request);
 
         if($this->isAccountActive($request) == 0) {
-            return $this->sendFailedLoginResponse($request, false);
+            $this->redirectTo = "/registered";
         }
 
         // If the class is using the ThrottlesLogins trait, we can automatically throttle
@@ -68,7 +68,11 @@ trait AuthenticatesUsers
     {
         $this->validate($request, [
             $this->username() => 'required|email',
-            'password' => 'required|string|min:8',
+            'password' => [
+                'required',
+                'min:8',
+                'regex:/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*(_|[^\w])).+$/'
+            ]
         ]);
     }
 

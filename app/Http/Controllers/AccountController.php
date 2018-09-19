@@ -24,15 +24,17 @@ class AccountController extends Controller
         return view('account.account-home');
     }
 
-    public function subscriptions()
+    public function subscriptions(Request $request, $portalBusinessId = null)
     {
+        $portalBusiness = null;
+        if($portalBusinessId) {
+            $portalBusiness = Business::find($portalBusinessId);
+        }
         $subscriptions  = Subscription::where('user_id', Auth::id())->where('business_id',"!=",0)->get();
-        return view('account.subscriptions')->with('subscriptions', $subscriptions)->with('mustUpdatePaymentMethod', !Auth::user()->has_valid_payment_method);
-    }
-    public function businessNotificationView($businessId){
-        $businessEmail = (new Business())->where('id', $businessId)->value('email');
-        $notifications = (new Notification())->getNotifications('business', $businessEmail, $businessId);
-        return view('business.business-notifications')->with('notifications', $notifications);
+        return view('account.subscriptions')
+            ->with('subscriptions', $subscriptions)
+            ->with('portalBusiness', $portalBusiness)
+            ->with('mustUpdatePaymentMethod', !Auth::user()->has_valid_payment_method);
     }
 
     public function accountNotificationView(){
@@ -46,6 +48,10 @@ class AccountController extends Controller
     }
 
     public function contactSupport(Request $request){
+        $this->validate($request,[
+            'subject'   => 'nullable|'.ALPHANUMERIC_DASH_SPACE_DOT_REGEX,
+            'body'      => 'nullable|'.ALPHANUMERIC_DASH_SPACE_DOT_REGEX
+        ]);
         $subject = $request->get('subject');
         $body    = $request->get('body');
         $currentTimestamp   = date('Y-m-d G:i:s');
@@ -91,16 +97,19 @@ class AccountController extends Controller
 
     public function deleteAccount(Request $request)
     {
+        $this->validate($request, [
+            'email' => 'required|email'
+        ]);
         setStripeApiKey('secret');
         $email = $request->get('email');
         $user = Auth::user();
         if($email !=  $user->email) {
             return redirect()->back()->with("errorMessage","Not authorized to make this request");
         }
-
-        if($user->business_id) {
+        $business = getAuthedBusiness();
+        if($business != null) {
             $businessController = new BusinessController();
-            $businessController->deleteBusiness( $request, $user->business_id, true);
+            $businessController->deleteBusiness( $request, $business->id, true);
         }
 
         $localSubscriptions = (new Subscription())->where('user_id', Auth::id())->get();

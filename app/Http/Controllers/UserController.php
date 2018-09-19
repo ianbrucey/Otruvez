@@ -2,12 +2,15 @@
 
 namespace App\Http\Controllers;
 
+use App\Email;
 use App\Notification;
 use App\S3FolderTypes;
 use App\Subscription;
 use App\User;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
+use Mockery\CountValidator\Exception;
 use Mockery\Matcher\Not;
 use App\PhotoClient\AWSPhoto;
 
@@ -23,7 +26,7 @@ class UserController extends Controller
 
     public function activateBusinessAccount($id, $accountPlan, $subscriptionId)
     {
-        $user = $this->findUser($id);
+        $user = Auth::user();
         if ($user)
         {
             $user->business_account = "1";
@@ -39,6 +42,11 @@ class UserController extends Controller
 
     public function activateUserAccount(Request $request)
     {
+        $this->validate($request,[
+           'email' => 'required|email',
+           'token' => 'required|'.ALPHANUMERIC_DASH_SPACE_DOT_REGEX
+        ]);
+
         $user = (new User())->where('email', $request->query('email'))->first();
 
         if($user && $user->activated == 0 && $user->activation_token == $request->query('token')) {
@@ -56,30 +64,15 @@ class UserController extends Controller
 
     public function updateBusinessAccount($id, $accountPlan = null)
     {
-        $user = $this->findUser($id);
-        if ($user)
-        {
-            $user->business_account = "1";
-            $user->business_account_plan = $accountPlan;
-            $user->save();
-            return $user;
-        }
+        $user = Auth::user();
 
-        return 'success';
+        $user->business_account = "1";
+        $user->business_account_plan = $accountPlan;
+        $user->save();
+        return $user;
 
     }
 
-    public function test(Request $request) {
-
-        $file = $request->file('file');
-        $this->s3->store($file, S3FolderTypes::BUSINESS_LOGO);
-        return redirect()->back()->with('successMessage',"it worked!");
-    }
-
-    public function testView() {
-        $this->s3->unlink("business-logo/22baaed9cb5ab368245aadb077a90e6e7553f6ca.jpg");
-        return view('test-view');
-    }
 
     private function getUserObject()
     {
@@ -88,5 +81,56 @@ class UserController extends Controller
     public function findUser($id)
     {
         return $this->getUserObject()->find($id);
+    }
+
+    public function regenerateValidationToken(User $user)
+    {
+        $token = generateValidationToken();
+        $user->activation_token = $token;
+        $user->save();
+        Email::sendConfirmAccountEmail($user, $token);
+    }
+
+    public function validateToken(Request $request)
+    {
+        $this->validate($request,[ // may need to test
+            'activation_token' => 'required|integer'
+        ]);
+        $validToken = 0;
+        $save = true;
+        if($request->has('activation_token')) {
+            $user = Auth::user();
+            if ($user->lockout != 1) {
+                if ($request->get('activation_token') == $user->activation_token) {
+                    $user->activated = "1";
+                    $user->validation_tries = 0;
+                    $user->lockout = 0;
+                    $validToken = 1;
+                } else {
+                    ++$user->validation_tries;
+                    if ($user->validation_tries > 3) {
+                        $user->lockout = 1;
+                        $validToken = 2;
+                    } else {
+                        $this->regenerateValidationToken($user);
+                        $save = false;
+                    }
+                }
+
+                if($save) {
+                    $user->save();
+                }
+
+            } else {
+                $validToken = 2; // turn these numbers into constants
+            }
+
+
+            return Response::create(['tokenStatus' => $validToken], 201);
+
+        } else {
+            // some method to capture IP, location and other info
+            return Response::create(['tokenStatus' => -1], 201);;
+        }
     }
 }

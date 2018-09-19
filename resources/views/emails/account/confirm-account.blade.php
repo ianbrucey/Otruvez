@@ -1,10 +1,12 @@
 @component('mail::message')
 <b>Hi, {{$name}}.</b>
 
-Thank you for registering. Click the button below to confirm your account and login
+Thank you for registering. Please go back and enter the 6 digit code below to confirm your account
+<br>
+<h1>{{$token}}</h1>
 
-@component('mail::button', ['url' => $url])
-Confirm Account
+@component('mail::button', ['url' => ""])
+Thanks for choosing Otruvez
 @endcomponent
 
 Thanks,

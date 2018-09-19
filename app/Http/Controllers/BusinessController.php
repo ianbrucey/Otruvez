@@ -15,9 +15,11 @@ use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Http\Request;
 use App\Business;
 use App\User;
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Bus;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Input;
 use Stripe\Stripe;
 use Stripe\Subscription;
 use Symfony\Component\Finder\Exception\AccessDeniedException;
@@ -26,7 +28,7 @@ class BusinessController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth');
+        $this->middleware('auth')->except(['viewStore','viewService', 'contact', 'about']);
         $this->photoClient = new AWSPhoto();
     }
 
@@ -34,6 +36,26 @@ class BusinessController extends Controller
     private $businessPhotoPath = 'public/images/business';
     private $businessLogoPath = 'public/images/business/logos';
     private $photoClient;
+    private $validationRules = [
+        'name'          => 'required|'.ALPHANUMERIC_DASH_SPACE_REGEX,
+        'email'         => 'required|email',
+        'phone'         => 'nullable|numeric',
+        'description'   => 'required|'.ALPHANUMERIC_DASH_SPACE_DOT_REGEX,
+        'redirect_to'   => 'nullable|url',
+        'city'          => 'nullable|'.ALPHANUMERIC_DASH_SPACE_DOT_REGEX,
+        'state'         => 'nullable|'.ALPHANUMERIC_DASH_SPACE_DOT_REGEX,
+        'zip'           => 'nullable|'.ALPHANUMERIC_DASH_SPACE_DOT_REGEX,
+        'country'       => 'nullable|'.ALPHANUMERIC_DASH_SPACE_DOT_REGEX,
+        'lat'           => 'nullable|'.ALPHANUMERIC_DASH_SPACE_DOT_REGEX,
+        'lng'           => 'nullable|'.ALPHANUMERIC_DASH_SPACE_DOT_REGEX,
+        'monday'        => 'nullable|'.ALPHANUMERIC_DASH_SPACE_DOT_REGEX,
+        'tuesday'       => 'nullable|'.ALPHANUMERIC_DASH_SPACE_DOT_REGEX,
+        'wednesday'     => 'nullable|'.ALPHANUMERIC_DASH_SPACE_DOT_REGEX,
+        'thursday'      => 'nullable|'.ALPHANUMERIC_DASH_SPACE_DOT_REGEX,
+        'friday'        => 'nullable|'.ALPHANUMERIC_DASH_SPACE_DOT_REGEX,
+        'saturday'      => 'nullable|'.ALPHANUMERIC_DASH_SPACE_DOT_REGEX,
+        'sunday'        => 'nullable|'.ALPHANUMERIC_DASH_SPACE_DOT_REGEX,
+    ];
 
     public function index()
     {
@@ -57,57 +79,77 @@ class BusinessController extends Controller
     }
 
     public function viewStore(Request $request, $id) {
-        $business = Business::find($id);
-        $owner = $business->user ? $business->user->id == Auth::id() : false;
+        $business   = Business::find($id);
+        noEntityAbort($business, 404);
+        $owner      = Auth::check()  ? $business->user->id == Auth::id() : false;
         $hasPhoto   = !empty($business->photo_path);
         $haslogo    = !empty($business->logo_path);
+        $guest              = !Auth::check();
         return view('themes.base-theme.store-front')
             ->with('business',$business)
             ->with('hasPhoto',$hasPhoto)
             ->with('haslogo',$haslogo)
             ->with('showCarousel',false)
             ->with('photoActive',0)
+            ->with('guest',$guest)
             ->with('active',"home")
             ->with('owner',$owner);
     }
 
     public function about(Request $request, $id) {
-        $business = Business::find($id);
-        $owner = $business->user ? $business->user->id == Auth::id() : false;
+        $business   = Business::find($id);
+        noEntityAbort($business, 404);
+        $owner      = Auth::check()  ? $business->user->id == Auth::id() : false;
         $hasPhoto   = !empty($business->photo_path);
         $haslogo    = !empty($business->logo_path);
+        $guest              = !Auth::check();
         return view('themes.base-theme.about')
             ->with('business',$business)
             ->with('hasPhoto',$hasPhoto)
             ->with('haslogo',$haslogo)
+            ->with('guest',$guest)
             ->with('active',"about")
             ->with('owner',$owner);
     }
 
     public function contact(Request $request, $id) {
-        $business = Business::find($id);
-        $owner = $business->user ? $business->user->id == Auth::id() : false;
+
+        $business   = Business::find($id);
+        noEntityAbort($business, 404);
+        $owner      = Auth::check() ? $business->user->id == Auth::id() : false;
         $hasPhoto   = !empty($business->photo_path);
         $haslogo    = !empty($business->logo_path);
+        $guest              = !Auth::check();
         return view('themes.base-theme.contact')
             ->with('business',$business)
             ->with('hasPhoto',$hasPhoto)
             ->with('haslogo',$haslogo)
+            ->with('guest',$guest)
             ->with('active',"contact")
             ->with('owner',$owner);
     }
 
+
+    /**
+     * @param Request $request
+     * @param $planId
+     * @return mixed
+     * todo: this should
+     */
     public function viewService(Request $request,$planId) {
         $plan               = Plan::find($planId);
+        noEntityAbort($plan, 404);
         $business           = $plan->business;
+        noEntityAbort($business, 404);
         $hasPhoto           = !empty($business->photo_path);
         $haslogo            = !empty($business->logo_path);
-        $alreadySubscribed  = (new \App\Subscription())->where('user_id', Auth::id())->where('plan_id', $planId)->exists();
-        $owner              = $business->user ? $business->user->id == Auth::id() : false;
+        $alreadySubscribed  = Auth::check() ? (new \App\Subscription())->where('user_id', Auth::id())->where('plan_id', $planId)->exists() : false;
+        $owner              = Auth::check() ? $business->user->id == Auth::id() : false;
         $publicStripeKey    = getPublicStripeKey();
         $rating             = (new Rating())->where('plan_id', $planId)->avg('rate_number');
         $reviews            = (new Review())->where('business_id', $business->id)->orderBy('id','desc')->get();
-        $hasReview          = (new Review())->where('business_id', $business->id)->where('user_id', Auth::id() ?: $request->get('user_id'))->first();
+        $hasReview          = Auth::check() ? (new Review())->where('business_id', $business->id)->where('user_id', Auth::id())->first(): false;
+        $guest              = !Auth::check();
         return view('themes.base-theme.service')
             ->with('hasPhoto',$hasPhoto)
             ->with('haslogo',$haslogo)
@@ -115,6 +157,7 @@ class BusinessController extends Controller
             ->with('hasReview',$hasReview)
             ->with('reviews',$reviews)
             ->with('rating',$rating)
+            ->with('guest',$guest)
             ->with('alreadySubscribed',$alreadySubscribed)
             ->with('active','')
             ->with('publicStripeKey',$publicStripeKey)
@@ -133,16 +176,17 @@ class BusinessController extends Controller
     public function manageBusiness(Request $request = null)
     {
         $days = ['monday','tuesday','wednesday','thursday','friday','saturday','sunday'];
-        $businesses = Business::where('user_id', Auth::id())->get();
+        $business = getAuthedBusiness();
         return view('business.manage-business')
-            ->with('businesses', $businesses)
+            ->with('business', $business)
             ->with('days', $days);
     }
 
-    public function updateBusinessPhoto(Request $request, $businessId)
+    public function updateBusinessPhoto(Request $request, $businessId) // request doesn't need id
     {
         if(!empty($request)) {
-            $business = Business::find($businessId);
+            $business = getAuthedBusiness();
+            noEntityAbort($business, 404);
             if($business->photo_path) {
                 $this->photoClient->unlink($business->photo_path);
             }
@@ -160,7 +204,8 @@ class BusinessController extends Controller
     public function updateBusinessLogo(Request $request, $businessId)
     {
         if(!empty($request)) {
-            $business = Business::find($businessId);
+            $business = getAuthedBusiness();
+            noEntityAbort($business, 403);
             if($business->logo_path) {
                 $this->photoClient->unlink($business->logo_path);
             }
@@ -178,7 +223,8 @@ class BusinessController extends Controller
     public function deleteBusinessPhoto(Request $request, $businessId)
     {
         if(!empty($request)) {
-            $business = Business::find($businessId);
+            $business = getAuthedBusiness();
+            noEntityAbort($business, 403);
             $this->photoClient->unlink($business->photo_path);
             $business->photo_path = null;
             $business->save();
@@ -192,7 +238,8 @@ class BusinessController extends Controller
     public function deleteBusinessLogo(Request $request, $businessId)
     {
         if(!empty($request)) {
-            $business = Business::find($businessId);
+            $business = getAuthedBusiness();
+            noEntityAbort($business, 403);
             $this->photoClient->unlink($business->logo_path);
             $business->logo_path = null;
             $business->save();
@@ -210,16 +257,28 @@ class BusinessController extends Controller
         return $path;
     }
 
+    public function updateApiKey(Request $request, $businessId)
+    {
+        $business = getAuthedBusiness();
+        noEntityAbort($business, 403);
+        $business->api_key = $this->generateApiKey($business->id);
+        $business->save();
+        return redirect()->back()->with('successMessage',"Your API key was updated successfully");
+    }
+
 
     public function createBusiness(Request $request)
     {
+        $this->validate($request,$this->validationRules);
+
         /** @var User $user */
         $user = Auth::user();
-//        if ($user->business_account == 1)
-//        {
             try {
+
+                $request = $this->formatRedirectToField($request);
                 $newBusiness = new Business($request->all());
                 $newBusiness->user_id = Auth::id();
+                $newBusiness->api_key  = $this->generateApiKey($newBusiness->id);
                 $newBusiness->active = "1";
                 $newBusiness->save();
                 $user->business_id = $newBusiness->id;
@@ -233,22 +292,19 @@ class BusinessController extends Controller
                 $message = $e->getMessage();
             }
 
-//        } elseif ($user->business_account == 2) {
-//            $message = 'Your account is suspended. Please bring your account to up to date';
-//        } else {
-//            throw new AccessDeniedException("You must have a business account to perform this action");
-//        }
-
         return redirect('/business')->with('successMessage', $message);
     }
 
     public function updateBusiness(Request $request, $id)
     {
+        $this->validate($request,$this->validationRules);
         /** @var User $user */
         $user = Auth::user();
-        $business = $this->findBusiness($id);
-        if($business && $user->business_account == 1)
+        $business = getAuthedBusiness();
+//        noEntityAbort($business, 403);
+        if($user->business_account == 1)
         {
+            $request = $this->formatRedirectToField($request);
             $business->update($request->all());
             $subscriptions = \App\Subscription::where('business_id', $id)->get();
             $notification         = new Notification();
@@ -256,33 +312,24 @@ class BusinessController extends Controller
             {
                 $notification->sendNotifyBusinessModificationNotification($business, $subscription);
             }
-//            if($request->async)
-//            {
-//                echo "Business details updated successfully \n";
-//                return "1";
-//            }
 
             return redirect('/business/manageBusiness')->with('successMessage','Business details updated successfully');
         }
-
-//        if($request->async)
-//        {
-//            echo "Business details not updated \n";
-//            return "0";
-//        }
 
         return redirect('/business/manageBusiness')->with('warningMessage','Business does not exist or is inactive');
     }
 
     public function showBusinessNotificationView($businessId){
-        $business = Business::find($businessId);
-        $notifications = (new Notification())->getBusinessNotifications($businessId);
+        $business = getAuthedBusiness();
+        noEntityAbort($business, 403);
+        $notifications = (new Notification())->getBusinessNotifications($business->id);
         // maybe also get common
         return view('business.business-notifications')->with('notifications', $notifications);
     }
 
     public function showNotifyCustomersView(){
-        $business = Business::find(Auth::user()->business_id);
+        $business = getAuthedBusiness();
+        noEntityAbort($business, 403);
         if(!$business) {
             return redirect('/business')->with('warningMessage', "You are not authorized to make this request");
         }
@@ -291,7 +338,12 @@ class BusinessController extends Controller
     }
 
     public function notifyCustomers(Request $request){
-        $business = Business::find(Auth::user()->business_id);
+        $this->validate($request,[
+            'subject'   => 'nullable|'.ALPHANUMERIC_DASH_SPACE_DOT_REGEX,
+            'body'      => 'nullable|'.ALPHANUMERIC_DASH_SPACE_DOT_REGEX
+        ]);
+        $business = getAuthedBusiness();
+        noEntityAbort($business, 403);
         if(!$business) {
             return redirect('/business')->with('warningMessage', "You are not authorized to make this request");
         }
@@ -313,6 +365,10 @@ class BusinessController extends Controller
 
     public function deleteBusiness(Request $request, $businessId, $userDelete = null)
     {
+        $this->validate($request, [
+            'email' => 'required|email'
+        ]);
+
         setStripeApiKey('secret');
         $user = (new User())->find(Auth::id());
 
@@ -320,7 +376,8 @@ class BusinessController extends Controller
             return redirect()->back()->with("errorMessage","Not authorized to make this request");
         }
 
-        $business = (new Business())->where('user_id', Auth::id())->first();
+        $business = getAuthedBusiness();
+        noEntityAbort($business, 403);
 
 
         if(!$business) {
@@ -340,9 +397,9 @@ class BusinessController extends Controller
                 } catch (Exception $e) {
                     logger('subscription cancellation failed');
                 }
-                if(!in_array($sub->user_id, $sentToUser)) // only send out one broad email
+                if(!isset($sentToUser[$sub->user_id])) // only send out one broad email
                 {
-                    $sentToUser[] = $sub->user_id;
+                    $sentToUser[$sub->user_id] = 1;
                     // send email
                 }
 
@@ -406,22 +463,23 @@ class BusinessController extends Controller
         if($userDelete) {
             return true;
         } else {
-            return redirect('/account')->with('successMessage',"Your business subscription was canceled successfully");
+            return redirect('/account')->with('successMessage',"Your business was deleted successfully");
         }
 
     }
 
     public function deactivateBusiness($id)
     {
-        $business = $this->findBusiness($id);
+        $business = getAuthedBusiness();
         if ($business)
         {
             $business->active = "0";
             $business->save();
             return $business;
+        } else {
+            abort(403);
         }
 
-        return $this->failMessage;
     }
 
     public function activateBusiness($id)
@@ -432,9 +490,10 @@ class BusinessController extends Controller
             $business->active = "1";
             $business->save();
             return $business;
+        } else {
+            abort(403);
         }
 
-        return $this->failMessage;
     }
 
     public function suspendBusiness($id)
@@ -445,9 +504,10 @@ class BusinessController extends Controller
             $business->active = "2";
             $business->save();
             return $business;
+        } else {
+            abort(403);
         }
 
-        return $this->failMessage;
     }
 
     private function getBusinessAccountStatsQuery(){
@@ -488,20 +548,44 @@ class BusinessController extends Controller
 
     public function showCheckinView($businessId) {
 
-        $checkins = \App\Subscription::where('business_id',$businessId)->where('is_checking_in', 1)->get();
+        $business = getAuthedBusiness();
+        noEntityAbort($business, 403);
+        $checkins = \App\Subscription::where('business_id',$business->id)->where('is_checking_in', 1)->get();
         return view('business.checkins')->with('checkins', $checkins);
     }
 
     public function businessNotificationView($businessId){
-        $businessEmail = (new Business())->where('id', $businessId)->value('email');
-        $notifications = (new Notification())->getNotifications('business', $businessEmail, $businessId);
+        $business = getAuthedBusiness();
+        noEntityAbort($business, 403);
+        $businessEmail = (new Business())->where('id', $business->id)->value('email');
+        $notifications = (new Notification())->getNotifications('business', $businessEmail, $business->id);
         return view('business.business-notifications')->with('notifications', $notifications);
     }
 
     public function showCancelAccountView() {
-        $businessId = (new Business())->where('user_id', Auth::id())->value('id');
-        return view('business.cancel-account')->with('businessId', $businessId);
+        $business = getAuthedBusiness();
+        noEntityAbort($business, 403);
+        return view('business.cancel-account')->with('businessId', $business->id);
     }
+
+    public function updateRedirectTo(Request $request) {
+        try {
+            $request = $this->formatRedirectToField($request);
+
+            $this->validate($request,[
+                'redirect_to' => 'required|url'
+            ]);
+
+            $business = getAuthedBusiness();
+            noEntityAbort($business, 403);
+            $business->redirect_to = $request->get('redirect_to');
+            $business->save();
+            return Response::create("Your URL was saved successfully", 201);
+        } catch (Exception $e) {
+            return Response::create("Please enter a valid url", 400);
+        }
+    }
+
 
 
 
@@ -523,6 +607,29 @@ class BusinessController extends Controller
     public function findUser($id)
     {
         return $this->getUserObject()->find($id);
+    }
+
+    private function verifyBusinessToUser($business) {
+        return $business->user_id == Auth::id();
+    }
+
+    private function generateApiKey($id) {
+        return sprintf('%s-%s-%s', uniqid("OV"),time()+rand(1,300),md5($id));
+    }
+
+    /**
+     * This method is to ensure that all of the urls we get start with https://
+     * @param Request $request
+     *
+     */
+    private function formatRedirectToField(Request $request) {
+        if($request->has('redirect_to') && !empty($request->get('redirect_to'))) {
+            $url = str_replace("http://", "", $request->get('redirect_to'));
+            if(strpos($url, "https://") === false) {
+                $request->replace(['redirect_to' => "https://".$url]);
+            }
+        }
+        return $request;
     }
 
 }

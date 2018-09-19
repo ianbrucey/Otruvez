@@ -100,7 +100,7 @@ trait ValidatesRequests
      *
      * @throws \Illuminate\Validation\ValidationException
      */
-    protected function throwValidationException(Request $request, $validator)
+    protected function       throwValidationException(Request $request, $validator)
     {
         throw new ValidationException($validator, $this->buildFailedValidationResponse(
             $request, $this->formatValidationErrors($validator)

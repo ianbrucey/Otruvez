@@ -35,8 +35,7 @@ $('.confirm-checkin').on('click', function () {
     // response is wrong. got successful response on bad code
     $.post(url, postdata).done(function (data) {
         if(data == 1){
-            alert(data);
-            responseContainer.html('<h3 class="text-success text-center">The customer is confirmed! <br> They may use your service.<hr>An email has been sent to their email for confirmation</h3>');
+            responseContainer.html('<h3 class="text-success text-center">The customer is checked in! <br> They may now use your service.<hr>An email has been sent to them for confirmation</h3>');
             checkinCard.hide();
         } else {
             responseContainer.html('<h3 class="text-danger text-center">Check-in Failed. Please double check that the code is valid.<br> If it is, the user has reached their limit for the time period.</h3>');

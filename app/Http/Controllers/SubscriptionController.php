@@ -67,7 +67,7 @@ class SubscriptionController extends Controller
     }
 
 
-    public function createSubscription(Request $request)
+    public function createSubscription(Request $request, $portal = null)
     {
         /** @var User $user */
         if(Auth::id() <= 0 || Auth::id() != $request->user_id) {
@@ -103,6 +103,10 @@ class SubscriptionController extends Controller
         }
         $business = Business::find($businessId);
         (new Notification())->sendSubscribedUserNotification($user,$business, $newStripeSubscription);
+
+        if($request->has('apiKey') && validatePortalParams($businessId, $smPlanId, $request->get('apiKey')) != null) {
+            return redirect()->to("/account/mysubscriptions/$businessId");
+        }
 
         return redirect('/subscription/subscribed')
             ->with('interval', $interval)

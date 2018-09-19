@@ -42,4 +42,11 @@ return [
         'enabled' => env('SEARCH_ENABLED', true),
         'hosts' => explode(',', env('SEARCH_HOSTS')),
     ],
+
+    'facebook' => [
+        'client_id'     => env('FACEBOOK_ID'),
+        'client_secret' => env('FACEBOOK_SECRET'),
+        'redirect'      => env('FACEBOOK_CALLBACK_URL'),
+        'portal-redirect'      => env('FACEBOOK_CALLBACK_URL_PORTAL')
+    ],
 ];

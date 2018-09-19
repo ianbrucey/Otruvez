@@ -3,40 +3,23 @@
         <div class="modal-content col-md-8 offset-md-2">
             <div class="modal-header">
                 <h4 class="modal-title">Plan Details</h4>
-                <button type="button" class="hide-sm-modal float-right" data-dismiss="modal">&times;</button>
+                <button type="button" class="btn-sm theme-background hide-sm-modal float-right" data-dismiss="modal">&times;</button>
             </div>
             <div class="modal-body">
                 <div class="">
                     <h3>{{$plan->stripe_plan_name}}</h3>
                     <hr>
                 </div>
-                {{--<div class="plan-preview-photo">--}}
-                    {{--<h4 class="text-center">Featured photo</h4>--}}
-                    {{--@if($plan->featured_photo)--}}
-                        {{--<span class="fa fa-user fa-1x"></span>--}}
-                    {{--@else--}}
-                        {{--<div class="text-center" style="margin: 5px; padding: 5px; border: 1px solid cornflowerblue; border-radius: 5px">--}}
-                            {{--<p class="text-muted">No featured image.</p>--}}
-                            {{--<button class="btn btn-primary" data-dismiss="modal" data-toggle="modal" data-target="#plan-gallery-{{$plan->id}}">--}}
-                                {{--<span class="fa fa-photo"> click to add</span>--}}
-                            {{--</button>--}}
-                        {{--</div>--}}
-                    {{--@endif--}}
-                    {{--<h4 class="text-center">Photo gallery</h4>--}}
-                        {{--<div class="text-center" style="margin: 5px; padding: 5px; border: 1px solid cornflowerblue; border-radius: 5px">--}}
-                            {{--<p class="text-muted">No gallery photos</p>--}}
-                            {{--<button class="btn btn-primary" data-dismiss="modal" data-toggle="modal" data-target="#plan-gallery-{{$plan->id}}">--}}
-                                {{--<span class="fa fa-photo"> click to add</span>--}}
-                            {{--</button>--}}
-                        {{--</div>--}}
-                {{--</div>--}}
+                <div class="">
+                    <label class="theme-color"><strong>Customer usage limit:</strong></label>
+                </div>
                 <div class="">
                     <label>{{getUseLimitString($plan)}} </label>
                 </div>
 
 
                 <div class="">
-                    <label>Service Description:</label>
+                    <label class="theme-color"><strong>Service Description:</strong></label>
                 </div>
                 <div class="">
                     <p>{{$plan->description}}</p>

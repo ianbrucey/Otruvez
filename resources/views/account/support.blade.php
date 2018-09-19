@@ -6,8 +6,9 @@
             <div class="card">
                 <div class="card-header">
                     <h4>Customer Support</h4>
+                    @include('errors.request-errors')
                 </div>
-                    <form class="form-group validate-message" action="/account/contactSupport" method="post">
+                    <form class="form-group validate-contact-form" action="/account/contactSupport" method="post">
                         {{csrf_field()}}
                             <label for="subject">Subject</label>
                             <input type="text"  class="form-control bg-white" name="subject" placeholder="what is this regarding?">

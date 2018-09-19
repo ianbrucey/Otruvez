@@ -12,15 +12,16 @@
     <div class="container">
         <div class="row "><br><br>
             <h3 class="text-center col-12">Manage your services</h3>
+            @include('errors.request-errors')
         </div>
     </div>
     <div class="container">
         <div class="row">
             @if(count($plans) < 10 || true)
-                <div class="col-md-6 offset-md-3 plan-preview-card my-3 new-plan-card show-sm-modal" data-modal-target="#createPlan">
-                    <h4><strong>Click here to create a new service</strong></h4>
-                    <span class="fa fa-plus fa-2x"></span>
-                </div>
+                <a class="col-md-6 offset-md-3 plan-preview-card my-3 new-plan-card" href="/plan/createService">
+                    <p class="text-white">Create a new service</p>
+                    <span class="fa fa-plus"></span>
+                </a>
             @endif
         </div>
     </div>
@@ -30,22 +31,27 @@
             @if(count($plans))
                 @foreach($plans as $plan)
                     <div class="col-md-4 plan-preview-card">
-                        <div class="card-body">
+                        <div class="card-header">
                             <h6><strong>{{$plan->stripe_plan_name}}</strong></h6>
                             {!! $plan->featured_photo_path == null ? '<p class="text-danger"><span class="fa fa-warning text-danger"></span> Service inactive. please add a featured photo</p>' : '<p class="text-info">active</p>'!!}
                             {{--If photo is null, show span element, else show the actual photo--}}
-                            <div class="featured-photo-container">
+                        </div>
+                        <div class="card-body">
+                            <div class="general-photo-container">
                                 <button class="btn-sm theme-background text-white show-sm-modal m-1" data-toggle="modal" data-modal-target="#plan-gallery-{{$plan->id}}" >Edit Photos</button>
                                 <p>Featured Photo</p>
                                 @if(!$plan->featured_photo_path)
                                     <span class="fa fa-photo fa-3x text-danger"></span>
                                 @else
-                                    <img src="{{getImage($plan->featured_photo_path)}}" width="48" height="48" style="display: inline-block" href="{{getImage($plan->featured_photo_path)}}" data-lity>
+                                    {{--<img src="{{getImage($plan->featured_photo_path)}}" width="48" height="48" style="display: inline-block" href="{{getImage($plan->featured_photo_path)}}" data-lity>--}}
+                                    <div class="photo-preview">
+                                        <img src="{{getImage($plan->featured_photo_path)}}"  style="width: 100%; vertical-align: middle !important;" href="" data-lity>
+                                    </div>
                                 @endif
                             </div>
 
                             {{--The div below should either show a photo, or the span element--}}
-                            <div class=" featured-photo-container" style="margin-bottom: -10px">
+                            <div class="general-photo-container" style="margin-bottom: -10px">
                                 {{--<hr>--}}
                                 <p>{{count($plan->photos)}}/4 gallery photos</p>
                                 @for($i = 0; $i < $maxGalleryCount; $i++)
@@ -54,7 +60,12 @@
                                         $path    = $hasGalleryPhoto ? $plan->photos[$i]->path : '';
                                     @endphp
                                     @if($hasGalleryPhoto)
-                                        <img src="{{getImage($path)}}" width="40" height="40" style="display: inline-block; margin-top: -25px" href="{{ getImage($path) }}" data-lity>
+                                        {{--<div style="width: 40px; height: 40px; background: url({{getImage($path)}}) no-repeat; background-size: contain; vertical-align: middle !important; border-radius: 5%; border: 1px solid purple; display: inline-block" href="{{getImage($path)}}" data-lity>--}}
+
+                                        {{--</div>--}}
+                                        <div class="photo-preview">
+                                            <img src="{{ getImage($path) }}"  style="width: 100%; vertical-align: middle !important;" href="" data-lity>
+                                        </div>
                                     @else
                                         <span class="fa fa-2x fa-picture-o"></span>
                                     @endif
@@ -83,6 +94,15 @@
                                     </div>
 
                                 {{--</div>--}}
+                        </div>
+
+                        <div class=" plan-preview-card-footer mt-4">
+
+
+                            {{--<div style="width: 100%" class="text-center">--}}
+                            <a href="/plan/apiSetup/{{$plan->id}}" class="btn theme-background" style="width: 100%;">API & Online Business integration</a>
+
+                            {{--</div>--}}
                         </div>
                     </div>
                     @include('modals.bootstrap.edit-plan-modal')

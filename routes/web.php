@@ -14,17 +14,20 @@
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Log;
+
 Route::get('/', function () {
     if(Auth::check()) {
         return redirect('/home');
     } else {
         return view('index');
     }
+
 });
 
 Route::get('/contact', function () {
     if(Auth::check()) {
-        return redirect('/home');
+//        return redirect('/home');
     } else {
         return view('contact');
     }
@@ -32,7 +35,7 @@ Route::get('/contact', function () {
 
 Route::get('/sellYourServices', function () {
     if(Auth::check()) {
-        return redirect('/home');
+//        return redirect('/home');
     } else {
         $sections = [
             [
@@ -105,13 +108,16 @@ Auth::routes();
 Route::get('/user/activateUserAccount', 'UserController@activateUserAccount');
 Route::post('/user/test', 'UserController@test');
 Route::get('/user/testView', 'UserController@testView');
+Route::post('/validateToken', 'UserController@validateToken');
 /** PLAN USER END */
 
-Route::get('/registered', function() {
-    return view('registered');
-});
 
-Route::get('/home', 'HomeController@index')->name('home');
+
+/** BUSINESS ROUTES */
+Route::get('/confirmAccount', 'HomeController@showConfirmAccount');
+Route::get('/home', 'HomeController@index');
+Route::post('/home/findServices', 'HomeController@findServices');
+/** BUSINESS ROUTES */
 
 
 
@@ -141,6 +147,7 @@ Route::post('/business/createAccount', 'BusinessController@createBusinessAccount
 Route::post('/business/create', 'BusinessController@createBusiness');
 Route::post('/business/updatePhoto/{businessId}', 'BusinessController@updateBusinessPhoto');
 Route::post('/business/updateLogo/{businessId}', 'BusinessController@updateBusinessLogo');
+Route::post('/business/updateRedirectTo', 'BusinessController@updateRedirectTo');
 Route::put('/business/update/{id}', 'BusinessController@updateBusiness');
 Route::put('/business/deactivate/{id}', 'BusinessController@deactivateBusiness');
 Route::put('/business/activate/{id}', 'BusinessController@activateBusiness');
@@ -189,10 +196,11 @@ Route::post('/subscription/confirmCheckin/{subscriptionId}', 'SubscriptionContro
 
 
 /** PLAN ROUTES */
-Route::get('/plan/chooseAccountPlan', 'PlanController@showChooseAccountForm');
+//Route::get('/plan/chooseAccountPlan', 'PlanController@showChooseAccountForm');
 Route::get('/plan/createAppPlans', 'PlanController@storeAppPlansLocally');
 Route::get('/plan/managePlans', 'PlanController@managePlans');
-
+Route::get('/plan/createService', 'PlanController@showCreateService');
+Route::get('/plan/apiSetup/{planId}', 'PlanController@apiSetup');
 Route::post('/plan/createPlan', 'PlanController@createServicePlan');
 Route::post('/plan/featuredPhoto/{id}', 'PlanController@updateFeaturedPhoto');
 Route::post('/plan/galleryPhoto/{id}', 'PlanController@updateGalleryPhotos');
@@ -222,7 +230,7 @@ Route::post('/rating/rateService/{planId}', 'RatingController@rateService');
 
 /** NOTIFICATION ROUTES */
 Route::get('/account', 'AccountController@index');
-Route::get('/account/mysubscriptions', 'AccountController@subscriptions');
+Route::get('/account/mysubscriptions/{portalBusinessId?}', 'AccountController@subscriptions');
 Route::get('/account/notifications', 'AccountController@accountNotificationView');
 Route::get('/account/delete', 'AccountController@showDeleteAccountView');
 Route::get('/account/support', 'AccountController@showSupportView');
@@ -235,3 +243,18 @@ Route::post('/account/deleteAccount', 'AccountController@deleteAccount');
 /** WEBHOOK ROUTES */
 Route::post('/stripeWebhook/failedPayment', 'WebhookController@failedPayment'); // [charge.failed , invoice.payment_failed]
 /** WEBHOOK ROUTES END */
+
+/** PORTAL ROUTES */
+Route::get('/portal/login/{businessId}/{stripeId}/{apiKey}/{customerEmail?}', 'PortalController@showLogin');
+Route::get('/portal/register/{businessId}/{stripeId}/{apiKey}/{customerEmail?}', 'PortalController@showRegister');
+Route::get('/portal/viewService/{businessId}/{stripeId}/{apiKey}', 'PortalController@showService');
+Route::get('/portal/confirmAccount/{businessId}/{stripeId}/{apiKey}', 'PortalController@showConfirmAccount');
+/** PORTAL ROUTES END */
+
+
+/** SOCIAL AUTH ROUTES */
+Route::get('auth/{provider}/', 'Auth\SocialAuthController@redirectToProvider');
+Route::get('auth/{provider}/callback', 'Auth\SocialAuthController@handleProviderCallback');
+Route::get('portal/auth/{provider}/{businessId}/{stripeId}/{apiKey}', 'Auth\SocialAuthController@redirectToProviderPortal');
+Route::get('portal/auth/callback/{provider}/{businessId}/{stripeId}/{apiKey}', 'Auth\SocialAuthController@handleProviderCallbackPortal');
+/** SOCIAL AUTH ROUTES END */

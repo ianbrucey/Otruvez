@@ -4,8 +4,8 @@
         <!-- Modal content-->
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="hide-sm-modal pull-right btn btn-default" data-dismiss="modal">cancel</button>
                 <h4 class="modal-title">Create Plan</h4>
+                <button type="button" class="btn-sm theme-background hide-sm-modal float-right" data-dismiss="modal">cancel</button>
             </div>
             <form method="post" action="/plan/createPlan" class="form-group-md" id="create-plan-form">
                 <div class="modal-body">

@@ -11,9 +11,16 @@
                     </div>
 
 
-                    <div class="card-body">
-                        <form class="form-horizontal" method="POST" action="{{ route('login') }}">
-                            {{ csrf_field() }}
+                <div class="card-body">
+                    <div class="text-center auth-login-button-container">
+                        <p>Login with</p>
+                        <a href="{{ url('/auth/facebook') }}" class="btn text-white" style="background: #4267b2;"><i class="fa fa-facebook"></i> Facebook</a>
+                        <a href="{{ url('/auth/google') }}" class="btn btn-danger"><i class="fa fa-google"></i> Google</a>
+                        <a href="{{ url('/auth/twitter') }}" class="btn text-white" style="background: lightskyblue;"><i class="fa fa-google"></i> Twitter</a>
+                    </div>
+                    <hr>
+                    <form class="form-horizontal validate-login" method="POST" action="{{ route('login') }}">
+                        {{ csrf_field() }}
 
                             <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
                                 <label for="email" class="col-md-12 text-left control-label">E-Mail Address</label>
@@ -32,8 +39,8 @@
                             <div class="form-group{{ $errors->has('password') ? ' has-error' : '' }}">
                                 <label for="password" class="col-md-12 text-left control-label">Password</label>
 
-                                <div class="col-md-12">
-                                    <input id="password" type="password" class="form-control" name="password" required>
+                            <div class="col-md-12">
+                                @include('partials.password-requirements')<input id="password" type="password" class="form-control" name="password" required>
 
                                     @if ($errors->has('password'))
                                         <span class="help-block">
