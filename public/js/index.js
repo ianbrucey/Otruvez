@@ -77,7 +77,7 @@ function triggerTargetHref(e, obj) {
     window.location.href = $(obj).attr('data-href');
 }
 
-function triggerTargetSubmit(e, obj, ajaxSubmit = false) {
+function triggerTargetSubmit(e, obj, ajaxSubmit) {
     e = e || window.event;
     e.preventDefault();
     let form = $($(obj).attr('data-target'));
@@ -126,7 +126,7 @@ function deletePlan(e, obj) {
             delete: {
                 btnClass: 'btn-danger',
                 action: function() {
-                    triggerTargetSubmit(e, obj);
+                    triggerTargetSubmit(e, obj, false);
                 }
             },
 
@@ -146,7 +146,7 @@ function cancelSubscription(e, obj) {
             delete: {
                 btnClass: 'btn-danger',
                 action: function() {
-                    triggerTargetSubmit(e, obj);
+                    triggerTargetSubmit(e, obj, false);
                 }
             },
 

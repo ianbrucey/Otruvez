@@ -74,7 +74,7 @@
                             </div>
                             @if($haslogo)
                                 <p class="text-center">
-                                    <a class="text-danger" id="delete-business-logo" data-target="#delete-business-logo-form" onclick="triggerTargetSubmit(event, this)">remove</a>
+                                    <a class="text-danger" id="delete-business-logo" data-target="#delete-business-logo-form" onclick="triggerTargetSubmit(event, this, false)">remove</a>
                                 <form method="post" action="/business/deleteLogo/{{$business->id}}" class="hide" id="delete-business-logo-form">
                                     {{ csrf_field() }}
                                     {{ form_method_field("DELETE") }}
@@ -101,7 +101,7 @@
                             {{--</div>--}}
                             {{--@if($hasPhoto)--}}
                             {{--<p class="text-center">--}}
-                                {{--<a class="text-danger" id="delete-business-photo" data-target="#delete-business-photo-form" onclick="triggerTargetSubmit(event, this)">remove</a>--}}
+                                {{--<a class="text-danger" id="delete-business-photo" data-target="#delete-business-photo-form" onclick="triggerTargetSubmit(event, this, false)">remove</a>--}}
                                 {{--<form method="post" action="/business/deletePhoto/{{$business->id}}" class="hide" id="delete-business-photo-form">--}}
                                     {{--{{ csrf_field() }}--}}
                                     {{--{{ form_method_field("DELETE") }}--}}
