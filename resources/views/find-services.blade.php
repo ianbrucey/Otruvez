@@ -40,7 +40,7 @@
                         <a href="#" data-from="{{$rightArrowFrom}}"><span class="fa fa-arrow-left"></span></a>
                     @endif
                     @for($i = $loopStart; $i <= $loopEnd; $i++)
-                        <a href="#" class="{{ !$searchFrom && $i == 1 || $searchFrom == ($i - 1) * $maxResults ? 'theme-color' : ''}}" data-from="{{$i == 1 ? $i - 1 : ($i - 1) * $maxResults}}" onclick="triggerTargetSubmit(event, this)" data-target="#search-form">| {{$i}}</a>
+                        <a href="#" class="{{ !$searchFrom && $i == 1 || $searchFrom == ($i - 1) * $maxResults ? 'theme-color' : ''}}" data-from="{{$i == 1 ? $i - 1 : ($i - 1) * $maxResults}}" onclick="triggerTargetSubmit(event, this, false)" data-target="#search-form">| {{$i}}</a>
 
                     @endfor
                     @if($rightArrow)
@@ -49,9 +49,9 @@
 
                     {{--@for($i = $pages > 10 ? $pages - 10 : 1; $i <= $pages + 1; $i++)--}}
                     {{--@if($pages < $i)--}}
-                    {{--<a href="#" data-from="{{$i}}" onclick="triggerTargetSubmit(event, this)" data-target="#search-form"><span class="fa fa-arrow-right"></span> </a>--}}
+                    {{--<a href="#" data-from="{{$i}}" onclick="triggerTargetSubmit(event, this, false)" data-target="#search-form"><span class="fa fa-arrow-right"></span> </a>--}}
                     {{--@else--}}
-                    {{--<a href="#" class="{{$searchFrom == $i ? 'text-info' : ''}}" data-from="{{$i}}" onclick="triggerTargetSubmit(event, this)" data-target="#search-form">{{$i}} | </a>--}}
+                    {{--<a href="#" class="{{$searchFrom == $i ? 'text-info' : ''}}" data-from="{{$i}}" onclick="triggerTargetSubmit(event, this, false)" data-target="#search-form">{{$i}} | </a>--}}
                     {{--@endif--}}
                     {{--@endfor--}}
                 </div>

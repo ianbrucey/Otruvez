@@ -40,7 +40,7 @@
     </div>
     <div class="col-md-2 col-sm-12">
         <div class="block d-flex">
-            <button class="btn btn-default form-control" style="background: white" onclick="triggerTargetSubmit(event, this)" data-target="#search-form" id="searchField-btn" disabled><span class="fa fa-search"></span></button>
+            <button class="btn btn-default form-control" style="background: white" onclick="triggerTargetSubmit(event, this, false)" data-target="#search-form" id="searchField-btn" disabled><span class="fa fa-search"></span></button>
         </div>
     </div>
 </div>
