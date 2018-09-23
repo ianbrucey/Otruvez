@@ -11,6 +11,7 @@ use App\Rating;
 use App\Review;
 use App\S3FolderTypes;
 use Dompdf\Exception;
+use Elasticsearch\Client;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Http\Request;
 use App\Business;
@@ -26,12 +27,13 @@ use Symfony\Component\Finder\Exception\AccessDeniedException;
 
 class BusinessController extends Controller
 {
-    public function __construct()
+    public function __construct(Client $esClient)
     {
         $this->middleware('auth')->except(['viewStore','viewService', 'contact', 'about']);
         $this->photoClient = new AWSPhoto();
+        $this->es = $esClient;
     }
-
+    private $es;
     private $failMessage = "The business you requested does not exist";
     private $businessPhotoPath = 'public/images/business';
     private $businessLogoPath = 'public/images/business/logos';
@@ -298,6 +300,7 @@ class BusinessController extends Controller
     public function updateBusiness(Request $request, $id)
     {
         $this->validate($request,$this->validationRules);
+        $updatePlans = false;
         /** @var User $user */
         $user = Auth::user();
         $business = getAuthedBusiness();
@@ -305,12 +308,22 @@ class BusinessController extends Controller
         if($user->business_account == 1)
         {
             $request = $this->formatRedirectToField($request);
+            if($request->get('lat') != $business->lat) {
+                $updatePlans = true;
+            }
             $business->update($request->all());
             $subscriptions = \App\Subscription::where('business_id', $id)->get();
+            $plans = \App\Plan::where('business_id', $id)->get();
             $notification         = new Notification();
             foreach($subscriptions as $subscription)
             {
                 $notification->sendNotifyBusinessModificationNotification($business, $subscription);
+            }
+
+            if ($updatePlans) {
+                foreach ($plans as $plan) {
+                    (new PlanController($this->es))->updateEsIndex($plan, $this->es);
+                }
             }
 
             return redirect('/business/manageBusiness')->with('successMessage','Business details updated successfully');
