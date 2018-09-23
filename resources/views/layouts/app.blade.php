@@ -9,18 +9,10 @@
     <title>Otruvez</title>
 
     <!-- PLUGINS CSS STYLE -->
-    {{--<script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>--}}
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    <!-- Bootstrap -->
-    <link href="{{baseUrlConcat('/classimax/plugins/bootstrap/dist/css/bootstrap.min.css')}}" rel="stylesheet">
-    <!-- Font Awesome -->
-    <link href="{{baseUrlConcat('/classimax/plugins/font-awesome/css/font-awesome.min.css')}}" rel="stylesheet">
-    <!-- Owl Carousel -->
-    {{--    <link href="{{baseUrlConcat('/classimax/plugins/slick-carousel/slick/slick.css')}}" rel="stylesheet">--}}
-    {{--    <link href="{{baseUrlConcat('/classimax/plugins/slick-carousel/slick/slick-theme.css')}}" rel="stylesheet">--}}
-<!-- Fancy Box -->
+    <link href="{{baseUrlConcat('/classimax/plugins/bootstrap/dist/css/bootstrap.min.css')}}" rel="stylesheet"> {{--replace with cdn--}}
+    <link href="{{baseUrlConcat('/classimax/plugins/font-awesome/css/font-awesome.min.css')}}" rel="stylesheet"> {{--replace with cdn--}}
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/lity/2.3.0/lity.min.css">
-    <!-- CUSTOM CSS -->
     <link href="{{baseUrlConcat('/classimax/css/style.css')}}" rel="stylesheet">
     <link href="{{ baseUrlConcat('/css/style.css') }}" rel="stylesheet">
 
@@ -117,18 +109,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.0/jquery-confirm.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/jquery.validate.min.js"></script>
 <script src='https://ajax.aspnetcdn.com/ajax/jquery.validate/1.17.0/additional-methods.js'></script>
-{{--        <script src="{{baseUrlConcat('/classimax/plugins/tether/js/tether.min.js')}}"></script>--}}
-<script src="{{baseUrlConcat('/classimax/plugins/raty/jquery.raty-fa.js')}}"></script>
-<script src="{{baseUrlConcat('/classimax/plugins/bootstrap/dist/js/popper.min.js')}}"></script>
-<script src="{{baseUrlConcat('/classimax/plugins/bootstrap/dist/js/bootstrap.min.js')}}"></script>
-<script src="{{baseUrlConcat('/classimax/plugins/seiyria-bootstrap-slider/dist/bootstrap-slider.min.js')}}"></script>
-<script src="{{baseUrlConcat('/classimax/plugins/slick-carousel/slick/slick.min.js')}}"></script>
-<script src="{{baseUrlConcat('/classimax/plugins/jquery-nice-select/js/jquery.nice-select.min.js')}}"></script>
-<script src="{{baseUrlConcat('/classimax/plugins/fancybox/jquery.fancybox.pack.js')}}"></script>
-<script src="{{baseUrlConcat('/classimax/plugins/smoothscroll/SmoothScroll.min.js')}}"></script>
-<script src="{{baseUrlConcat('/classimax/js/scripts.js')}}"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/lity/2.3.0/lity.min.js"></script>
-<script src="{{ baseUrlConcat('/js/stripe.js') }}"></script>
 <script src="{{ baseUrlConcat('/js/index.js') }}"></script>
 @yield('footer')
 
