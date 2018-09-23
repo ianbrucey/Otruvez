@@ -20,7 +20,6 @@
     {{--    <link href="{{baseUrlConcat('/classimax/plugins/slick-carousel/slick/slick-theme.css')}}" rel="stylesheet">--}}
 <!-- Fancy Box -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/lity/2.3.0/lity.min.css">
-    <!-- CUSTOM CSS -->
     <link href="{{baseUrlConcat('/classimax/css/style.css')}}" rel="stylesheet">
     <link href="{{ baseUrlConcat('/css/style.css') }}" rel="stylesheet">
 
@@ -116,16 +115,6 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.0/jquery-confirm.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/jquery.validate.min.js"></script>
 <script src='https://ajax.aspnetcdn.com/ajax/jquery.validate/1.17.0/additional-methods.js'></script>
-{{--        <script src="{{baseUrlConcat('/classimax/plugins/tether/js/tether.min.js')}}"></script>--}}
-<script src="{{baseUrlConcat('/classimax/plugins/raty/jquery.raty-fa.js')}}"></script>
-<script src="{{baseUrlConcat('/classimax/plugins/bootstrap/dist/js/popper.min.js')}}"></script>
-<script src="{{baseUrlConcat('/classimax/plugins/bootstrap/dist/js/bootstrap.min.js')}}"></script>
-<script src="{{baseUrlConcat('/classimax/plugins/seiyria-bootstrap-slider/dist/bootstrap-slider.min.js')}}"></script>
-<script src="{{baseUrlConcat('/classimax/plugins/slick-carousel/slick/slick.min.js')}}"></script>
-<script src="{{baseUrlConcat('/classimax/plugins/jquery-nice-select/js/jquery.nice-select.min.js')}}"></script>
-<script src="{{baseUrlConcat('/classimax/plugins/fancybox/jquery.fancybox.pack.js')}}"></script>
-<script src="{{baseUrlConcat('/classimax/plugins/smoothscroll/SmoothScroll.min.js')}}"></script>
-<script src="{{baseUrlConcat('/classimax/js/scripts.js')}}"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/lity/2.3.0/lity.min.js"></script>
 <script src="{{ baseUrlConcat('/js/index.js') }}"></script>
 @yield('footer')
