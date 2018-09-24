@@ -30,9 +30,9 @@ trait RegistersUsers
     {
         $this->validator($request->all())->validate();
 
-        event(new Registered($user = $this->create($request->all())));
+        event(new Registered($user = $this->create($request->all(), $request)));
 
-//        $this->guard()->login($user);
+        $this->guard()->login($user);
 
         return $this->registered($request, $user)
                         ?: redirect($this->redirectPath());
@@ -57,6 +57,19 @@ trait RegistersUsers
      */
     protected function registered(Request $request, $user)
     {
-        //
+
+        if($user->activated != "1" && $request->has('apiKey')) {
+            return redirect($this->confirmAccountRoute);
+        } elseif($user->activated != "1") {
+            return redirect('/confirmAccount');
+        } elseif($request->has('apiKey')) {
+            return redirect($this->viewServiceRoute);
+        }
+
+        if($request->has('business_owner') && $request->get('business_owner') == true) {
+            return redirect('/business');
+        }
+
+        return redirect('/home')->with("successMessage", "Registration successful! Now get subscribing");
     }
 }

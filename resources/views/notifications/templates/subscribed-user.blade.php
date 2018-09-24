@@ -11,7 +11,7 @@
 <div class="row text-center">
     @if($logoPath)
         <div class="col-12">
-            <h3 class="text-center">{{$companyName}} thanks you</h3>
+            <h3 class="text-center m-3">{{$companyName}} thanks you</h3>
         </div>
             <div style="margin: auto; margin-bottom: 5px; width: 200px; height: 200px; background: url({{ getImage($logoPath) }}) no-repeat; background-size: contain"> </div>
     @endif

@@ -19,11 +19,21 @@ body {
 }
 
 
+.allowCopy {
+    position:absolute;
+    left:-9999px
+}
 
-/*.business-img-placeholder:hover {*/
-    /*color: whitesmoke;*/
-    /*background: #4cb996;*/
-/*}*/
+.copied-msg {
+    display: none;
+    font-family: "Muli", sans-serif !important;
+}
+
+.search-card-title {
+    height: 50px;
+    max-height: 50px;
+    text-overflow: ellipsis !important;
+}
 
 #scoreboard {
     box-shadow: 2px 2px 5px black;
@@ -31,7 +41,7 @@ body {
 
 .sm-modal {
     position: fixed;
-    z-index: 9999999;
+    z-index: 99999;
     top: 0;
     left: 0;
     min-width: 100%;
@@ -74,7 +84,30 @@ body {
 
 }
 
+hr {
+    /*background-color: #4cb996;*/
+}
+
+.error {
+     color:red;
+ }
+.p-20 {
+    font-size: 20px !important;
+}
+
+.p-24 {
+    font-size: 24px !important;
+}
+
+.p-26 {
+    font-size: 26px !important;
+}
+
 .text-white {
+    color: whitesmoke !important;
+}
+
+.text-white-children * {
     color: whitesmoke !important;
 }
 
@@ -97,7 +130,7 @@ body {
 
 .plan-preview-card {
     clear: none !important;
-    height: 220px;
+    height: 500px;
 }
 
 .plan-preview-card-footer {
@@ -114,6 +147,12 @@ body {
 .plan-preview-card-footer div:hover {
     background: #4cb996;
     color: whitesmoke;
+}
+
+
+.general-photo-container {
+    text-align: center;
+    padding: 5px;
 }
 
 .plan-footer-buttons {
@@ -136,11 +175,12 @@ body {
 }
 
 .new-plan-card {
-    border: .5px dashed white;
     background: #4cb996;
     color: whitesmoke;
-    height: 100px;
+    height: 60px;
     text-align: center;
+    border-radius: .3em;
+    /*padding: 5px;*/
 }
 
 .new-plan-card:hover {
@@ -246,22 +286,25 @@ label {
     background: transparent !important;
 }
 
+.lity {
+z-index: 99999999999999999 !important;
+}
+
 .featured-photo-thumb,
 .gallery-photo {
     display: block;
     background-repeat: no-repeat !important;
-    background-size: contain !important;
-    width: 200px;
-    height: 200px;
+    background-size: cover !important;
+    width: 100px;
+    height: 100px;
     margin: auto;
-    border-radius: 50%;
-    border: .5px black solid;
+    /*border-radius: 50%;*/
+    /*border: .5px #4cb996 solid;*/
 }
 
 .gallery-photo {
-    width: 80px;
-    height: 80px;
-    margin-right: 10px;
+    width: 50px;
+    height: 50px;
 }
 
 .view-thumb,
@@ -280,6 +323,16 @@ label {
     top: 65px;
 }
 
+.photo-preview {
+    width: 40px;
+    height: 40px;
+    display: inline-block;
+    border-radius: 50%;
+    border: 1px solid lightgray;
+    margin-top: -15px;
+    vertical-align: middle !important;
+    overflow: hidden !important;
+}
 
 .black-transparent {
     background-color: rgba(0,0,0,.9);
@@ -362,4 +415,25 @@ textarea {
 /*for google location*/
 .pac-container {
     z-index: 1051 !important;
+}
+
+.sell-with-o-section:nth-child(odd) {
+    background: #4cb996;
+}
+
+.sell-with-o-section:nth-child(odd) .sect-message {
+    color: white;
+}
+
+.sell-with-o-section:nth-child(even) {
+    background: white;
+}
+
+
+.sell-with-o-section:nth-child(even) .sect-message {
+    color: #4cb996;
+}
+
+.small-spinner, .check-mark {
+    display: none;
 }

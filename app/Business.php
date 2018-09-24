@@ -15,6 +15,8 @@ class Business extends Model
         'description',
         'address',
         'city',
+        'api_key',
+        'redirect_to',
         'state',
         'zip',
         'lat',
@@ -30,7 +32,8 @@ class Business extends Model
         'thursday',
         'friday',
         'saturday',
-        'sunday'
+        'sunday',
+        'theme_color',
     ];
 
     public function user() {

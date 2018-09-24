@@ -12,6 +12,7 @@
             <div class="card">
                 <div class="card-header">
                     <h4 class="text-center">Payment Method</h4>
+                    @include('errors.request-errors')
                 </div>
                 @if(!empty($user->card_last_four))
                     <ul class="m-2">

@@ -29,6 +29,9 @@ class RatingController extends Controller
 
     public function rateService(Request $request, $planId)
     {
+        $this->validate($request, [
+            'rate_number' => 'required|integer'
+        ]);
         if($this->create($request, $planId)) {
             return redirect()->back()->with("successMessage","You gave them " . $request->rate_number . " stars. Thanks for your input");
         } else {

@@ -24,7 +24,7 @@ $intervals = ['month','year'];
                         </ul>
                     </div>
                     @if($plan->featured_photo_path)
-                        <div class="hd-img-top img-fluid" style="background: url({{getImage($plan->featured_photo_path)}}) no-repeat black; height: 320px; max-height: 320px; background-size: contain; background-position: center; "> </div>
+                        <div class="hd-img-top img-fluid" style="background: url({{getImage($plan->featured_photo_path)}}) no-repeat black; height: 320px; max-height: 320px; background-size: contain; background-position: center; " href="{{getImage($plan->featured_photo_path)}}" data-lity> </div>
                     @else
                         <hr>
                     @endif
@@ -81,11 +81,11 @@ $intervals = ['month','year'];
                             @endforelse
                         </div>
                         <hr>
-                        @if(!$hasReview && !$owner)
-                            <form method="post" action="/review/addReview/{{$business->id}}" class="form-group" id="review-form">
+                        @if(!\Illuminate\Support\Facades\Auth::check())
+                            <p class="theme-color">You must be logged in to write a review</p>
+                        @elseif(!$hasReview && !$owner)
+                            <form method="post" action="/review/addReview/{{$business->id}}" class="form-group validate-review" id="review-form">
                                 <textarea name="body" placeholder="write your review here" class="form-control-lg review-body" id="review-body" required></textarea><br>
-                                <input type="hidden" name="user_id"   class="user-id" value="{{\Illuminate\Support\Facades\Auth::id()}}">
-                                <input type="hidden" name="user_name" class="user-name" value="{{authedUserFullName()}}">
                                 {{csrf_field()}}
                                 <br>
                                 <button type="submit" class="btn btn-success" id="service-review-button">Leave a Review</button>
@@ -103,30 +103,47 @@ $intervals = ['month','year'];
                         Subscribe
                     </div>
                     <div class="list-group">
-                            @foreach($intervals as $interval)
+                            @if(!\Illuminate\Support\Facades\Auth::check())
+                            <div class="list-group-item text-center ">
+                                <p class="theme-color"> You must be signed in to purchase a subscription</p>
+                                <a class="btn theme-background" href="/portal/login/{{$business->id}}/{{$plan->id}}/{{$business->api_key}}">Login or Register</a>
+                            </div>
+                            @elseif($alreadySubscribed)
+                                <div class="list-group-item text-center ">
+                                    <a href="/account/mysubscriptions#subscription-details-{{$plan->id}}" class="btn-sm theme-background"><span class="fa fa-star"></span> Use this subscription </a>
+                                </div>
+                            @elseif($owner)
+                            <div class="list-group-item text-center ">
+                                <p class=""> You own this subscription </p>
+                            </div>
+                            @else
+                                @foreach($intervals as $interval)
 
-                            <form action="/subscription/subscribe" class=" list-group-item text-center" method="POST">
-                                <h5 class="">{{$interval == 'month' ? formatPrice($plan->month_price) . " / month" : formatPrice($plan->year_price) . " / year"}}</h5>
-                                <script
-                                        src="https://checkout.stripe.com/checkout.js" class="stripe-button"
-                                        data-key="{{$publicStripeKey}}"
-                                        data-amount="{{$interval == 'month' ? $plan->month_price : $plan->year_price}}"
-                                        data-name="{{$plan->stripe_plan_name}} {{strtoupper($interval)}}"
-                                        data-description="For plan: {{$plan->stripe_plan_id}}_{{$interval}}"
-                                        data-image="{{ $haslogo ? getImage($business->logo_path) : ''}}"
-                                        data-locale="auto">
-                                </script>
-                                <input type="hidden" name="plan_id" value="{{$plan->id}}">
-                                <input type="hidden" name="stripe_plan_id" value="{{$plan->stripe_plan_id}}_{{$interval}}">
-                                <input type="hidden" name="stripe_plan_name" value="{{$plan->stripe_plan_name}} {{strtoupper($interval)}}">
-                                <input type="hidden" name="is_app_plan" value="{{$plan->is_app_plan}}">
-                                <input type="hidden" name="business_id" value="{{$plan->business_id}}">
-                                <input type="hidden" name="price" value="{{$interval == 'month' ? $plan->month_price : $plan->year_price}}">
-                                <input type="hidden" name="o_interval" value="{{$interval}}">
-                                {{csrf_field()}}
-                                <input type="hidden" name="user_id" value="{{\Illuminate\Support\Facades\Auth::id()}}">
-                            </form>
-                            @endforeach
+                                    @if($interval == 'month' && $plan->month_price > 0 || $interval == 'year' && $plan->year_price > 0)
+                                        <form action="/subscription/subscribe" class=" list-group-item text-center stripe-payment-form" method="POST" >
+                                            <h5 class="">{{$interval == 'month' ? formatPrice($plan->month_price) . " / month" : formatPrice($plan->year_price) . " / year"}}</h5>
+                                            <script
+                                                    src="https://checkout.stripe.com/checkout.js" class="stripe-button"
+                                                    data-key="{{$publicStripeKey}}"
+                                                    data-amount="{{$interval == 'month' ? $plan->month_price : $plan->year_price}}"
+                                                    data-name="{{$plan->stripe_plan_name}} {{strtoupper($interval)}}"
+                                                    data-description="For plan: {{$plan->stripe_plan_id}}_{{$interval}}"
+                                                    data-image="{{ $haslogo ? getImage($business->logo_path) : ''}}"
+                                                    data-locale="auto">
+                                            </script>
+                                            <input type="hidden" name="plan_id" value="{{$plan->id}}">
+                                            <input type="hidden" name="stripe_plan_id" value="{{$plan->stripe_plan_id}}_{{$interval}}">
+                                            <input type="hidden" name="stripe_plan_name" value="{{$plan->stripe_plan_name}} {{strtoupper($interval)}}">
+                                            <input type="hidden" name="is_app_plan" value="{{$plan->is_app_plan}}">
+                                            <input type="hidden" name="business_id" value="{{$plan->business_id}}">
+                                            <input type="hidden" name="price" value="{{$interval == 'month' ? $plan->month_price : $plan->year_price}}">
+                                            <input type="hidden" name="o_interval" value="{{$interval}}">
+                                            {{csrf_field()}}
+                                            <input type="hidden" name="user_id" value="{{\Illuminate\Support\Facades\Auth::id()}}">
+                                        </form>
+                                    @endif
+                                @endforeach
+                            @endif
                     </div>
                 </div>
             </div>
@@ -136,4 +153,10 @@ $intervals = ['month','year'];
         </div>
 
     </div>
+    <script>
+        $( window ).unload(function() {
+            // $('#blanket').show();
+            $('#blanket').fadeIn(250);
+        });
+    </script>
  @endsection

@@ -10,9 +10,10 @@
             @forelse($notifications as $notification)
                 <div class="card">
                     <div class="card-footer">
-                        <p style="font-size: 18px">
-                        From: <b class="theme-color">{{$notification->sender_name}}</b>
+                        <p style="font-size: 12px">
+                        <b class="theme-color">{{$notification->sender_name}}</b>
                             <span class="float-right">{{formatDate($notification->created_at, "m-d-Y")}}</span>
+
                         <hr>
                         </p>
                         <h6><b>{{$notification->subject}}</b></h6>

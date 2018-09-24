@@ -2,9 +2,30 @@
 
 @section('body')
     @include('partials.account-back')
-    <h3 class="text-center"> My Subscriptions</h3>
+
     <div class="container">
         <div class="row">
+            <div class="col-12">
+                @if($portalBusiness)
+                    <div class="alert alert-success text-center">
+                        Success!
+                        <br>
+                        You can always manage your subscription here on Otruvez or at <b>{{ucfirst($portalBusiness->name)}}</b>
+                        <br>
+                        @if(!empty($portalBusiness->redirect_to))
+                            <a class="btn bg-white theme-color btn-sm m-auto" href="{{$portalBusiness->redirect_to}}">
+                                Click here to go back to {{ucfirst($portalBusiness->name)}}
+                            </a>
+                        @endif
+                    </div>
+
+
+                @endif
+            </div>
+            <div class="col-12">
+                <h3 class="text-center"> My Subscriptions</h3>
+                @include('errors.request-errors')
+            </div>
             <div class="col-12">
                 @if($mustUpdatePaymentMethod)
                     <div class="alert alert-danger">
@@ -23,31 +44,44 @@
                 @forelse($subscriptions as $subscription)
                     @php $plan = $subscription->plan(); @endphp
                 <div class="card">
-                    {{--@if($mustUpdatePaymentMethod || true)--}}
-                        {{--<div class="card" style="width: 100%; height: 100%; position: absolute; left: 0; top: 0px; background: rgba(0,0,0,.5)"></div>--}}
-                    {{--@endif--}}
-                        <div class="card-header">
-                            {{removeLastWord($subscription->name)}} - {{$subscription->uses ? : 0}}/{{$plan->use_limit}} uses
-                            <form method="POST" action=/subscription/cancel/{{$subscription->id}}" style="display: inline-block" class="float-right">
+                        <div class="card-header text-center">
+                            {{removeLastWord($subscription->name)}}
+                            {{--- {{$subscription->uses ? : 0}}/{{$plan->use_limit}} uses--}}
+                            <form method="POST" id="delete-subscription-form-{{$subscription->id}}" action=/subscription/cancel/{{$subscription->id}}" style="display: inline-block" class="float-right">
                                 {{csrf_field()}}
                                 {{method_field("DELETE")}}
                                 <input type="hidden" name="is_business_account" value="0">
-                                <button type="submit" class=" text-danger "> Cancel Subscription </button> {{-- still needs to be worked out --}}
                             </form>
                         </div>
                         <div class="card-body">
-                            <p>{{$plan->description}}</p>
-                            <img src="{{getImage($plan->featured_photo_path)}}" width="200">
+                            <div class="row">
+                                <div class="col-md-12 text-center">
+                                    <img src="{{getImage($plan->featured_photo_path)}}" width="200">
+                                </div>
+                            </div>
                             <hr>
-                            <button class="btn btn-success show-sm-modal checkin" data-subscription-id="{{$subscription->id}}" data-plan-id="{{$plan->id}}" data-modal-target="#checkin-{{$subscription->id}}" {{$mustUpdatePaymentMethod ? "disabled" : ""}}> Check-in </button> {{-- still needs to be worked out --}}
-                            <button class="btn btn-info" {{$mustUpdatePaymentMethod ? "disabled" : ""}}> View Details </button> {{-- we need a modal for this --}}
-                            <a class="btn btn-warning" href="{{$mustUpdatePaymentMethod ? "#" : '/business/viewService/'.$plan->id.'/#review-container'}}" > Write A Review </a>
-                            <button class="btn btn-primary show-sm-modal" data-modal-target="#rate-{{$plan->id}}" {{$mustUpdatePaymentMethod ? "disabled" : ""}}>Rate <span class="fa fa-star"></span> </button>
+
+                            {{--<button class=" col-12 btn-sm theme-background show-sm-modal checkin" data-subscription-id="{{$subscription->id}}" data-plan-id="{{$plan->id}}" data-modal-target="#checkin-{{$subscription->id}}" {{$mustUpdatePaymentMethod ? "disabled" : ""}}><span class="fa fa-check-circle"></span> Check-in </button> --}}{{-- still needs to be worked out --}}
+                            {{--<button class=" col-12 btn-sm theme-background show-sm-modal" data-modal-target="#subscription-details-{{$plan->id}}" {{$mustUpdatePaymentMethod ? "disabled" : ""}}><span class="fa fa-eye"></span> View Details </button> --}}{{-- we need a modal for this --}}
+                            {{--<a style="display: block" class="col-12 btn-sm theme-background text-center" href="{{$mustUpdatePaymentMethod ? "#" : '/business/viewService/'.$plan->id.'/#review-container'}}" ><span class="fa fa-pencil-square"></span> Write A Review </a>--}}
+                            {{--<button class=" col-12 btn-sm theme-background show-sm-modal" data-modal-target="#rate-{{$plan->id}}" {{$mustUpdatePaymentMethod ? "disabled" : ""}}><span class="fa fa-star"></span> Rate </button>--}}
+                            {{--<hr>--}}
+                            {{--<button type="submit" class="btn-sm btn-danger" data-target="#delete-subscription-form-{{$subscription->id}}" data-subscription-name="{{removeLastWord($subscription->name)}}" onclick="cancelSubscription(event, this)"> Cancel Subscription </button> --}}{{-- still needs to be worked out --}}
+                            <table class="table table-striped">
+                                <tbody>
+                                <tr class=" theme-background text-center show-sm-modal checkin" data-subscription-id="{{$subscription->id}}" data-plan-id="{{$plan->id}}" data-modal-target="#checkin-{{$subscription->id}}" {{$mustUpdatePaymentMethod ? "disabled" : ""}}><td><span class="fa fa-check-circle"></span> Check-in </td></tr>
+                                <tr class=" theme-background text-center show-sm-modal" data-modal-target="#subscription-details-{{$plan->id}}" {{$mustUpdatePaymentMethod ? "disabled" : ""}}><td><span class="fa fa-eye"></span> View Details</td></tr>
+                                <tr class=" theme-background text-center" data-href="{{$mustUpdatePaymentMethod ? "#" : '/business/viewService/'.$plan->id.'/#review-container'}}" onclick="triggerTargetHref(event, this)"><td><span class="fa fa-pencil-square"></span> Write A Review </td></tr>
+                                <tr class=" theme-background text-center show-sm-modal" data-modal-target="#rate-{{$plan->id}}" {{$mustUpdatePaymentMethod ? "disabled" : ""}}><td><span class="fa fa-star"></span> Rate </td></tr>
+                                </tbody>
+                            </table>
                             <hr>
+                            <button type="submit" class="btn-sm btn-danger" data-target="#delete-subscription-form-{{$subscription->id}}" data-subscription-name="{{removeLastWord($subscription->name)}}" onclick="cancelSubscription(event, this)"> Cancel Subscription </button>
                         </div>
                 </div>
                 @include('modals.custom.checkin-modal')
                 @include('modals.custom.ratings-modal')
+                @include('modals.custom.subscription-details-modal')
                 @empty
                     <div class="card">
                         <div class="card-header">No subscriptions yet!</div>
@@ -58,5 +92,5 @@
     </div>
 @endsection
 @section('footer')
-    <script src="{{asset('js/ajax/checkin.js')}}"></script>
+    <script src="{{baseUrlConcat('/js/ajax/checkin.js')}}"></script>
 @endsection

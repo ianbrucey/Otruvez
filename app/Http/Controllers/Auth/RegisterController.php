@@ -6,6 +6,7 @@ use App\Email;
 use App\Mail\ConfirmAccount;
 use App\User;
 use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
@@ -23,6 +24,15 @@ class RegisterController extends Controller
     | provide this functionality without requiring any additional code.
     |
     */
+    private $secret = "6LdhMW4UAAAAAGFcIO72FqWsyIThtH9MNpc6vCP9";
+    private $reCapUrl = "https://www.google.com/recaptcha/api/siteverify";
+    protected $hasApiKey   = false;
+    protected $portalRouteExtension = '';
+    protected $loginRoute;
+    protected $registerRoute;
+    protected $viewServiceRoute;
+    protected $confirmAccountRoute;
+
 
     use RegistersUsers;
 
@@ -31,16 +41,33 @@ class RegisterController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/registered';
+    protected $redirectTo = '/confirmAccount';
 
     /**
      * Create a new controller instance.
      *
-     * @return void
+     * @param Request $request
      */
-    public function __construct()
+    public function __construct(Request $request = null)
     {
         $this->middleware('guest');
+
+        if(!empty($request) && $request->has('apiKey')) {
+
+            $businessId = $request->get('businessId');
+            $stripeId   = $request->get('stripeId');
+            $apiKey     = $request->get('apiKey');
+            $this->portalRouteExtension = sprintf("/%s/%s/%s",$businessId,$stripeId,$apiKey);
+            $this->loginRoute = sprintf("/portal/login%s",$this->portalRouteExtension);
+            $this->registerRoute = sprintf("/portal/register%s",$this->portalRouteExtension);
+            $this->viewServiceRoute = sprintf("/portal/viewService%s",$this->portalRouteExtension);
+            $this->confirmAccountRoute = sprintf("/portal/confirmAccount%s",$this->portalRouteExtension);
+            $this->hasApiKey = true;
+            $paramsAreValid = validatePortalParams($businessId,$stripeId,$apiKey);
+            if($paramsAreValid) {
+                $this->redirectTo = sprintf("/portal/viewService%s",$this->portalRouteExtension);
+            }
+        }
     }
 
     /**
@@ -55,17 +82,24 @@ class RegisterController extends Controller
             'first' => 'required|string|max:255',
             'last' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users',
-            'password' => 'required|string|min:6|confirmed',
+            'password' => [
+                'required',
+                'min:8',
+                'regex:/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*(_|[^\w])).+$/',
+                'confirmed'
+            ],
+            'g-recaptcha-response' => 'required|min:10'
         ]);
     }
 
     /**
      * Create a new user instance after a valid registration.
      *
-     * @param  array  $data
-     * @return \App\User
+     * @param  array $data
+     * @param Request $request
+     * @return User
      */
-    protected function create(array $data)
+    protected function create(array $data, Request $request)
     {
 
         $stripeSecretKey = config('services.stripe.secret');
@@ -77,23 +111,43 @@ class RegisterController extends Controller
             'email' => $data['email'],
             'description' => sprintf("account for %s %s | %s",$data['first'],$data['last'],$data['email']),
         ]);
-        $token  = rand(1,100)*rand(1,10) . time() . $data['email'];
 
-        $activationToken = md5($token);
-        $updatedAt = date("Y:m:d H:i:s");
+        // if we have a provider, we don't need to verify the user as a bot or not
+        $recapResponse = null;
+        if(!issetAndTrue($data,'provider')) {
+            $recapResponse = $this->postRecaptchaResponse($request);
+        }
 
-        $user = User::create([
+        $activationToken = generateValidationToken();
+
+        $user = (new User())->create([
             'first' => $data['first'],
             'last' => $data['last'],
             'email' => $data['email'],
             'password' => bcrypt($data['password']),
             'stripe_id' => $stripeCustomer->id,
-            'activated' => "0",
-            'activation_token' => $activationToken
+            'activated' => ( issetAndTrue($data,'provider') || $recapResponse->success == true ) ? "1" : "0",
+            'activation_token' => $activationToken,
+            'provider' => issetAndTrue($data,'provider'),
+            'provider_id' => issetAndTrue($data,'provider_id')
         ]);
 
-        Email::sendConfirmAccountEmail($user, $activationToken);
+        if($user->activated != 1) {
+            Email::sendConfirmAccountEmail($user, $activationToken);
+        }
 
         return $user;
+    }
+
+    private function postRecaptchaResponse(Request $request)
+    {
+        $postQueryString = sprintf("secret=%s&response=%s", $this->secret, $request->get("g-recaptcha-response"));
+        $ch = curl_init($this->reCapUrl);
+        curl_setopt($ch, CURLOPT_POST, true);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $postQueryString);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+        $response = curl_exec($ch);
+        curl_close($ch);
+        return \GuzzleHttp\json_decode($response); // returns std class obj
     }
 }

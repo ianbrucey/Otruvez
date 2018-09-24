@@ -7,6 +7,7 @@ use App\Notification;
 use App\Subscription;
 use App\User;
 use Exception;
+use Faker\Provider\DateTime;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Stripe\Stripe;
@@ -23,15 +24,17 @@ class AccountController extends Controller
         return view('account.account-home');
     }
 
-    public function subscriptions()
+    public function subscriptions(Request $request, $portalBusinessId = null)
     {
+        $portalBusiness = null;
+        if($portalBusinessId) {
+            $portalBusiness = Business::find($portalBusinessId);
+        }
         $subscriptions  = Subscription::where('user_id', Auth::id())->where('business_id',"!=",0)->get();
-        return view('account.subscriptions')->with('subscriptions', $subscriptions)->with('mustUpdatePaymentMethod', !Auth::user()->has_valid_payment_method);
-    }
-    public function businessNotificationView($businessId){
-        $businessEmail = (new Business())->where('id', $businessId)->value('email');
-        $notifications = (new Notification())->getNotifications('business', $businessEmail, $businessId);
-        return view('business.business-notifications')->with('notifications', $notifications);
+        return view('account.subscriptions')
+            ->with('subscriptions', $subscriptions)
+            ->with('portalBusiness', $portalBusiness)
+            ->with('mustUpdatePaymentMethod', !Auth::user()->has_valid_payment_method);
     }
 
     public function accountNotificationView(){
@@ -45,8 +48,34 @@ class AccountController extends Controller
     }
 
     public function contactSupport(Request $request){
+        $this->validate($request,[
+            'subject'   => 'nullable|'.ALPHANUMERIC_DASH_SPACE_DOT_REGEX,
+            'body'      => 'nullable|'.ALPHANUMERIC_DASH_SPACE_DOT_REGEX
+        ]);
         $subject = $request->get('subject');
         $body    = $request->get('body');
+        $currentTimestamp   = date('Y-m-d G:i:s');
+        $currentMonthAndDay = date('m-d');
+
+        $user = Auth::user();
+
+        if(!$user->customer_service_limit) {
+            ++$user->customer_service_limit;
+            $user->last_customer_service_contact_date = $currentTimestamp;
+            $user->save();
+        } elseif($user->customer_service_limit == CUSTOMER_SERVICE_CONTACT_LIMIT ) {
+            if($currentMonthAndDay == (new \DateTime($user->last_customer_service_contact_date))->format('m-d')) {
+                return redirect('/account')->with('infoMessage', "Request limit reached for the day. We will respond to your previous requests within 24-48 hours");
+            } else {
+                $user->customer_service_limit = 1;
+                $user->last_customer_service_contact_date = $currentTimestamp;
+                $user->save();
+            }
+
+        } else {
+            ++$user->customer_service_limit;
+            $user->save();
+        }
 
         try {
             (new Notification())->sendSupportNotification($request);
@@ -54,7 +83,7 @@ class AccountController extends Controller
         } catch (Exception $e) {
             // return with old values
             return redirect('/account/support')
-                    ->with('errorMessage', "Message was not sent successfully. Please try again.")
+                    ->with('errorMessage', "Message was not sent successfully. Please try again: " . $e->getMessage())
                     ->with('subject', $subject)
                     ->with('body', $body);
         }
@@ -68,16 +97,19 @@ class AccountController extends Controller
 
     public function deleteAccount(Request $request)
     {
+        $this->validate($request, [
+            'email' => 'required|email'
+        ]);
         setStripeApiKey('secret');
         $email = $request->get('email');
         $user = Auth::user();
         if($email !=  $user->email) {
             return redirect()->back()->with("errorMessage","Not authorized to make this request");
         }
-
-        if($user->business_id) {
+        $business = getAuthedBusiness();
+        if($business != null) {
             $businessController = new BusinessController();
-            $businessController->deleteBusiness( $request, $user->business_id, true);
+            $businessController->deleteBusiness( $request, $business->id, true);
         }
 
         $localSubscriptions = (new Subscription())->where('user_id', Auth::id())->get();

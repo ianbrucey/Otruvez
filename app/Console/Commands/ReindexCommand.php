@@ -31,6 +31,7 @@ class ReindexCommand extends Command
 
 
         $this->info('Indexing all plans. Might take a while...');
+        $this->output->write(sprintf("there are %s plans", count(Plan::cursor())));
         foreach (Plan::cursor() as $model) {
 
             if($model->business) {
@@ -68,15 +69,15 @@ class ReindexCommand extends Command
                         ],
                         'properties' => [
                             'stripe_plan_name' => [
-                                'type' => 'string',
+                                'type' => 'text',
                                 'analyzer' => 'english'
                             ],
                             'id' => [
                                 'type' => 'integer',
-                                'index' => 'not_analyzed'
+                                'index' => 'false'
                             ],
                             'description' => [
-                                'type' => 'string',
+                                'type' => 'text',
                                 'analyzer' => 'english'
                             ],
                             "location" => [

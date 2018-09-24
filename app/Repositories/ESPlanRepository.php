@@ -61,6 +61,11 @@ class ESPlanRepository extends ESRepository implements RepositoryInterface
                                 ]
                             ]
                         ],
+                        'must' => [
+                            'exists' => [
+                                'field' => 'featured_photo_path'
+                            ],
+                        ],
                         "minimum_should_match" => 1,
                         "filter" => [
                             'geo_distance' => [
@@ -87,8 +92,16 @@ class ESPlanRepository extends ESRepository implements RepositoryInterface
             'index' => $instance->getSearchIndex(),
             'type' => $instance->getSearchType(),
             'body' => [
+                "from" => 0,
+                "size" => 25,
                 'query' => [
-                    'match_all' => (object)[],
+                    'bool' => [
+                        'must' => [
+                            'exists' => [
+                                'field' => 'featured_photo_path'
+                            ],
+                        ]
+                  ],
                 ],
             ],
         ]);

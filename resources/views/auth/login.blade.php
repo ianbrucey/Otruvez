@@ -4,11 +4,16 @@
 <div class="container">
     <div class="row">
         <div class="col-md-8 offset-md-2">
-            <div class="card"><br><br>
-                <h3 class="card-heading text-center">Login</h3>
+            <div class="card card-default">
+                <div class="card-header">
+                    <h3 class="card-heading text-center"><img src="{{getOtruvezLogoImg()}}" width="100"></h3>
+                    <h3 class="card-heading text-center">Login</h3>
+                </div>
+
 
                 <div class="card-body">
-                    <form class="form-horizontal" method="POST" action="{{ route('login') }}">
+                    @include('partials.social.auth-buttons')
+                    <form class="form-horizontal validate-login" method="POST" action="{{ route('login') }}">
                         {{ csrf_field() }}
 
                         <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
@@ -29,6 +34,7 @@
                             <label for="password" class="col-md-12 text-left control-label">Password</label>
 
                             <div class="col-md-12">
+                                @include('partials.password-requirements')
                                 <input id="password" type="password" class="form-control" name="password" required>
 
                                 @if ($errors->has('password'))
@@ -51,11 +57,11 @@
 
                         <div class="form-group">
                             <div class="col-md-8">
-                                <button type="submit" class="btn btn-primary">
+                                <button type="submit" class="btn theme-background">
                                     Login
                                 </button>
 
-                                <a class="btn btn-link" href="{{ route('password.request') }}">
+                                <a class="btn btn-link theme-color" href="{{ route('password.request') }}">
                                     Forgot Your Password?
                                 </a>
                             </div>

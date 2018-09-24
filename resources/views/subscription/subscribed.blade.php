@@ -16,15 +16,20 @@
     <div class="container">
         <div class="row">
             <div class="col-md-8 offset-md-2">
-                <div class="card card-header">
-                    <h1 class="text-center">Thanks for your subscription to {{removeLastWord(session('planName'))}}</h1>
-                </div>
-                <div class="card card-body">
-                    <h2 class="text-center"><u>Details</u></h2>
-                    <h3 class="text-center">Price: <strong>{{formatPrice(session('price'))}}</strong> per <strong>{{session('interval')}}</strong></h3>
+                <div class="card ">
+                    <p class="text-center p-20">Success!</p>
+                    <p class="text-center p-20" >Thank you for subscribing to <br>
+                        <span class="theme-color p-26">{{removeLastWord(session('planName'))}}</span>
+                        <hr>
+                    </p>
+
+                    <p class="text-center p-20" >Details <br>
+                    <span class="text-center theme-color p-24">{{formatPrice(session('price'))}} / {{session('interval')}}</span>
+                    </p>
+
                     <hr>
-                    <h3 class="text-center">To use this service now, <a class="theme-color" href="/account/mysubscriptions">click here to go to your active subscriptions</a></h3>
-                    <a href="/home" class="btn theme-background">Find more services</a>
+                    <h3 class="text-center"><a class="btn theme-background col-12" href="/account/mysubscriptions">Go to my active subscriptions</a></h3>
+                    <h3 class="text-center"><a href="/home" class="btn bg-white theme-color col-12 ">Keep shopping</a></h3>
                 </div>
             </div>
         </div>

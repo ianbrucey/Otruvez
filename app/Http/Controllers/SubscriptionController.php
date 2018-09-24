@@ -67,7 +67,7 @@ class SubscriptionController extends Controller
     }
 
 
-    public function createSubscription(Request $request)
+    public function createSubscription(Request $request, $portal = null)
     {
         /** @var User $user */
         if(Auth::id() <= 0 || Auth::id() != $request->user_id) {
@@ -103,6 +103,10 @@ class SubscriptionController extends Controller
         }
         $business = Business::find($businessId);
         (new Notification())->sendSubscribedUserNotification($user,$business, $newStripeSubscription);
+
+        if($request->has('apiKey') && validatePortalParams($businessId, $smPlanId, $request->get('apiKey')) != null) {
+            return redirect()->to("/account/mysubscriptions/$businessId");
+        }
 
         return redirect('/subscription/subscribed')
             ->with('interval', $interval)
@@ -151,8 +155,13 @@ class SubscriptionController extends Controller
         }
 
         (new Notification())->sendUnsubscribedUserNotification($user,$business, $localSubscription);
-        $stripeSubscription->cancel(); // need a catch here
         $localSubscription->delete();
+        try {
+            $stripeSubscription->cancel(); // need a catch here
+        } catch (Exception $e) {
+            return redirect("/account/mysubscriptions")->with('warningMessage',"There was a problem deleting the service because it may no longer exist. please contact support with the following id if problems persist: {$localSubscription->stripe_id}");
+        }
+
 
 
         $isBusinessAcoount    = $request->is_business_account;

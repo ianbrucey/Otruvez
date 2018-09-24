@@ -1,5 +1,7 @@
 <?php
 
+use App\Business;
+use App\Plan;
 use Illuminate\Support\Arr;
 use Illuminate\Support\HtmlString;
 use Illuminate\Support\Str;
@@ -1205,7 +1207,7 @@ function getBusinessLogoImg($business)
 
 function getOtruvezLogoImg()
 {
-    return getImage('logos/otruvez-logo.png');
+    return baseUrlConcat('/classimax/images/logos/otruvez-logo.png');
 }
 
 function getAccountNotificationsUrl()
@@ -1231,6 +1233,10 @@ function getImage($imgPath) {
     return s3PhotobucketPath().$imgPath;
 }
 
+function getLocalImage($imgPath) {
+    return s3PhotobucketPath().$imgPath;
+}
+
 function s3BucketFolderList() {
     return [
         'business-photo',
@@ -1240,4 +1246,85 @@ function s3BucketFolderList() {
         'logos'
     ];
 }
+
+function truncateCardTitle($str){
+    return strlen($str) > 55 ? substr($str,0,55)."..." : substr($str,0,55);
+}
+
+function baseUrlConcat($str) {
+    return sprintf("%s%s",env('APP_URL'),$str);
+}
+
+function validatePortalParams($businessId ,$stripeId ,$apiKey) {
+
+    $arr = [];
+    $business = (new Business())->find($businessId);
+    $arr['business'] = $business;
+
+    if($business && $business->api_key == $apiKey) {
+        $plan = (new Plan())->find($stripeId);
+        $arr['plan'] = $plan;
+        if($plan && $plan->business_id == $business->id) {
+            return $arr;
+        } else {
+            return null;
+        }
+    } else {
+        return null;
+    }
+}
+
+function generateValidationToken() {
+    return rand(0,9).rand(0,9).rand(0,9).rand(0,9).rand(0,9).rand(0,9);
+}
+
+function issetAndTrue($array, $key) {
+    return isset($array[$key]) && $array[$key] ? $array[$key] : null;
+}
+
+function curlRequest($url, $post = null) {
+
+    $ch = curl_init();
+
+    curl_setopt($ch, CURLOPT_URL, $url);
+
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+    curl_setopt($ch, CURLOPT_TIMEOUT, 3);
+    $content = trim(curl_exec($ch));
+    curl_close($ch);
+    var_dump($content);
+    print $content;
+}
+
+function jsonToObject($json) {
+    return json_decode($json);
+}
+
+function objectToJson($object) {
+    return json_encode($object);
+}
+
+function noEntityAbort($entity, $code) {
+    if($entity == null) {
+        abort($code);
+    }
+}
+
+function serverError500() {
+    abort(500);
+}
+
+function notYourEntityAbort403(\Illuminate\Database\Eloquent\Model $entity) {
+    if($entity->user_id != Auth::id()) {
+        abort(403);
+    }
+}
+
+function getAuthedBusiness() {
+    return Business::where('user_id', Auth::id())->first();
+}
+
+const CUSTOMER_SERVICE_CONTACT_LIMIT = 5;
+const ALPHANUMERIC_DASH_SPACE_REGEX = 'regex:/^[a-zA-Z0-9\-\s]+$/';
+const ALPHANUMERIC_DASH_SPACE_DOT_REGEX = 'regex:/^[a-zA-Z0-9\-\s.]+$/';
 // logo: <img src="{{getImage("logos/otruvez-logo.png")}}" style="width: 150px; height: auto;">

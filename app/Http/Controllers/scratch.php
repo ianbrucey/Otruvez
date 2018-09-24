@@ -60,7 +60,7 @@ curl -XPOST 'localhost:9200/my_index/my_type?pretty' -H 'Content-Type: applicati
 
 
 
-curl -XDELETE 'localhost:9200/plans?pretty'
+php
 
 php artisan search:reindex
 
