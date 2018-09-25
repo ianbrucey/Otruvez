@@ -8,13 +8,14 @@
                     <div class="card-header">
                         <h3 class="card-heading text-center"><img src="{{getOtruvezLogoImg()}}" width="100"></h3>
                         <h3 class="card-heading text-center">Login</h3>
+                        @include('errors.request-errors')
                     </div>
 
 
-                <div class="card-body">
-                    @include('partials.social.auth-buttons')
-                    <form class="form-horizontal validate-login" method="POST" action="{{ route('login') }}">
-                        {{ csrf_field() }}
+                    <div class="card-body">
+                        @include('partials.social.auth-buttons')
+                        <form class="form-horizontal validate-login" method="POST" action="{{ route('login') }}">
+                            {{ csrf_field() }}
 
                             <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
                                 <label for="email" class="col-md-12 text-left control-label">E-Mail Address</label>
@@ -33,8 +34,9 @@
                             <div class="form-group{{ $errors->has('password') ? ' has-error' : '' }}">
                                 <label for="password" class="col-md-12 text-left control-label">Password</label>
 
-                            <div class="col-md-12">
-                                @include('partials.password-requirements')<input id="password" type="password" class="form-control" name="password" required>
+                                <div class="col-md-12">
+                                    @include('partials.password-requirements')
+                                    <input id="password" type="password" class="form-control" name="password" required>
 
                                     @if ($errors->has('password'))
                                         <span class="help-block">
