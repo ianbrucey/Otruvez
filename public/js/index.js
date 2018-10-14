@@ -305,10 +305,6 @@ $(document).ready(function () {
                 minlength: 10,
                 alphaNumericSpace: true
             },
-            redirect_to: {
-                required: false,
-                url: true
-            },
             monday: {
                 required: false,
                 alphaNumericSpace: true
@@ -355,6 +351,17 @@ $(document).ready(function () {
             $('#submitting').fadeIn(500);
             form.submit();
         }
+    });
+
+    $('#redirect-to-url').on('blur', function () {
+        let curObj = $(this);
+        let curVal = curObj.val();
+        let https = "https://";
+       if(curVal.indexOf("http://") !== -1) { // if contains http: only, replace
+            curObj.val(curVal.replace("http://","https://"))
+       } else if (curVal.indexOf("https://") === -1) { // if does not contain https:, prepend
+            curObj.val(https + curVal);
+       }
     });
 
 
