@@ -20,7 +20,7 @@
             @if(count($plans) < 10 || true)
                 <a class="col-md-6 offset-md-3 plan-preview-card my-3 new-plan-card" href="/plan/createService">
                     <p class="text-white">Create a new service</p>
-                    <span class="fa fa-plus"></span>
+                    {{--<span class="fa fa-plus"></span>--}}
                 </a>
             @endif
         </div>

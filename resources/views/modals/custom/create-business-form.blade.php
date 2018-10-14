@@ -40,7 +40,7 @@
                         <div class="business-hours">
                             @foreach($days as $day)
                                 <div style="width: 30%; display: inline-block">
-                                    <label>{{ucfirst($day)}}</label>
+                                    <label class="text-white">{{ucfirst($day)}}</label>
                                 </div>
                                 <div style="width: 68%; display: inline-block">
                                     <input type="text" name="{{$day}}" class="" placeholder="ex: 10am - 8pm ">

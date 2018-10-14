@@ -111,7 +111,7 @@
                         {{--PRIMARY BUSINESS PHOTO--}}
                         {{--</div>--}}
 
-                        <div class="card-body">
+                        <div class="col-md-6">
                             <h3 class="text-justify">{{$business->name}}</h3>
                             <p><i>"{{$business->description}}"</i></p>
                             <p>{{$business->email}}</p>
@@ -130,12 +130,12 @@
                                 @endforeach
                             </div>
                         </div>
-                        <div class="card-body">
-                            <hr>
-                            <h3 class="text-justify" data-toggle="collapse" data-target="#redirect-url-info">Redirect Url: <span class="float-right theme-color">What's this?</span> </h3>
-                            <p class="theme-color collapse" id="redirect-url-info" >This field is for online business who want to use our portal to sell their subscriptions. After a customer completes the process, they will be redirected to this URL. You can also set this field in the <b>API & Online Business Integration</b> Page for any of the services you offer.</p>
-                            <p>{{$business->redirect_to ?: 'No url provided'}}</p>
-                        </div>
+                        {{--<div class="card-body">--}}
+                            {{--<hr>--}}
+                            {{--<h3 class="text-justify" data-toggle="collapse" data-target="#redirect-url-info">Redirect Url: <span class="float-right theme-color">What's this?</span> </h3>--}}
+                            {{--<p class="theme-color collapse" id="redirect-url-info" >This field is for online business who want to use our portal to sell their subscriptions. After a customer completes the process, they will be redirected to this URL. You can also set this field in the <b>API & Online Business Integration</b> Page for any of the services you offer.</p>--}}
+                            {{--<p>{{$business->redirect_to ?: 'No url provided'}}</p>--}}
+                        {{--</div>--}}
 
                         <div class="card-footer " style="width: 100%">
                             <button type="button" class="btn-sm theme-background float-left show-sm-modal" data-modal-target="#business-details-{{$business->id}}">Edit Details</button>
