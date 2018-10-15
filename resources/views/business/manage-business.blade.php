@@ -61,7 +61,7 @@
                             {{--PRIMARY BUSINESS LOGO--}}
                             <p class="text-center">
                                 <a class="text-primary btn theme-background" id="update-business-logo" data-target="#business-logo-dropzone" onclick="triggerTargetClick(event, this)">update logo</a>
-                            <form action="/business/updateLogo/{{$business->id}}" class="dropzone business-logo-dropzone hide" id="business-logo-dropzone">
+                            <form action="https://www.otruvez.com/business/updateLogo/{{$business->id}}" class="dropzone business-logo-dropzone hide" id="business-logo-dropzone">
                                 {{ csrf_field() }}
                                 {{ form_method_field("POST") }}
                                 <div class="fallback">
@@ -88,7 +88,7 @@
                             {{--PRIMARY BUSINESS PHOTO--}}
                             {{--<p class="text-center">--}}
                                 {{--<a class="text-primary btn theme-background" id="update-business_photo" data-target="#business-dropzone" onclick="triggerTargetClick(event, this)">update primary photo</a>--}}
-                                {{--<form action="/business/updatePhoto/{{$business->id}}" class="dropzone hide" id="business-dropzone">--}}
+                                {{--<form action="https://www.otruvez.com/business/updatePhoto/{{$business->id}}" class="dropzone hide" id="business-dropzone">--}}
                                     {{--{{ csrf_field() }}--}}
                                     {{--{{ form_method_field("POST") }}--}}
                                     {{--<div class="fallback">--}}

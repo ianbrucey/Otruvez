@@ -86,7 +86,7 @@
                                         <span class="fa fa-pencil fa-2x"></span>
                                     </div>
                                     <div class="col-4 delete-plan" data-target="#delete-plan-form-{{$plan->id}}" data-plan-name="{{$plan->stripe_plan_name}}" onclick="deletePlan(event, this)">
-                                        <form action="/plan/delete/{{$plan->id}}" method="POST" id="delete-plan-form-{{$plan->id}}">
+                                        <form action="https://www.otruvez.com/plan/delete/{{$plan->id}}" method="POST" id="delete-plan-form-{{$plan->id}}">
                                             {{method_field('DELETE')}}
                                             {{csrf_field()}}
                                             <span class="fa fa-trash fa-2x"></span>

@@ -69,7 +69,7 @@ $intervals = ['month','year'];
                                     <p>{{$review->body}}</p>
                                     <small class="text-muted">Posted by <b>{{$review->name}}</b> on <span><b>{{formatDate($review->created_at,'M-d-Y')}}</b></span></small>
                                     @if($review->user_id === \Illuminate\Support\Facades\Auth::id())
-                                        <form action="/review/deleteReview/{{$review->id}}" method="post" class="float-right">
+                                        <form action="https://www.otruvez.com/review/deleteReview/{{$review->id}}" method="post" class="float-right">
                                             <button type="submit" class="text-danger">delete</button>
                                             {{method_field('delete')}}
                                             {{csrf_field()}}
@@ -120,7 +120,7 @@ $intervals = ['month','year'];
                                 @foreach($intervals as $interval)
 
                                     @if($interval == 'month' && $plan->month_price > 0 || $interval == 'year' && $plan->year_price > 0)
-                                        <form action="/subscription/subscribe" class=" list-group-item text-center stripe-payment-form" method="POST" >
+                                        <form action="https://www.otruvez.com/subscription/subscribe" class=" list-group-item text-center stripe-payment-form" method="POST" >
                                             <h5 class="">{{$interval == 'month' ? formatPrice($plan->month_price) . " / month" : formatPrice($plan->year_price) . " / year"}}</h5>
                                             <script
                                                     src="https://checkout.stripe.com/checkout.js" class="stripe-button"

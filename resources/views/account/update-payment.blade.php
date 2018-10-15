@@ -25,7 +25,7 @@
                         <li><h3><b>*No card on file*</b></h3></li>
                     </ul>
                 @endif
-                <form action="/account/updatePaymentMethod" method="POST" class="mt-4 text-center">
+                <form action="https://www.otruvez.com/account/updatePaymentMethod" method="POST" class="mt-4 text-center">
                     <script
                             src="https://checkout.stripe.com/checkout.js" class="stripe-button"
                             data-key="pk_test_GQCUjPm3eovgzCUVD2RmzTjU"

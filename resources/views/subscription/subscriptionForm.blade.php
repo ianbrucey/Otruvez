@@ -22,7 +22,7 @@ $interval        = $data['interval'];
                         <h3 class="text-center">at {{formatPrice($price)}} a {{$interval}}</h3>
                     </div>
                     <div class="card-body">
-                        <form action="/subscription/subscribe" class="text-center" method="POST">
+                        <form action="https://www.otruvez.com/subscription/subscribe" class="text-center" method="POST">
                             <script
                                     src="https://checkout.stripe.com/checkout.js" class="stripe-button"
                                     data-key="{{$publicStripeKey}}"

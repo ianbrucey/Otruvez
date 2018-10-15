@@ -1,6 +1,6 @@
 <div class="row page-search">
     <!-- Store Search -->
-    <form action="/home/findServices" method="post" class="col-md-5 offset-md-1" id="search-form" autocomplete="off">
+    <form action="https://www.otruvez.com/home/findServices" method="post" class="col-md-5 offset-md-1" id="search-form" autocomplete="off">
         {{csrf_field()}}
         <div class="block d-flex">
             <input type="hidden" name="submitted"  value=true>
