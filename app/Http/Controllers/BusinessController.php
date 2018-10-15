@@ -216,9 +216,9 @@ class BusinessController extends Controller
             $business->logo_path = $path;
             $business->save();
 
-            return redirect('/business/manageBusiness')->with('successMessage', "Logo uploaded successfully");
+            return 1;
         } else {
-            return redirect('/business/manageBusiness')->with('errorMessage', "request is empty");
+            return 0;
         }
     }
 
