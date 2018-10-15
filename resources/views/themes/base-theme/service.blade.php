@@ -83,7 +83,7 @@ $intervals = ['month','year'];
                         <hr>
                         @if(!\Illuminate\Support\Facades\Auth::check())
                             <p class="theme-color">You must be logged in to write a review</p>
-                        @elseif(!$hasReview && !$owner)
+                        @elseif($canReview && !$owner)
                             <form method="post" action="/review/addReview/{{$business->id}}" class="form-group validate-review" id="review-form">
                                 <textarea name="body" placeholder="write your review here" class="form-control-lg review-body" id="review-body" required></textarea><br>
                                 {{csrf_field()}}
