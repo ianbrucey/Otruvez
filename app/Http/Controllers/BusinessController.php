@@ -150,7 +150,7 @@ class BusinessController extends Controller
         $publicStripeKey    = getPublicStripeKey();
         $rating             = (new Rating())->where('plan_id', $planId)->avg('rate_number');
         $reviews            = (new Review())->where('business_id', $business->id)->orderBy('id','desc')->get();
-        $hasReview          = Auth::check() ? (new Review())->where('business_id', $business->id)->where('user_id', Auth::id())->first(): false;
+        $hasReview          = Auth::check() ? (new Review())->where('business_id', $business->id)->where('user_id', Auth::id())->first() && (new \App\Subscription())->where('plan_id', $planId)->where('user_id', Auth::id())->first(): false;
         $guest              = !Auth::check();
         return view('themes.base-theme.service')
             ->with('hasPhoto',$hasPhoto)

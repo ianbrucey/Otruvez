@@ -90,6 +90,8 @@ $intervals = ['month','year'];
                                 <br>
                                 <button type="submit" class="btn btn-success" id="service-review-button">Leave a Review</button>
                             </form>
+                        @else
+                            <p class="theme-color">You must have a subscription to this service to write a review</p>
                         @endif
                     </div>
                 </div>
