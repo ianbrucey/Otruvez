@@ -357,11 +357,13 @@ $(document).ready(function () {
         let curObj = $(this);
         let curVal = curObj.val();
         let https = "https://";
-       if(curVal.indexOf("http://") !== -1) { // if contains http: only, replace
-            curObj.val(curVal.replace("http://","https://"))
-       } else if (curVal.indexOf("https://") === -1) { // if does not contain https:, prepend
-            curObj.val(https + curVal);
-       }
+        if (curVal) {
+            if (curVal.indexOf("http://") !== -1) { // if contains http: only, replace
+                curObj.val(curVal.replace("http://", "https://"))
+            } else if (curVal.indexOf("https://") === -1) { // if does not contain https:, prepend
+                curObj.val(https + curVal);
+            }
+        }
     });
 
 
