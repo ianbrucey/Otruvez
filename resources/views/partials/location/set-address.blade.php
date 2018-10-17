@@ -8,8 +8,8 @@
     <input type="hidden" class="field" id="administrative_area_level_1" name="state">
     <input type="hidden" class="field" id="postal_code" name="zip">
     <input type="hidden" class="field" id="country" name="country">
-    <input type="hidden" class="field" id="lat" name="lat">
-    <input type="hidden" class="field" id="lng" name="lng">
+    <input type="hidden" class="field" id="lat" name="lat" value="0">
+    <input type="hidden" class="field" id="lng" name="lng" value="0">
 </div>
 <script>
     $(window).keydown(function(event){
