@@ -62,7 +62,7 @@ class HomeController extends Controller
         $lng = $location ? $location->longitude : null;
         $paginationIndex = $request->get('from');
 
-        $results = $ESPlanRepository->search($request->get('searchField'), $lat, $lng, $kms, $paginationIndex);
+        $results = $ESPlanRepository->search($request->get('searchField'), null, $lat, $lng, $kms, $paginationIndex);
 
 //        if($request->get('location_id') != Auth::user()->location_id && $request->get('location_id') > 0) {
 //            $user = Auth::user();
@@ -98,6 +98,7 @@ class HomeController extends Controller
         $location->state        = $request->get('state');
         $location->postal       = $request->get('postal');
         $location->country_name = $request->get('country_name');
+        $category               = $request->get('category');
         Cache::forever('location', $location);
 
         $kms = $request->get('miles') ? ($request->get('miles') * 1.61) . "km" : '16.10km'; // default distance is 10 miles | 8.05km == 5 mi
@@ -106,7 +107,7 @@ class HomeController extends Controller
         $paginationIndex = $request->get('from');
         $maxResults     = $this->maxResults;
 
-        $results = $ESPlanRepository->search($request->get('searchField'), $lat, $lng, $kms, $paginationIndex);
+        $results = $ESPlanRepository->search($request->get('searchField'), $category, $lat, $lng, $kms, $paginationIndex);
 
 
         $searchFrom = $paginationIndex ?: null;
@@ -121,7 +122,6 @@ class HomeController extends Controller
         $rightArrowFrom         = ($currentPageInterval * 125 );
         $leftArrow              = $currentPageInterval > 1;
         $leftArrowFrom          = ($currentPageInterval - 1) * 125;
-
         return view('find-services')
             ->with('maxResults', $maxResults)
             ->with('plans', $results['plans'])
@@ -130,6 +130,7 @@ class HomeController extends Controller
             ->with('searchField', $request->get('searchField') ?: '')
             ->with('totalResultCount', $results['actualTotal']) // this may change. With pagination, we need the total "hits" and the returned results
             ->with('miles', $request->get('miles') > 0 ? $request->get('miles') : 100)
+            ->with('category', $category)
             ->with('location', $location)
             ->with('totalPages', $totalPages)
             ->with('loopStart', $loopStart)

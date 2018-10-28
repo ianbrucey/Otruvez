@@ -30,16 +30,43 @@ class ESPlanRepository extends ESRepository implements RepositoryInterface
         $this->model  = new Plan();
     }
 
-    public function search($query = "", $lat = null, $lng = null, $distance = '80.5km', $from = 0, $maxResults = 25)
+    public function search($query = "",$category = null, $lat = null, $lng = null, $distance = '80.5km', $from = 0, $maxResults = 25)
     {
-        $items = $query ? $this->searchOnElasticsearch($query, $lat, $lng, $distance, $from) : $this->getAllItems();
+        $items = $query ? $this->searchOnElasticsearch($query, $category, $lat, $lng, $distance, $from) : $this->getAllItems();
 
         return $this->buildCollection($items);
     }
 
-    private function searchOnElasticsearch($query, $lat, $lng, $distance, $from = 0, $maxResults = 25)
+    private function searchOnElasticsearch($query, $category = null, $lat, $lng, $distance, $from = 0, $maxResults = 25)
     {
         $instance = $this->model;
+        $shouldArray = [
+            [
+                'match' => [
+                    'stripe_plan_name'  => $query,
+                ]
+            ],
+            [
+                'match' => [
+                    'description'       => $query
+                ]
+            ],
+        ];
+        $mustArray = [
+            [
+                'exists' => [
+                    'field' => 'featured_photo_path'
+                ],
+            ]
+        ];
+
+        if($category) {
+            $mustArray[] = [
+                'match' => [
+                    'category' => $category
+                ]
+            ];
+        }
 
         $items = $this->search->search([
             'index' => $instance->getSearchIndex(),
@@ -50,21 +77,10 @@ class ESPlanRepository extends ESRepository implements RepositoryInterface
                 'query' => [
                     'bool' => [
                         'should' => [
-                            [
-                                'match' => [
-                                    'stripe_plan_name'  => $query,
-                                ]
-                            ],
-                            [
-                                'match' => [
-                                    'description'       => $query
-                                ]
-                            ]
+                            $shouldArray
                         ],
                         'must' => [
-                            'exists' => [
-                                'field' => 'featured_photo_path'
-                            ],
+                            $mustArray
                         ],
                         "minimum_should_match" => 1,
                         "filter" => [

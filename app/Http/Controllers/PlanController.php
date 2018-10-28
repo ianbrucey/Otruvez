@@ -98,6 +98,7 @@ class PlanController extends Controller
             'featured_photo'    => 'required|image',
             'gallery_photos.*'  => 'nullable|image',
             'use_limit_month'   => 'nullable|integer',
+            'category'          => 'required|integer',
             'use_limit_year'    => 'nullable|integer',
             'month_price'       => 'nullable|integer',
             'year_price'        => 'nullable|integer'
@@ -117,6 +118,7 @@ class PlanController extends Controller
         $monthPrice           = $request->month_price * 100;
         $yearPrice            = $request->year_price * 100;
         $description          = $request->description;
+        $category             = $request->category;
         $intervals            = ['month','year'];
 
 
@@ -168,6 +170,7 @@ class PlanController extends Controller
             'use_limit_year'    => $useLimitYear,
             'limit_interval'    => $limitInterval,
             'description'       => $description,
+            'category'          => $category,
             'featured_photo_path' => null,
         ]);
 

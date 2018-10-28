@@ -370,7 +370,7 @@ class Notification extends Model
         $this->subject              = self::WELCOME_BUSINESS_NOTIFICATION['subject'];
         $this->body_template        = self::WELCOME_BUSINESS_NOTIFICATION['body_template']; // template?
         $this->body                 = $this->renderNotificationView(self::WELCOME_BUSINESS_NOTIFICATION['type'])->render();
-        $this->sender_name          = env('APP_NAME');
+        $this->sender_name          = env('APP_NAME') ?: "Otruvez";
         $this->is_template          = true;
         $this->recipient_id         = $user->id;
         $this->business_id          = $business->id;

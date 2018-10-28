@@ -373,6 +373,10 @@ $(document).ready(function () {
                 required: true,
                 alphaNumericSpace: true
             },
+            service_category: {
+                required: true,
+                digits: true
+            },
             month_price: {
                 digits: true,
             },
