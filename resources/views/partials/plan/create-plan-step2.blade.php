@@ -1,4 +1,4 @@
-<div id="create-service-step2" class="row"style="display: none">
+<div id="create-service-step2" class="row"style="display: ">
     <div class="col-md-8 offset-md-2">
         <div class="text-center m-4"> <button class="btn btn-sm theme-background create-service-previous-step">Back to photos</button></div>
 
@@ -10,6 +10,13 @@
                 </div>
                 <form method="post" action="/plan/createPlan" class="form-group-md validate-create-service" id="create-plan-form" enctype="multipart/form-data">
                     <div class="modal-body">
+                        <label for="category">Service Category</label>
+                        <select class="form-control" name="category" id="category">
+                            @foreach(SERVICE_CATEGORY_LIST as $key => $value)
+                                <option value="{{$key}}">{{$value}}</option>
+                            @endforeach
+                        </select>
+                        <hr>
                         <label>Plan Name</label>
                         <input type="text" name="stripe_plan_name" class="form-control" placeholder="Plan Name">
 

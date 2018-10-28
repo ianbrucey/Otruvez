@@ -19,6 +19,12 @@
             <span class="fa fa-plus-circle"></span> Advanced search
         </a>
         <div class="block form-group collapse" id="more-criteria">
+            <label class="text-white">Category</label>
+            <select class="form-control bg-white" name="category" id="category">
+                @foreach(SERVICE_CATEGORY_LIST as $key => $value)
+                    <option value="{{$key}}" {{$selected = isset($category) && $category == $key ? 'selected' : ''}}>{{$value}}</option>
+                @endforeach
+            </select>
             <label class="text-white">Distance in miles:</label>
             <input id="miles" name="miles" type="number" value="{{$miles}}" class="form-control bg-white" min="1" max="100" placeholder="Distance in miles">
         </div>

@@ -1324,6 +1324,20 @@ function getAuthedBusiness() {
     return Business::where('user_id', Auth::id())->first();
 }
 
+
+const SERVICE_CATEGORY_LIST = [
+    ""  => "Choose a category",
+    "1" => "Beauty & Spa",
+    "2" => "Health & Fitness",
+    "3" => "Activities, Special Events",
+    "4" => "Retail",
+    "5" => "Food and Drink",
+    "6" => "Automotive",
+    "7" => "Home Services",
+    "8" => "Online Services",
+    "9" => "Software",
+    "10" => "Travel"
+];
 const CUSTOMER_SERVICE_CONTACT_LIMIT = 5;
 const ALPHANUMERIC_DASH_SPACE_REGEX = 'regex:/^[a-zA-Z0-9\-\s]+$/';
 const ALPHANUMERIC_DASH_SPACE_DOT_REGEX = 'regex:/^[a-zA-Z0-9\-\s.]+$/';
