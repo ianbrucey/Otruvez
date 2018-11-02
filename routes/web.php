@@ -39,9 +39,14 @@ Route::get('/sellYourServices', function () {
     } else {
         $sections = [
             [
+                'msg'       => 'We charge 10% per Subscription you sell and payout every 2 weeks. That\'s it. Now let\'s talk about selling',
+                'photoPath' => '',
+                'first'     => 'Pricing / Fees'
+            ],
+            [
                 'msg'       => '1st, register with us and then login. After logging in you will see "business account" at the top. Go there',
                 'photoPath' => baseUrlConcat('/images/highlight-business.png'),
-                'first'     => 'Sell your services with Otruvez'
+                'first'     => 'Selling your services with Otruvez'
             ],
             [
                 'msg'       => "Once in the business center, you'll see this form. <br>Enter all your business's information and submit",
@@ -54,7 +59,7 @@ Route::get('/sellYourServices', function () {
                 'first'     => ''
             ],
             [
-                'msg'       => "In Manage Service page, you'll see this button<br> Click it.",
+                'msg'       => "On the Manage Services page, you'll see this button<br> Click it.",
                 'photoPath' => baseUrlConcat('/images/createservicebutton.png'),
                 'first'     => ''
             ],

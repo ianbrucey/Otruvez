@@ -425,6 +425,10 @@ textarea {
     color: white;
 }
 
+.sell-with-o-section:nth-child(even) .sect-title {
+    color: #4cb996 !important;
+}
+
 .sell-with-o-section:nth-child(even) {
     background: white;
 }

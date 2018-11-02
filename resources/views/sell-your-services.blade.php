@@ -8,14 +8,16 @@
             <div class="row">
                 <div class="col-md-12 mb-0">
                     <div class="section-title text-center">
-                        @if(!empty($section['first'])) <h2 class="text-white">{{$section['first']}}</h2> @endif
+                        @if(!empty($section['first'])) <h2 class="text-white sect-title">{{$section['first']}}</h2> @endif
                         <p class="sect-message">{!! $section['msg'] !!}</p>
                     </div>
                 </div>
             </div>
             <div class="row">
+
                 <div class="col-sm-12 col-lg-8 offset-lg-2 hidden-sm hidden-xs">
                     <!-- product card -->
+                    @if(!empty($section['photoPath']))
                     <div class="product-item bg-light">
                         <div class="card">
                             <div class="thumb-content">
@@ -25,6 +27,7 @@
                             </div>
                         </div>
                     </div>
+                    @endif
 
                     <div class="text-center"><a href="#section-{{++$count}}" class="btn bg-white theme-color m-2">Next Section</a></div>
                 </div>
