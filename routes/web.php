@@ -146,6 +146,7 @@ Route::get('/business/checkins/{businessId}', 'BusinessController@showCheckinVie
 Route::get('/business/cancel', 'BusinessController@showCancelAccountView');
 Route::get('/business/notifyCustomers', 'BusinessController@showNotifyCustomersView');
 Route::get('/business/notifications/{businessId}', 'BusinessController@showBusinessNotificationView');
+Route::post('/business/checkHandleAvailability', 'BusinessController@checkHandleAvailability');
 Route::post('/business/notifyCustomers', 'BusinessController@notifyCustomers');
 Route::post('/business/deleteBusiness/{id}', 'BusinessController@deleteBusiness');
 Route::post('/business/createAccount', 'BusinessController@createBusinessAccount');
