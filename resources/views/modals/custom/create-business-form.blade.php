@@ -24,7 +24,7 @@
                             <p class="collapse" id="business-handle-info" >Your business handle will be used so people can quickly access your online store, either through our search engine or via a url like this <br><b>{{strtoupper("otruvez.com/store/example_store")}}</b></p>
 
                             <p id="chosen-handle"></p>
-                            <input class="form-control" placeholder="Ex: @example_store" type="text" id="choose-business-handle" name="choose_business_handle">
+                            <input class="form-control" placeholder="Ex: example_store" type="text" id="choose-business-handle" name="choose_business_handle">
                             <input type="hidden" id="business-handle" name="business_handle">
                             <p class="p-3 text-center"><a class="btn btn-sm bg-white theme-color" onclick="checkHandleAvailability()">Check availability</a></p>
                             <hr>

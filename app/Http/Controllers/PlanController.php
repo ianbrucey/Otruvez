@@ -453,6 +453,7 @@ class PlanController extends Controller
             $location = ['lat' => $plan->business->lat,'lon' => $plan->business->lng];
             $body['location'] = $location;
             $body['rating'] = (new Rating())->where('plan_id', $plan->id)->avg('rate_number') ?: 0;
+            $body['business_handle'] = $plan->business->business_handle;
 
             try {
                 $es->index([

@@ -39,24 +39,25 @@ class BusinessController extends Controller
     private $businessLogoPath = 'public/images/business/logos';
     private $photoClient;
     private $validationRules = [
-        'name'          => 'required|'.ALPHANUMERIC_DASH_SPACE_REGEX,
-        'email'         => 'required|email',
-        'phone'         => 'nullable|numeric',
-        'description'   => 'required|'.ALPHANUMERIC_DASH_SPACE_DOT_REGEX,
-        'redirect_to'   => 'nullable|url',
-        'city'          => 'nullable|'.ALPHANUMERIC_DASH_SPACE_DOT_REGEX,
-        'state'         => 'nullable|'.ALPHANUMERIC_DASH_SPACE_DOT_REGEX,
-        'zip'           => 'nullable|'.ALPHANUMERIC_DASH_SPACE_DOT_REGEX,
-        'country'       => 'nullable|'.ALPHANUMERIC_DASH_SPACE_DOT_REGEX,
-        'lat'           => 'nullable|'.ALPHANUMERIC_DASH_SPACE_DOT_REGEX,
-        'lng'           => 'nullable|'.ALPHANUMERIC_DASH_SPACE_DOT_REGEX,
-        'monday'        => 'nullable|'.ALPHANUMERIC_DASH_SPACE_DOT_REGEX,
-        'tuesday'       => 'nullable|'.ALPHANUMERIC_DASH_SPACE_DOT_REGEX,
-        'wednesday'     => 'nullable|'.ALPHANUMERIC_DASH_SPACE_DOT_REGEX,
-        'thursday'      => 'nullable|'.ALPHANUMERIC_DASH_SPACE_DOT_REGEX,
-        'friday'        => 'nullable|'.ALPHANUMERIC_DASH_SPACE_DOT_REGEX,
-        'saturday'      => 'nullable|'.ALPHANUMERIC_DASH_SPACE_DOT_REGEX,
-        'sunday'        => 'nullable|'.ALPHANUMERIC_DASH_SPACE_DOT_REGEX,
+        'name'            => 'required|'.ALPHANUMERIC_DASH_SPACE_REGEX,
+        'business_handle' => 'required|'.HANDLE, // needs to be digits and underscores only
+        'email'           => 'required|email',
+        'phone'           => 'nullable|numeric',
+        'description'     => 'required|'.ALPHANUMERIC_DASH_SPACE_DOT_REGEX,
+        'redirect_to'     => 'nullable|url',
+        'city'            => 'nullable|'.ALPHANUMERIC_DASH_SPACE_DOT_REGEX,
+        'state'           => 'nullable|'.ALPHANUMERIC_DASH_SPACE_DOT_REGEX,
+        'zip'             => 'nullable|'.ALPHANUMERIC_DASH_SPACE_DOT_REGEX,
+        'country'         => 'nullable|'.ALPHANUMERIC_DASH_SPACE_DOT_REGEX,
+        'lat'             => 'nullable|'.ALPHANUMERIC_DASH_SPACE_DOT_REGEX,
+        'lng'             => 'nullable|'.ALPHANUMERIC_DASH_SPACE_DOT_REGEX,
+        'monday'          => 'nullable|'.ALPHANUMERIC_DASH_SPACE_DOT_REGEX,
+        'tuesday'         => 'nullable|'.ALPHANUMERIC_DASH_SPACE_DOT_REGEX,
+        'wednesday'       => 'nullable|'.ALPHANUMERIC_DASH_SPACE_DOT_REGEX,
+        'thursday'        => 'nullable|'.ALPHANUMERIC_DASH_SPACE_DOT_REGEX,
+        'friday'          => 'nullable|'.ALPHANUMERIC_DASH_SPACE_DOT_REGEX,
+        'saturday'        => 'nullable|'.ALPHANUMERIC_DASH_SPACE_DOT_REGEX,
+        'sunday'          => 'nullable|'.ALPHANUMERIC_DASH_SPACE_DOT_REGEX,
     ];
 
     public function index()
@@ -269,7 +270,7 @@ class BusinessController extends Controller
     }
 
 
-    public function createBusiness(Request $request)
+    public function createBusiness(Request $request) // maybe an are you sure button? some info will not be editable for customer protection
     {
         $this->validate($request,$this->validationRules);
 
@@ -440,7 +441,12 @@ class BusinessController extends Controller
                         $photo->delete(); // delete all photos assoc with plans
                     }
                 }
-                $plan->delete(); // delete plan
+                $planId = $plan->id;
+                try {
+                    $plan->delete(); // delete plan
+                } catch (Exception $e) {
+                    logger("Could not delete plan: $planId");
+                }
             }
 
         }
@@ -459,7 +465,11 @@ class BusinessController extends Controller
 //        $localSubscription = (new \App\Subscription())->find($user->subscription_id);
 //        try {
 //            Subscription::retrieve($localSubscription->stripe_id)->cancel();
+        try {
             $business->delete(); //  delete business
+        } catch (Exception $e) {
+            logger("Could not delete business $businessId");
+        }
 //        } catch (Exception $e) {
 //            if ($userDelete) {
 //                return redirect('/account/delete')->with('warningMessage', "Please try again, business was not deleted");
@@ -643,6 +653,15 @@ class BusinessController extends Controller
             }
         }
         return $request;
+    }
+
+    public function checkHandleAvailability(Request $request) {
+        $handle = $request->get('choose_business_handle');
+        if( Business::where('business_handle',$handle)->first() ) {
+            echo 0; // not available
+        } else {
+            echo 1;
+        }
     }
 
 }
