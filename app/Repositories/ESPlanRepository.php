@@ -51,6 +51,16 @@ class ESPlanRepository extends ESRepository implements RepositoryInterface
                     'description'       => $query
                 ]
             ],
+            [
+                'match' => [
+                    'name'       => $query
+                ]
+            ],
+            [
+                'wildcard' => [
+                    'business_handle'   => "*$query*"
+                ]
+            ]
         ];
         $mustArray = [
             [
