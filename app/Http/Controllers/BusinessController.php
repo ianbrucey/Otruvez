@@ -66,12 +66,12 @@ class BusinessController extends Controller
         if(!$business) {
             return redirect('/business/manageBusiness');
         } else {
-            $stats = DB::select($this->getBusinessAccountStatsQuery());
-            $projectedMonthlyIncome = $this->calulateMonthlyIncome();
-            $subscriptionCount = !count($stats) ? 0 :$stats[0]->subCount;
+            $subs = \App\Subscription::where('business_id', $business->id)->get();
+            $projectedMonthlyIncome = $this->calulateMonthlyIncome($subs);
             $data = [
-              'businessId'            => Auth::user()->business ? Auth::user()->business->id : 0,
-              'subscriptionCount'     => $subscriptionCount,
+              'businessId'            => $business->id,
+              'business_handle'       => $business->business_handle,
+              'subscriptionCount'     => $subs->count(),
               'name'                  => ucfirst(Auth::user()->first),
               'projectedMonthlyIncome'=> formatPrice($projectedMonthlyIncome)
             ];
@@ -97,6 +97,15 @@ class BusinessController extends Controller
             ->with('guest',$guest)
             ->with('active',"home")
             ->with('owner',$owner);
+    }
+
+    public function getStore(Request $request, $businessHandle) {
+        $business = Business::where('business_handle', $businessHandle)->first();
+        if($business) {
+            return $this->viewStore($request, $business->id);
+        } else {
+            abort(404,"The store you're looking for does not exist");
+        }
     }
 
     public function about(Request $request, $id) {
@@ -547,21 +556,18 @@ class BusinessController extends Controller
 
     }
 
-    public function calulateMonthlyIncome()
+    public function calulateMonthlyIncome($subs)
     {
-        $businessIds = DB::table('businesses')->where('user_id', Auth::id())->pluck('id');
         $income = 0;
-        if(count($businessIds)) {
-            $subs = DB::table('subscriptions')->whereIn('business_id',$businessIds)->get();
-            if(count($subs)) {
-                foreach ($subs as $sub)
+
+        if(count($subs)) {
+            foreach ($subs as $sub)
+            {
+                if($sub->o_interval == 'year')
                 {
-                    if($sub->o_interval == 'year')
-                    {
-                        $income += ($sub->price/12);
-                    } else {
-                        $income += $sub->price;
-                    }
+                    $income += ($sub->price/12);
+                } else {
+                    $income += $sub->price;
                 }
             }
         }

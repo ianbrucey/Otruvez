@@ -1,19 +1,20 @@
 @extends('layouts.app')
 
 @section('body')
-    <h3 class="text-center"><p>Welcome <span class="theme-color">{{$data['name']}}</span>! Check your stats below</p></h3>
+
 
 <div class="container-fluid">
     <div class="row">
         <div class="col-md-8 offset-md-2" href="#">
+            <h3 class="text-center">Welcome, {{"@".$data['business_handle']}} </h3>
             <div class="row theme-background p-2" id="scoreboard">
-                <div class="col-6 text-default ">
-                    <p class="text-default">Subscriptions </p>
-                    <p class="text-default">Projected monthly income </p>
+                <div class="col-6  ">
+                    <h4 class="text-center text-default">Active Subscriptions </h4>
+                    <p class="text-center text-default"><span>{{$data['subscriptionCount']}}</span></p>
                 </div>
                 <div class="col-6">
-                    <p class="text-default"><span>{{$data['subscriptionCount']}}</span></p>
-                    <p class="text-default"><span>{{$data['projectedMonthlyIncome']}}</span></p>
+                    <h4 class="text-center text-default">Projected monthly income </h4>
+                    <p class="text-center text-default"><span>{{$data['projectedMonthlyIncome']}}</span></p>
                 </div>
             </div>
 
@@ -28,7 +29,10 @@
     <div class="row b-home-cards">
         <hr>
         <div class="col-md-12">
-            <h4 class="text-center">Manage your account</h4>
+            <hr>
+            <p class="text-center">Provide customers with this direct link to your store:<br>
+                <span class="theme-color">{{env('APP_URL')}}/store/{{$data['business_handle']}}</span>
+            </p>
         </div>
         <a class="col-md-4" href="/business/manageBusiness">
             <div class="card">
