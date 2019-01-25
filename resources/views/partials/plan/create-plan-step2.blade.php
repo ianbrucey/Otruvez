@@ -1,4 +1,4 @@
-<div id="create-service-step2" class="row"style="display: ">
+<div id="create-service-step2" class="row"style="display: none">
     <div class="col-md-8 offset-md-2">
         <div class="text-center m-4"> <button class="btn btn-sm theme-background create-service-previous-step">Back to photos</button></div>
 

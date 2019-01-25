@@ -12,7 +12,7 @@
             <input type="hidden" class="field" id="country" name="country_name" value="{{$location->country_name}}">
             <input type="hidden" class="field" id="lat" name="latitude" value="{{$location->latitude}}">
             <input type="hidden" class="field" id="lng" name="longitude" value="{{$location->longitude}}">
-            <input type="text" class="form-control mb-2 mr-sm-2 mb-sm-0" value="{{$searchField ?: ''}}" id="searchField" name="searchField" placeholder="What are you looking for?" style="background: white " required>
+            <input type="text" class="form-control mb-2 mr-sm-2 mb-sm-0" value="{{$searchField ?: ''}}" id="searchField" name="searchField" placeholder="Search for a service, product or business name" style="background: white " required>
         </div>
         <hr>
         <a class="text-white" data-toggle="collapse" data-target="#more-criteria" aria-expanded="false" aria-controls="more-criteria">
@@ -26,7 +26,7 @@
                 @endforeach
             </select>
             <label class="text-white">Distance in miles:</label>
-            <input id="miles" name="miles" type="number" value="{{$miles}}" class="form-control bg-white" min="1" max="100" placeholder="Distance in miles">
+            <input id="miles" name="miles" type="number" value="{{$miles}}" class="form-control bg-white" min="1" max="10000" placeholder="Distance in miles">
         </div>
         <hr>
     </form>

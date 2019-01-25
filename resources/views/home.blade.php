@@ -14,18 +14,9 @@
         </div>
 
         <br>
-        @for($i = 0; $i < 12; $i++)
-        {{--<div class="col-sm-12 col-md-4">--}}
-            {{--<!-- product card -->--}}
-            {{--<div class="product-item bg-light">--}}
-                {{--<div class="card">--}}
-                    {{--<div class="card-header text-center theme-background text-white-children">--}}
-                        {{--<h3>Featured services will go here</h3>--}}
-                    {{--</div>--}}
-                {{--</div>--}}
-            {{--</div>--}}
-        {{--</div>--}}
-        @endfor
+        {{--@for($i = 0; $i < 12; $i++)--}}
+        {{----}}
+        {{--@endfor--}}
     </div>
 </div>
 

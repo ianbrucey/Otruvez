@@ -290,6 +290,11 @@ $(document).ready(function () {
                 minlength: 3,
                 alphaNumericSpace: true
             },
+            choose_business_handle: {
+                required: true,
+                minlength: 2,
+                handle: true
+            },
             email: {
                 required: true,
                 email: true,
@@ -573,6 +578,10 @@ $(document).ready(function () {
         return this.optional(element) || /^[a-z0-9\-\s.]+$/i.test(value);
     }, "field must contain only letters, numbers, or dashes.");
 
+    $.validator.addMethod("handle", function(value, element) {
+        return this.optional(element) || /^[a-z0-9_\s.]+$/i.test(value);
+    }, "field must contain only letters, numbers, periods or underscores.");
+
     $.validator.addMethod("password", function(value, element) {
         return this.optional(element) || /^(?=.*[\d])(?=.*[A-Z])(?=.*[a-z])(?=.*[!@#$%^&*])[\w!@#$%^&*]{8,}$/i.test(value);
     }, "Your password does not meet our requirements");
@@ -646,4 +655,28 @@ function copyText(self) {
     thisObj.find('.copied-msg').show();
     thisObj.find('.copied-msg').fadeOut(1500);
 
+}
+
+function checkHandleAvailability() {
+    let handle = $('#choose-business-handle').val();
+    if(handle === '') {
+        sendWarning("Please enter a value");
+        $('.rest-of-biz-inputs').hide(500);
+        return false;
+    }
+    let formData = $('form').serialize();
+    $.post("/business/checkHandleAvailability", formData).done(function(data) {
+        if(data === "1") {
+            sendSuccess("This name is available! <br> Finish the form below");
+            $('#business-handle').val(handle);
+            $('#chosen-handle').text("You chose @"+handle);
+            $('.rest-of-biz-inputs').show(500);
+            $('#business-handle').val(handle); // add this to the DB and ES index next
+        } else {
+            sendWarning("This name is not available");
+            $('.rest-of-biz-inputs').hide(500);
+        }
+    });
+    // sendSuccess("success");
+    return true;
 }

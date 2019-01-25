@@ -75,7 +75,7 @@ class HomeController extends Controller
             ->with('plans', $results['plans'])
             ->with('searchField', $request->get('searchField') ?: '')
             ->with('totalResultCount', $results['actualTotal']) // this may change. With pagination, we need the total "hits" and the returned results
-            ->with('miles', 100)
+            ->with('miles', 10000)
             ->with('location', $location)
             ->with('queryString', !empty($request->get('searchField')) ? $request->get('searchField') : '');
 
