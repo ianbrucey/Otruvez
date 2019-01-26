@@ -29,7 +29,7 @@ class BusinessController extends Controller
 {
     public function __construct(Client $esClient)
     {
-        $this->middleware('auth')->except(['viewStore','viewService', 'contact', 'about']);
+        $this->middleware('auth')->except(['getStore','viewStore','viewService', 'contact', 'about']);
         $this->photoClient = new AWSPhoto();
         $this->es = $esClient;
     }
