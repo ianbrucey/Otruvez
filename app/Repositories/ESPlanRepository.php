@@ -78,7 +78,7 @@ class ESPlanRepository extends ESRepository implements RepositoryInterface
             ];
         }
 
-        if($lat) {
+        if(abs($lat + $lng) > 0) {
             $filter = [
                 'geo_distance' => [
                     'distance' => $distance,
