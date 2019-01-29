@@ -1210,6 +1210,11 @@ function getOtruvezLogoImg()
     return baseUrlConcat('/classimax/images/logos/otruvez-logo.png');
 }
 
+function getOtruvezCircleLogoImg()
+{
+    return baseUrlConcat('/classimax/images/logos/o-logo.png');
+}
+
 function getAccountNotificationsUrl()
 {
     return sprintf('%s/account/notifications',config('app.url'));
