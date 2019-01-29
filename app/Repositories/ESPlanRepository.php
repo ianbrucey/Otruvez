@@ -32,12 +32,12 @@ class ESPlanRepository extends ESRepository implements RepositoryInterface
 
     public function search($query = "",$category = null, $lat = null, $lng = null, $distance = '80.5km', $from = 0, $maxResults = 25)
     {
-        $items = $query ? $this->searchOnElasticsearch($query, $category, $lat, $lng, $distance, $from) : $this->getAllItems();
+        $items = $query ? $this->searchOnElasticsearch($query, $category, $lat, $lng, $distance, $from ) : $this->getAllItems();
 
         return $this->buildCollection($items);
     }
 
-    private function searchOnElasticsearch($query, $category = null, $lat, $lng, $distance, $from = 0, $maxResults = 25)
+    private function searchOnElasticsearch($query, $category, $lat, $lng, $distance, $from = 0, $maxResults = 25)
     {
         $instance = $this->model;
         $shouldArray = [
@@ -78,6 +78,20 @@ class ESPlanRepository extends ESRepository implements RepositoryInterface
             ];
         }
 
+        if($lat) {
+            $filter = [
+                'geo_distance' => [
+                    'distance' => $distance,
+                    'location' => [
+                        'lat' => $lat,
+                        'lon' => $lng
+                    ]
+                ]
+            ];
+        } else {
+            $filter = [];
+        }
+
         $items = $this->search->search([
             'index' => $instance->getSearchIndex(),
             'type' => $instance->getSearchType(),
@@ -93,15 +107,7 @@ class ESPlanRepository extends ESRepository implements RepositoryInterface
                             $mustArray
                         ],
                         "minimum_should_match" => 1,
-                        "filter" => [
-                            'geo_distance' => [
-                                'distance' => $distance,
-                                'location' => [
-                                    'lat' => $lat,
-                                    'lon' => $lng
-                                ]
-                            ]
-                        ]
+                        "filter" => $filter
                     ]
                 ],
             ],
