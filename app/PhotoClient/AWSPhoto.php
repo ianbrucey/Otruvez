@@ -23,8 +23,8 @@ class AWSPhoto implements PhotoInterface
             'version' => 'latest',
             'region'  => 'us-west-2',
             'credentials' => [
-                'key'    => env('AWS_ACCESS_KEY'),
-                'secret' => env('AWS_SECRET'),
+                'key'    => config('auth.s3.AWS_ACCESS_KEY'),
+                'secret' => config('auth.s3.AWS_SECRET'),
             ],
         ]);
     }
