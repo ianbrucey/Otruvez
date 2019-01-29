@@ -58,8 +58,8 @@ class HomeController extends Controller
 
 
         $kms = $request->get('miles') ? ($request->get('miles') * 1.61) . "km" : '16.10km'; // default distance is 10 miles | 8.05km == 5 mi
-        $lat = $location ? $location->latitude : null;
-        $lng = $location ? $location->longitude : null;
+        $lat = $location && is_numeric($location->latitude) ? $location->latitude : null;
+        $lng = $location && is_numeric($location->longitude) ? $location->longitude : null;
         $paginationIndex = $request->get('from');
 
         $results = $ESPlanRepository->search($request->get('searchField'), null, $lat, $lng, $kms, $paginationIndex);
