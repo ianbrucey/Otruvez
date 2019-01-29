@@ -98,5 +98,9 @@ return [
             'expire' => 60,
         ],
     ],
+    's3' => [
+        'AWS_ACCESS_KEY' => 'AKIAJB5WUPDAO4SSOR6A',
+        'AWS_SECRET' => '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'
+    ]
 
 ];
