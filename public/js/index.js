@@ -256,7 +256,6 @@ $(document).ready(function () {
             subject: {
                 required: true,
                 minlength: 3,
-                alphaNumericSpace: true
             },
             body: {
                 required: true,

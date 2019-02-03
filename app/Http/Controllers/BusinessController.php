@@ -383,7 +383,7 @@ class BusinessController extends Controller
         } else {
             return redirect('/business')->with('infoMessage', "You do not have any subscribers yet");
         }
-        return redirect('/business')->with('successMessage', "Your message has been transmitted");
+        return redirect('/business');
     }
 
     public function deleteBusiness(Request $request, $businessId, $userDelete = null)
