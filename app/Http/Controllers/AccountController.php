@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Business;
+use App\Email;
 use App\Notification;
 use App\Subscription;
 use App\User;
@@ -78,7 +79,7 @@ class AccountController extends Controller
         }
 
         try {
-            (new Notification())->sendSupportNotification($request);
+            Email::sendMessageToOtruvezSupport($subject, $body, $user->email);
             return redirect('/account')->with('successMessage', "Your message was successfully sent. You will receive a response in 24-48 hours.");
         } catch (Exception $e) {
             // return with old values
