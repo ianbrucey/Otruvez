@@ -150,8 +150,8 @@ class HomeController extends Controller
 
     public function contactUs(Request $request){
         $this->validate($request,[
-            'subject'   => 'required|'.ALPHANUMERIC_DASH_SPACE_DOT_REGEX,
-            'body'      => 'required|'.ALPHANUMERIC_DASH_SPACE_DOT_REGEX,
+            'subject'   => 'required',
+            'body'      => 'required',
             'email'     => 'required|email',
         ]);
 
