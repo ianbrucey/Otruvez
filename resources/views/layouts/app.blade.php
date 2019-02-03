@@ -25,7 +25,7 @@
 
 
     <!-- FAVICON -->
-    <link rel="shortcut icon" href="{{getOtruvezLogoImg()}}">
+    <link rel="shortcut icon" href="{{getOtruvezCircleLogoImg()}}">
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.0/jquery-confirm.min.css">
     @yield('meta')
