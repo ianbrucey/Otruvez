@@ -2,7 +2,6 @@
 
 namespace App\Console;
 
-use App\Console\Commands\DeleteEsIndex;
 use App\Console\Commands\ReindexCommand;
 use App\Console\Commands\TestCommand;
 use Illuminate\Console\Scheduling\Schedule;
@@ -18,7 +17,6 @@ class Kernel extends ConsoleKernel
     protected $commands = [
         ReindexCommand::class,
         TestCommand::class,
-        DeleteEsIndex::class,
     ];
 
     /**
