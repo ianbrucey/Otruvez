@@ -80,7 +80,6 @@ class AccountController extends Controller
 
         try {
             Email::sendMessageToOtruvezSupport($subject, $body, $user->email);
-            return redirect('/account')->with('successMessage', "Your message was successfully sent. You will receive a response in 24-48 hours.");
         } catch (Exception $e) {
             // return with old values
             return redirect('/account/support')
@@ -88,6 +87,8 @@ class AccountController extends Controller
                     ->with('subject', $subject)
                     ->with('body', $body);
         }
+        Email::acknowledgeContact($user->email);
+        return redirect('/account')->with('successMessage', "Your message was successfully sent. You will receive a response in 24-48 hours.");
 
     }
 
