@@ -261,7 +261,6 @@ $(document).ready(function () {
             body: {
                 required: true,
                 minlength: 10,
-                alphaNumericSpace: true
             }
         },
         invalidHandler: function(event, validator) {
@@ -308,7 +307,6 @@ $(document).ready(function () {
             description: {
                 required: true,
                 minlength: 10,
-                alphaNumericSpace: true
             },
             monday: {
                 required: false,
@@ -399,7 +397,6 @@ $(document).ready(function () {
             description: {
                 required: true,
                 minlength: 10,
-                alphaNumericSpace: true
             }
         },
         invalidHandler: function(event, validator) {
@@ -445,7 +442,6 @@ $(document).ready(function () {
             description: {
                 required: true,
                 minlength: 10,
-                alphaNumericSpace: true
 
             }
         },
@@ -498,7 +494,6 @@ $(document).ready(function () {
         rules: {
             body: {
                 required: true,
-                alphaNumericSpace: true
             }
         },
         invalidHandler: function(event, validator) {
