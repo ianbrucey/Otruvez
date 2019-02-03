@@ -18,8 +18,8 @@ class AcknowledgeContact extends Mailable
      */
     public function __construct()
     {
-        $this->subject("we got your message!");
-        $this->from("otruvez@gmail.com");
+        $this->subject("We got your message!");
+        $this->from("Otruvez@gmail.com");
     }
 
     /**
