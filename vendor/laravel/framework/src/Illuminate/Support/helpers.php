@@ -1212,7 +1212,7 @@ function getOtruvezLogoImg()
 
 function getOtruvezCircleLogoImg()
 {
-    return baseUrlConcat('/classimax/images/logos/o-logo.png');
+    return baseUrlConcat('/classimax/images/logos/o-logo-cropped.png');
 }
 
 function getAccountNotificationsUrl()
