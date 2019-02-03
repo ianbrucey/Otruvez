@@ -70,11 +70,11 @@
                                 <h4 class="card-title search-card-title">{{ truncateCardTitle($plan->stripe_plan_name) }}</h4>
                                 <ul class="list-inline product-meta">
                                     <li class="list-inline-item">
-                                        <a href=""><i class="fa fa-briefcase"></i>{{$plan->business['name']}}</a>
+                                        <a href=""><i class="fa fa-briefcase"></i><span class="theme-color">{{"@".$plan->business['business_handle']}}</span></a>
                                     </li>
 
                                     <li class="list-item">
-                                        <a href=""><i class="fa fa-location-arrow"></i>{{$plan->business['city']}}, {{$plan->business['state']}} - {{howFarAway($location->latitude,$location->longitude,$plan->business['lat'],$plan->business['lng'])}} mi</a>
+                                        <a href=""><i class="fa fa-location-arrow"></i>{{  (empty($plan->business['city']) && empty($plan->business['state'])) ? "Online Business" : sprintf("%s, %s - %s mi",$plan->business['city'],$plan->business['state'],howFarAway($location->latitude,$location->longitude,$plan->business['lat'],$plan->business['lng']) ) }}</a>
                                     </li>
                                 </ul>
                                 <div class="product-ratings">
