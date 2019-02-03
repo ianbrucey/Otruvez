@@ -50,8 +50,8 @@ class AccountController extends Controller
 
     public function contactSupport(Request $request){
         $this->validate($request,[
-            'subject'   => 'nullable|'.ALPHANUMERIC_DASH_SPACE_DOT_REGEX,
-            'body'      => 'nullable|'.ALPHANUMERIC_DASH_SPACE_DOT_REGEX
+            'subject'   => 'required',
+            'body'      => 'required'
         ]);
         $subject = $request->get('subject');
         $body    = $request->get('body');

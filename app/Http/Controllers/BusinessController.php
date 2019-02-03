@@ -362,8 +362,8 @@ class BusinessController extends Controller
 
     public function notifyCustomers(Request $request){
         $this->validate($request,[
-            'subject'   => 'nullable|'.ALPHANUMERIC_DASH_SPACE_DOT_REGEX,
-            'body'      => 'nullable|'.ALPHANUMERIC_DASH_SPACE_DOT_REGEX
+            'subject'   => 'required',
+            'body'      => 'required'
         ]);
         $business = getAuthedBusiness();
         noEntityAbort($business, 403);
