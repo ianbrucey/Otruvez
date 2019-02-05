@@ -7,11 +7,13 @@ namespace Stripe;
  *
  * @property string $id
  * @property string $object
- * @property mixed $business_logo
+ * @property string $business_logo
  * @property string $business_name
- * @property mixed $business_url
+ * @property string $business_primary_color
+ * @property string $business_url
  * @property bool $charges_enabled
  * @property string $country
+ * @property int $created
  * @property bool $debit_negative_balances
  * @property mixed $decline_charge_on
  * @property string $default_currency
@@ -20,23 +22,25 @@ namespace Stripe;
  * @property string $email
  * @property mixed $external_accounts
  * @property mixed $legal_entity
- * @property bool $managed
+ * @property AttachedObject $metadata
  * @property mixed $payout_schedule
- * @property mixed $payout_statement_descriptor
+ * @property string $payout_statement_descriptor
  * @property bool $payouts_enabled
- * @property mixed $product_description
- * @property mixed $statement_descriptor
- * @property mixed $support_email
- * @property mixed $support_phone
+ * @property string $product_description
+ * @property string $statement_descriptor
+ * @property string $support_email
+ * @property string $support_phone
  * @property string $timezone
  * @property mixed $tos_acceptance
  * @property mixed $verification
- * @property mixed $keys
  *
  * @package Stripe
  */
 class Account extends ApiResource
 {
+    const PATH_EXTERNAL_ACCOUNTS = '/external_accounts';
+    const PATH_LOGIN_LINKS = '/login_links';
+
     public function instanceUrl()
     {
         if ($this['id'] === null) {
@@ -131,6 +135,12 @@ class Account extends ApiResource
         return self::_all($params, $opts);
     }
 
+    /**
+     * @param array|null $clientId
+     * @param array|string|null $opts
+     *
+     * @return StripeObject Object containing the response from the API.
+     */
     public function deauthorize($clientId = null, $opts = null)
     {
         $params = array(
@@ -138,5 +148,80 @@ class Account extends ApiResource
             'stripe_user_id' => $this->id,
         );
         OAuth::deauthorize($params, $opts);
+    }
+
+    /**
+     * @param array|null $id The ID of the account on which to create the external account.
+     * @param array|null $params
+     * @param array|string|null $opts
+     *
+     * @return ExternalAccount
+     */
+    public static function createExternalAccount($id, $params = null, $opts = null)
+    {
+        return self::_createNestedResource($id, static::PATH_EXTERNAL_ACCOUNTS, $params, $opts);
+    }
+
+    /**
+     * @param array|null $id The ID of the account to which the external account belongs.
+     * @param array|null $externalAccountId The ID of the external account to retrieve.
+     * @param array|null $params
+     * @param array|string|null $opts
+     *
+     * @return ExternalAccount
+     */
+    public static function retrieveExternalAccount($id, $externalAccountId, $params = null, $opts = null)
+    {
+        return self::_retrieveNestedResource($id, static::PATH_EXTERNAL_ACCOUNTS, $externalAccountId, $params, $opts);
+    }
+
+    /**
+     * @param array|null $id The ID of the account to which the external account belongs.
+     * @param array|null $externalAccountId The ID of the external account to update.
+     * @param array|null $params
+     * @param array|string|null $opts
+     *
+     * @return ExternalAccount
+     */
+    public static function updateExternalAccount($id, $externalAccountId, $params = null, $opts = null)
+    {
+        return self::_updateNestedResource($id, static::PATH_EXTERNAL_ACCOUNTS, $externalAccountId, $params, $opts);
+    }
+
+    /**
+     * @param array|null $id The ID of the account to which the external account belongs.
+     * @param array|null $externalAccountId The ID of the external account to delete.
+     * @param array|null $params
+     * @param array|string|null $opts
+     *
+     * @return ExternalAccount
+     */
+    public static function deleteExternalAccount($id, $externalAccountId, $params = null, $opts = null)
+    {
+        return self::_deleteNestedResource($id, static::PATH_EXTERNAL_ACCOUNTS, $externalAccountId, $params, $opts);
+    }
+
+    /**
+     * @param array|null $id The ID of the account on which to retrieve the external accounts.
+     * @param array|null $params
+     * @param array|string|null $opts
+     *
+     * @return ExternalAccount
+     */
+    public static function allExternalAccounts($id, $params = null, $opts = null)
+    {
+        return self::_allNestedResources($id, static::PATH_EXTERNAL_ACCOUNTS, $params, $opts);
+    }
+
+    /**
+     * @param array|null $id The ID of the account on which to create the login link.
+     * @param array|null $params
+     * @param array|string|null $opts
+     *
+     * @return LoginLink
+     */
+    public static function createLoginLink($id, $params = null, $opts = null)
+    {
+        return self::_createNestedResource($id, static::PATH_LOGIN_LINKS, $params, $opts);
     }
 }
