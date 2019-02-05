@@ -1207,7 +1207,7 @@ function getBusinessLogoImg($business)
 
 function getOtruvezLogoImg()
 {
-    return baseUrlConcat('/classimax/images/logos/otruvez-logo.png');
+    return baseUrlConcat('/classimax/images/logos/otruvez-logo.png'); 
 }
 
 function getOtruvezCircleLogoImg()
