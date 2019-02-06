@@ -103,7 +103,7 @@ class Connection implements ConnectionInterface
                                 SerializerInterface $serializer, LoggerInterface $log, LoggerInterface $trace)
     {
         if (isset($hostDetails['port']) !== true) {
-            $hostDetails['port'] = 9200;
+            $hostDetails['port'] = ''; // cannot have port for production
         }
 
         if (isset($hostDetails['scheme'])) {
