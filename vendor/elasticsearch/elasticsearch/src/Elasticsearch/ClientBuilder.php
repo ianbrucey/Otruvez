@@ -654,7 +654,7 @@ class ClientBuilder
             $host['scheme'] = 'http';
         }
         if (isset($host['port']) === false) {
-            $host['port'] = '9200';
+            $host['port'] = ''; // cannot have ports in prod
         }
         return $host;
     }
@@ -687,7 +687,7 @@ class ClientBuilder
      */
     private function prependMissingScheme($host)
     {
-        if (!filter_var($host, FILTER_VALIDATE_URL)) {
+        if (!filter_var($host, FILTER_VALIDATE_URL, FILTER_FLAG_SCHEME_REQUIRED)) {
             $host = 'http://' . $host;
         }
 
