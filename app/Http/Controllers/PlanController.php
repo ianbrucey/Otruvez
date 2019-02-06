@@ -23,6 +23,7 @@ use Elasticsearch\Client;
 use App\PhotoClient\AWSPhoto;
 use Stripe\Stripe;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
+use Bugsnag\BugsnagLaravel\Facades\Bugsnag;
 
 class PlanController extends Controller
 {
@@ -153,26 +154,33 @@ class PlanController extends Controller
                         $stripeplan->delete();
                     }
                 }
+                Bugsnag::notifyException($e);
                 return redirect('/plan/managePlans')->with('successMessage',"We apologize, we are having technical difficulties. Please contact us about your issue");
             }
 
             $plansCreated[] = $stripeIdentifier;
         }
 
-        $plan = Plan::create([
-            'user_id'           => Auth::id(),
-            'business_id'       => $businessId,
-            'stripe_plan_id'    => $planIdentifier,
-            'stripe_plan_name'  => $planName,
-            'month_price'       => $monthPrice,
-            'year_price'        => $yearPrice,
-            'use_limit_month'   => $useLimitMonth,
-            'use_limit_year'    => $useLimitYear,
-            'limit_interval'    => $limitInterval,
-            'description'       => $description,
-            'category'          => $category,
-            'featured_photo_path' => null,
-        ]);
+        try {
+            $ex = null;
+            $plan = Plan::create([
+                'user_id' => Auth::id(),
+                'business_id' => $businessId,
+                'stripe_plan_id' => $planIdentifier,
+                'stripe_plan_name' => $planName,
+                'month_price' => $monthPrice,
+                'year_price' => $yearPrice,
+                'use_limit_month' => $useLimitMonth,
+                'use_limit_year' => $useLimitYear,
+                'limit_interval' => $limitInterval,
+                'description' => $description,
+                'category' => $category,
+                'featured_photo_path' => null,
+            ]);
+        } catch (Exception $e) {
+            $ex = $e;
+            $plan = null;
+        }
 
         if($plan == null) {
             if(count($plansCreated) > 0) {
@@ -182,6 +190,7 @@ class PlanController extends Controller
                 }
             }
 
+            Bugsnag::notifyException($ex);
             return redirect('/plan/managePlans')->with('successMessage',"We apologize, we are having technical difficulties. Please contact us about your issue");
         }
 
@@ -197,6 +206,7 @@ class PlanController extends Controller
                 }
             }
         } catch (Exception $e) {
+            Bugsnag::notifyException($e);
             $msg .= " Warning: there was a problem with one or more of your uploads";
         }
 
