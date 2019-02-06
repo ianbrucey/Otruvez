@@ -96,7 +96,7 @@ class PlanController extends Controller
         noEntityAbort($business, 403);
         $this->validate($request, [
             'stripe_plan_name'  => 'required|'.ALPHANUMERIC_DASH_SPACE_DOT_REGEX,
-            'description'       => 'required|',
+            'description'       => 'required',
             'featured_photo'    => 'required|image',
             'gallery_photos.*'  => 'nullable|image',
             'use_limit_month'   => 'nullable|integer',
@@ -327,8 +327,8 @@ class PlanController extends Controller
     public function updatePlan(Request $request, $id)
     {
         $this->validate($request,[
-            'stripe_plan_name'   => 'required|'.ALPHANUMERIC_DASH_SPACE_DOT_REGEX,
-            'description'        => 'required|'.ALPHANUMERIC_DASH_SPACE_DOT_REGEX
+            'stripe_plan_name'   => 'required',
+            'description'        => 'required'
         ]);
         $smPlan = Plan::where('user_id', Auth::id())->where('id',$id)->first();
 
