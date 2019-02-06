@@ -94,7 +94,7 @@ class PlanController extends Controller
         noEntityAbort($business, 403);
         $this->validate($request, [
             'stripe_plan_name'  => 'required|'.ALPHANUMERIC_DASH_SPACE_DOT_REGEX,
-            'description'       => 'required|'.ALPHANUMERIC_DASH_SPACE_DOT_REGEX,
+            'description'       => 'required|',
             'featured_photo'    => 'required|image',
             'gallery_photos.*'  => 'nullable|image',
             'use_limit_month'   => 'nullable|integer',
