@@ -12,6 +12,7 @@ use App\Rating;
 use App\S3FolderTypes;
 use App\Subscription;
 use App\User;
+use Bugsnag\BugsnagLaravel\Facades\Bugsnag;
 use Elasticsearch\Common\Exceptions\BadRequest400Exception;
 use Exception;
 use Faker\Provider\cs_CZ\DateTime;
@@ -23,7 +24,7 @@ use Elasticsearch\Client;
 use App\PhotoClient\AWSPhoto;
 use Stripe\Stripe;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
-use Bugsnag\BugsnagLaravel\Facades\Bugsnag;
+
 
 class PlanController extends Controller
 {
@@ -154,6 +155,7 @@ class PlanController extends Controller
                         $stripeplan->delete();
                     }
                 }
+
                 Bugsnag::notifyException($e);
                 return redirect('/plan/managePlans')->with('successMessage',"We apologize, we are having technical difficulties. Please contact us about your issue");
             }
