@@ -169,7 +169,6 @@ return [
         Laravel\Tinker\TinkerServiceProvider::class,
         Laravel\Cashier\CashierServiceProvider::class,
         Laravel\Passport\PassportServiceProvider::class,
-        Bugsnag\BugsnagLaravel\BugsnagServiceProvider::class,
 
         /*
          * Application Service Providers...
