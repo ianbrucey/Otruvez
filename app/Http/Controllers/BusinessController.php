@@ -10,6 +10,7 @@ use App\Plan;
 use App\Rating;
 use App\Review;
 use App\S3FolderTypes;
+use Bugsnag\BugsnagLaravel\Facades\Bugsnag;
 use Dompdf\Exception;
 use Elasticsearch\Client;
 use Illuminate\Auth\Access\AuthorizationException;
@@ -215,19 +216,24 @@ class BusinessController extends Controller
 
     public function updateBusinessLogo(Request $request, $businessId)
     {
-        if(!empty($request)) {
-            $business = getAuthedBusiness();
-            noEntityAbort($business, 403);
-            if($business->logo_path) {
-                $this->photoClient->unlink($business->logo_path);
-            }
-            $file = $request->file('file');
-            $path = $this->photoClient->store($file, S3FolderTypes::BUSINESS_PHOTO);
-            $business->logo_path = $path;
-            $business->save();
+        try {
+            if (!empty($request)) {
+                $business = getAuthedBusiness();
+                noEntityAbort($business, 403);
+                if ($business->logo_path) {
+                    $this->photoClient->unlink($business->logo_path);
+                }
+                $file = $request->file('file');
+                $path = $this->photoClient->store($file, S3FolderTypes::BUSINESS_PHOTO);
+                $business->logo_path = $path;
+                $business->save();
 
-            return 1;
-        } else {
+                return 1;
+            } else {
+                return 0;
+            }
+        } catch (Exception $e) {
+            logException($e);
             return 0;
         }
     }

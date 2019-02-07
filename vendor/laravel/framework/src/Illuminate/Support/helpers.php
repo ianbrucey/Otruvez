@@ -2,6 +2,7 @@
 
 use App\Business;
 use App\Plan;
+use Bugsnag\BugsnagLaravel\Facades\Bugsnag;
 use Illuminate\Support\Arr;
 use Illuminate\Support\HtmlString;
 use Illuminate\Support\Str;
@@ -1323,6 +1324,10 @@ function notYourEntityAbort403(\Illuminate\Database\Eloquent\Model $entity) {
     if($entity->user_id != Auth::id()) {
         abort(403);
     }
+}
+
+function logException(Exception $e) {
+    return Bugsnag::notifyException($e);
 }
 
 function getAuthedBusiness() {
