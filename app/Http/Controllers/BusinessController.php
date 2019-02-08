@@ -46,19 +46,14 @@ class BusinessController extends Controller
         'phone'           => 'nullable|numeric',
         'description'     => 'required|'.ALPHANUMERIC_DASH_SPACE_DOT_REGEX,
         'redirect_to'     => 'nullable|url',
-        'city'            => 'nullable|'.ALPHANUMERIC_DASH_SPACE_DOT_REGEX,
-        'state'           => 'nullable|'.ALPHANUMERIC_DASH_SPACE_DOT_REGEX,
-        'zip'             => 'nullable|'.ALPHANUMERIC_DASH_SPACE_DOT_REGEX,
-        'country'         => 'nullable|'.ALPHANUMERIC_DASH_SPACE_DOT_REGEX,
-        'lat'             => 'nullable|'.ALPHANUMERIC_DASH_SPACE_DOT_REGEX,
-        'lng'             => 'nullable|'.ALPHANUMERIC_DASH_SPACE_DOT_REGEX,
-        'monday'          => 'nullable|'.ALPHANUMERIC_DASH_SPACE_DOT_REGEX,
-        'tuesday'         => 'nullable|'.ALPHANUMERIC_DASH_SPACE_DOT_REGEX,
-        'wednesday'       => 'nullable|'.ALPHANUMERIC_DASH_SPACE_DOT_REGEX,
-        'thursday'        => 'nullable|'.ALPHANUMERIC_DASH_SPACE_DOT_REGEX,
-        'friday'          => 'nullable|'.ALPHANUMERIC_DASH_SPACE_DOT_REGEX,
-        'saturday'        => 'nullable|'.ALPHANUMERIC_DASH_SPACE_DOT_REGEX,
-        'sunday'          => 'nullable|'.ALPHANUMERIC_DASH_SPACE_DOT_REGEX,
+
+    ];
+
+    private $updateValidationRules = [
+        'email'           => 'required|email',
+        'phone'           => 'nullable|numeric',
+        'description'     => 'required',
+        'redirect_to'     => 'nullable|url',
     ];
 
     public function index()
@@ -315,7 +310,7 @@ class BusinessController extends Controller
 
     public function updateBusiness(Request $request, $id)
     {
-        $this->validate($request,$this->validationRules);
+        $this->validate($request,$this->updateValidationRules);
         $updatePlans = false;
         /** @var User $user */
         $user = Auth::user();
