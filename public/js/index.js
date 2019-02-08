@@ -436,7 +436,8 @@ $(document).ready(function () {
         rules: {
             stripe_plan_name: {
                 required: true,
-                alphaNumericSpace: true
+                minlength: 3
+
             },
             description: {
                 required: true,
