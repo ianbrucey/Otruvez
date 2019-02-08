@@ -97,7 +97,7 @@ function triggerTargetSubmit(e, obj, ajaxSubmit) {
         $.post(url, postdata);
 
         setTimeout(function () {
-            window.location.href = "/business?messageSent";
+            window.location.href = "/business";
         }, 2000);
     } else {
         $('#submitting').fadeIn(500);
