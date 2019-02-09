@@ -111,7 +111,7 @@
                         {{--PRIMARY BUSINESS PHOTO--}}
                         {{--</div>--}}
 
-                        <div class="card-body">
+                        <div class="col-md-6">
                             <h3 class="text-justify">{{$business->name}}</h3>
                             <h4><i>{{"@".$business->business_handle}}</i></h4>
                             <p class="theme-color"><i>otruvez.com/store/{{$business->business_handle}}</i></p>
