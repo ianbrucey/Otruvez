@@ -2,6 +2,7 @@
 
 use App\Business;
 use App\Plan;
+use App\Subscription;
 use Bugsnag\BugsnagLaravel\Facades\Bugsnag;
 use Illuminate\Support\Arr;
 use Illuminate\Support\HtmlString;
@@ -1332,6 +1333,15 @@ function logException(Exception $e) {
 
 function getAuthedBusiness() {
     return Business::where('user_id', Auth::id())->first();
+}
+
+function calculateRemainingUses(Plan $plan, Subscription $subscription) {
+    $limitInterval = $plan->limit_interval;
+    $usesRemaining = $limitInterval == "year" ? $plan->use_limit_year : $plan->use_limit_month;
+    return [
+        'limitInterval' => $limitInterval,
+        'usesRemaining' => $usesRemaining
+    ];
 }
 
 

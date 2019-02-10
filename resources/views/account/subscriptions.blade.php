@@ -42,11 +42,17 @@
             <div class="col-md-8 offset-md-2">
 
                 @forelse($subscriptions as $subscription)
-                    @php $plan = $subscription->plan(); @endphp
+                    @php
+                        $plan = $subscription->plan();
+                        $usesRemaining = calculateRemainingUses($plan, $subscription);
+
+                    @endphp
+
                 <div class="card">
                         <div class="card-header text-center">
-                            {{removeLastWord($subscription->name)}}
-                            {{--- {{$subscription->uses ? : 0}}/{{$plan->use_limit}} uses--}}
+                            {{removeLastWord($subscription->name)}}<br>
+                            by {{"@".$plan->business->business_handle}}<br>
+                            {{$usesRemaining['usesRemaining'] == -1 ? '' : sprintf("You can use this subscription %s more %s this %s", $usesRemaining['usesRemaining'], $usesRemaining['usesRemaining'] > 1 ? 'times' : 'time', $usesRemaining['limitInterval']) }}
                             <form method="POST" id="delete-subscription-form-{{$subscription->id}}" action=/subscription/cancel/{{$subscription->id}}" style="display: inline-block" class="float-right">
                                 {{csrf_field()}}
                                 {{method_field("DELETE")}}
