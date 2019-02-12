@@ -10,6 +10,7 @@ use App\Plan;
 use App\Rating;
 use App\Review;
 use App\S3FolderTypes;
+use Bugsnag\BugsnagLaravel\Facades\Bugsnag;
 use Dompdf\Exception;
 use Elasticsearch\Client;
 use Illuminate\Auth\Access\AuthorizationException;
@@ -45,19 +46,14 @@ class BusinessController extends Controller
         'phone'           => 'nullable|numeric',
         'description'     => 'required|'.ALPHANUMERIC_DASH_SPACE_DOT_REGEX,
         'redirect_to'     => 'nullable|url',
-        'city'            => 'nullable|'.ALPHANUMERIC_DASH_SPACE_DOT_REGEX,
-        'state'           => 'nullable|'.ALPHANUMERIC_DASH_SPACE_DOT_REGEX,
-        'zip'             => 'nullable|'.ALPHANUMERIC_DASH_SPACE_DOT_REGEX,
-        'country'         => 'nullable|'.ALPHANUMERIC_DASH_SPACE_DOT_REGEX,
-        'lat'             => 'nullable|'.ALPHANUMERIC_DASH_SPACE_DOT_REGEX,
-        'lng'             => 'nullable|'.ALPHANUMERIC_DASH_SPACE_DOT_REGEX,
-        'monday'          => 'nullable|'.ALPHANUMERIC_DASH_SPACE_DOT_REGEX,
-        'tuesday'         => 'nullable|'.ALPHANUMERIC_DASH_SPACE_DOT_REGEX,
-        'wednesday'       => 'nullable|'.ALPHANUMERIC_DASH_SPACE_DOT_REGEX,
-        'thursday'        => 'nullable|'.ALPHANUMERIC_DASH_SPACE_DOT_REGEX,
-        'friday'          => 'nullable|'.ALPHANUMERIC_DASH_SPACE_DOT_REGEX,
-        'saturday'        => 'nullable|'.ALPHANUMERIC_DASH_SPACE_DOT_REGEX,
-        'sunday'          => 'nullable|'.ALPHANUMERIC_DASH_SPACE_DOT_REGEX,
+
+    ];
+
+    private $updateValidationRules = [
+        'email'           => 'required|email',
+        'phone'           => 'nullable|numeric',
+        'description'     => 'required',
+        'redirect_to'     => 'nullable|url',
     ];
 
     public function index()
@@ -215,19 +211,24 @@ class BusinessController extends Controller
 
     public function updateBusinessLogo(Request $request, $businessId)
     {
-        if(!empty($request)) {
-            $business = getAuthedBusiness();
-            noEntityAbort($business, 403);
-            if($business->logo_path) {
-                $this->photoClient->unlink($business->logo_path);
-            }
-            $file = $request->file('file');
-            $path = $this->photoClient->store($file, S3FolderTypes::BUSINESS_PHOTO);
-            $business->logo_path = $path;
-            $business->save();
+        try {
+            if (!empty($request)) {
+                $business = getAuthedBusiness();
+                noEntityAbort($business, 403);
+                if ($business->logo_path) {
+                    $this->photoClient->unlink($business->logo_path);
+                }
+                $file = $request->file('file');
+                $path = $this->photoClient->store($file, S3FolderTypes::BUSINESS_PHOTO);
+                $business->logo_path = $path;
+                $business->save();
 
-            return 1;
-        } else {
+                return 1;
+            } else {
+                return 0;
+            }
+        } catch (Exception $e) {
+            logException($e);
             return 0;
         }
     }
@@ -309,7 +310,7 @@ class BusinessController extends Controller
 
     public function updateBusiness(Request $request, $id)
     {
-        $this->validate($request,$this->validationRules);
+        $this->validate($request,$this->updateValidationRules);
         $updatePlans = false;
         /** @var User $user */
         $user = Auth::user();

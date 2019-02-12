@@ -2,6 +2,8 @@
 
 use App\Business;
 use App\Plan;
+use App\Subscription;
+use Bugsnag\BugsnagLaravel\Facades\Bugsnag;
 use Illuminate\Support\Arr;
 use Illuminate\Support\HtmlString;
 use Illuminate\Support\Str;
@@ -1207,7 +1209,7 @@ function getBusinessLogoImg($business)
 
 function getOtruvezLogoImg()
 {
-    return baseUrlConcat('/classimax/images/logos/otruvez-logo.png');
+    return baseUrlConcat('/classimax/images/logos/otruvez-logo.png'); 
 }
 
 function getOtruvezCircleLogoImg()
@@ -1325,8 +1327,21 @@ function notYourEntityAbort403(\Illuminate\Database\Eloquent\Model $entity) {
     }
 }
 
+function logException(Exception $e) {
+    return Bugsnag::notifyException($e);
+}
+
 function getAuthedBusiness() {
     return Business::where('user_id', Auth::id())->first();
+}
+
+function calculateRemainingUses(Plan $plan, Subscription $subscription) {
+    $limitInterval = $plan->limit_interval;
+    $usesRemaining = $limitInterval == "year" ? $plan->use_limit_year : $plan->use_limit_month;
+    return [
+        'limitInterval' => $limitInterval,
+        'usesRemaining' => $usesRemaining
+    ];
 }
 
 

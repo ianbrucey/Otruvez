@@ -29,8 +29,8 @@
                     <script
                             src="https://checkout.stripe.com/checkout.js" class="stripe-button"
                             data-key="pk_test_GQCUjPm3eovgzCUVD2RmzTjU"
-                            data-image="{{getOtruvezLogoImg()}}"
-                            data-name="Your Website Name"
+                            data-image="{{getOtruvezCircleLogoImg()}}"
+                            data-name="Otruvez"
                             data-panel-label="Update Card Details"
                             data-label="Update Card Details"
                             data-allow-remember-me=false

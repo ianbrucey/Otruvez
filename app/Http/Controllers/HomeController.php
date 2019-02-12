@@ -90,10 +90,14 @@ class HomeController extends Controller
             return redirect('/home')->with('warningMessage','Search field required');
         }
 
+        if(!is_numeric($request->get('latitude'))) {
+            return redirect('/home')->with('warningMessage','Please select your location');
+        }
+
 
         $location = Cache::get('location');
-        $location->latitude     = $request->get('latitude');
-        $location->longitude    = $request->get('longitude');
+        $location->latitude     = $request->get('latitude') && is_numeric($request->get('latitude')) ? $request->get('latitude') : null;
+        $location->longitude    = $request->get('longitude') && is_numeric($request->get('longitude')) ? $request->get('latitude') : null;
         $location->city         = $request->get('city');
         $location->state        = $request->get('state');
         $location->postal       = $request->get('postal');

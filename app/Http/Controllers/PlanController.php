@@ -12,6 +12,7 @@ use App\Rating;
 use App\S3FolderTypes;
 use App\Subscription;
 use App\User;
+use Bugsnag\BugsnagLaravel\Facades\Bugsnag;
 use Elasticsearch\Common\Exceptions\BadRequest400Exception;
 use Exception;
 use Faker\Provider\cs_CZ\DateTime;
@@ -23,6 +24,7 @@ use Elasticsearch\Client;
 use App\PhotoClient\AWSPhoto;
 use Stripe\Stripe;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
+
 
 class PlanController extends Controller
 {
@@ -93,8 +95,8 @@ class PlanController extends Controller
         $business = getAuthedBusiness();
         noEntityAbort($business, 403);
         $this->validate($request, [
-            'stripe_plan_name'  => 'required|'.ALPHANUMERIC_DASH_SPACE_DOT_REGEX,
-            'description'       => 'required|'.ALPHANUMERIC_DASH_SPACE_DOT_REGEX,
+            'stripe_plan_name'  => 'required',
+            'description'       => 'required',
             'featured_photo'    => 'required|image',
             'gallery_photos.*'  => 'nullable|image',
             'use_limit_month'   => 'nullable|integer',
@@ -153,26 +155,34 @@ class PlanController extends Controller
                         $stripeplan->delete();
                     }
                 }
+
+                Bugsnag::notifyException($e);
                 return redirect('/plan/managePlans')->with('successMessage',"We apologize, we are having technical difficulties. Please contact us about your issue");
             }
 
             $plansCreated[] = $stripeIdentifier;
         }
 
-        $plan = Plan::create([
-            'user_id'           => Auth::id(),
-            'business_id'       => $businessId,
-            'stripe_plan_id'    => $planIdentifier,
-            'stripe_plan_name'  => $planName,
-            'month_price'       => $monthPrice,
-            'year_price'        => $yearPrice,
-            'use_limit_month'   => $useLimitMonth,
-            'use_limit_year'    => $useLimitYear,
-            'limit_interval'    => $limitInterval,
-            'description'       => $description,
-            'category'          => $category,
-            'featured_photo_path' => null,
-        ]);
+        try {
+            $ex = null;
+            $plan = Plan::create([
+                'user_id' => Auth::id(),
+                'business_id' => $businessId,
+                'stripe_plan_id' => $planIdentifier,
+                'stripe_plan_name' => $planName,
+                'month_price' => $monthPrice,
+                'year_price' => $yearPrice,
+                'use_limit_month' => $useLimitMonth,
+                'use_limit_year' => $useLimitYear,
+                'limit_interval' => $limitInterval,
+                'description' => $description,
+                'category' => $category,
+                'featured_photo_path' => null,
+            ]);
+        } catch (Exception $e) {
+            $ex = $e;
+            $plan = null;
+        }
 
         if($plan == null) {
             if(count($plansCreated) > 0) {
@@ -182,6 +192,7 @@ class PlanController extends Controller
                 }
             }
 
+            Bugsnag::notifyException($ex);
             return redirect('/plan/managePlans')->with('successMessage',"We apologize, we are having technical difficulties. Please contact us about your issue");
         }
 
@@ -197,6 +208,7 @@ class PlanController extends Controller
                 }
             }
         } catch (Exception $e) {
+            Bugsnag::notifyException($e);
             $msg .= " Warning: there was a problem with one or more of your uploads";
         }
 
@@ -315,8 +327,8 @@ class PlanController extends Controller
     public function updatePlan(Request $request, $id)
     {
         $this->validate($request,[
-            'stripe_plan_name'   => 'required|'.ALPHANUMERIC_DASH_SPACE_DOT_REGEX,
-            'description'        => 'required|'.ALPHANUMERIC_DASH_SPACE_DOT_REGEX
+            'stripe_plan_name'   => 'required',
+            'description'        => 'required'
         ]);
         $smPlan = Plan::where('user_id', Auth::id())->where('id',$id)->first();
 
