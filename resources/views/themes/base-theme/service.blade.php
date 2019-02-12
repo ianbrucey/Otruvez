@@ -131,6 +131,7 @@ $intervals = ['month','year'];
                                                     data-name="{{$plan->stripe_plan_name}} {{strtoupper($interval)}}"
                                                     data-description="For plan: {{$plan->stripe_plan_id}}_{{$interval}}"
                                                     data-image="{{ $haslogo ? getImage($business->logo_path) : ''}}"
+                                                    data-email="{{\Illuminate\Support\Facades\Auth::user()->email}}"
                                                     data-locale="auto">
                                             </script>
                                             <input type="hidden" name="plan_id" value="{{$plan->id}}">

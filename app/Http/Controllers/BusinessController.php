@@ -343,13 +343,23 @@ class BusinessController extends Controller
         return redirect('/business/manageBusiness')->with('warningMessage','Business does not exist or is inactive');
     }
 
-    public function showBusinessNotificationView($businessId){
+    public function showBusinessNotificationView(){
         $business = getAuthedBusiness();
         noEntityAbort($business, 403);
         $notifications = (new Notification())->getBusinessNotifications($business->id);
         // maybe also get common
         return view('business.business-notifications')->with('notifications', $notifications);
     }
+
+    public function showSubscribers(){
+        $business = getAuthedBusiness();
+        noEntityAbort($business, 403);
+        $subscribers = DB::table('users')->join('subscriptions','users.id','=','subscriptions.user_id')->whereIn('users.id', (new \App\Subscription())->where('business_id', $business->id)->pluck('user_id'))->get();
+        // maybe also get common
+//        var_dump($subscribers); die();
+        return view('business.active-subscribers')->with('subscribers', $subscribers);
+    }
+
 
     public function showNotifyCustomersView(){
         $business = getAuthedBusiness();

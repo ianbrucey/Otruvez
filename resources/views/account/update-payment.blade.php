@@ -35,7 +35,7 @@
                             data-label="Update Card Details"
                             data-allow-remember-me=false
                             data-locale="auto"
-                            {{--data-email="{{$user->email}}"--}}
+                            data-email="{{$user->email}}"
                     >
 
                     </script>

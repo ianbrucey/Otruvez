@@ -56,7 +56,7 @@
             </div>
         </a>
 
-        <a class="col-md-4" href="/business/notifications/{{$data['businessId']}}">
+        <a class="col-md-4" href="/business/notifications">
             <div class="card">
                 <span class="fa fa-bell fa-2x"></span>
                 <h3>Notifications</h3>
@@ -69,6 +69,14 @@
                 <h3>Check-ins</h3>
             </div>
         </a>
+
+        <a class="col-md-4" href="/business/subscribers">
+            <div class="card">
+                <span class="fa fa-user fa-2x"></span>
+                <h3>Active Subscribers</h3>
+            </div>
+        </a>
+
         <a class="col-md-4" href="/business/notifyCustomers">
             <div class="card">
                 <span class="fa fa-bullhorn fa-2x"></span>

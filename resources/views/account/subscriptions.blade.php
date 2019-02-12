@@ -62,7 +62,7 @@
                         <div class="card-body">
                             <div class="row">
                                 <div class="col-md-12 text-center">
-                                    <img src="{{getImage($plan->featured_photo_path)}}" width="200">
+                                    <img src="{{getImage($plan->featured_photo_path)}}" height="150">
                                 </div>
                             </div>
                             <hr>
