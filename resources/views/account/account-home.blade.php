@@ -2,6 +2,7 @@
 
 @section('body')
     <h3 class="text-center">Account Home</h3>
+    <p class="text-center">{{$user->email}}</p>
     <div class="container">
         <div class="row">
             <div class="col-md-8 offset-md-2">

@@ -114,9 +114,9 @@ class PlanController extends Controller
         $planName             = $request->stripe_plan_name;
         $businessId           = $business->id;
         $planIdentifier       = uniqid(sprintf("%u_%u",$businessId,Auth::id()));
-        $useLimitMonth        = abs($request->use_limit_month);
-        $useLimitYear         = abs($request->use_limit_year);
-        $limitInterval        = $useLimitMonth ? 'month' : $useLimitYear ? 'year' : null;
+        $useLimitMonth        = abs(intval($request->get('use_limit_month')));
+        $useLimitYear         = abs(intval($request->get('use_limit_year')));
+        $limitInterval        = $this->getInterval($useLimitMonth, $useLimitYear);
         $monthPrice           = $request->month_price * 100;
         $yearPrice            = $request->year_price * 100;
         $description          = $request->description;
@@ -496,6 +496,16 @@ class PlanController extends Controller
             'plan' => $plan,
             'portalLink' => $portalLink
         ]);
+    }
+
+    public function getInterval($month, $year) {
+        if($month) {
+            return 'month';
+        } else if($year) {
+            return 'year';
+        } else {
+            return null;
+        }
     }
 
 

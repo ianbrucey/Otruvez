@@ -22,7 +22,7 @@ class AccountController extends Controller
 
     public function index()
     {
-        return view('account.account-home');
+        return view('account.account-home')->with('user', Auth::user());
     }
 
     public function subscriptions(Request $request, $portalBusinessId = null)
