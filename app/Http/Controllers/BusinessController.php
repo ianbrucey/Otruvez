@@ -586,7 +586,7 @@ class BusinessController extends Controller
         return $income;
     }
 
-    public function showCheckinView($businessId) {
+    public function showCheckinView() {
 
         $business = getAuthedBusiness();
         noEntityAbort($business, 403);
@@ -594,7 +594,7 @@ class BusinessController extends Controller
         return view('business.checkins')->with('checkins', $checkins);
     }
 
-    public function businessNotificationView($businessId){
+    public function businessNotificationView(){
         $business = getAuthedBusiness();
         noEntityAbort($business, 403);
         $businessEmail = (new Business())->where('id', $business->id)->value('email');

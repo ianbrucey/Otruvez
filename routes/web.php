@@ -142,7 +142,7 @@ Route::get('/business/viewStore/{id}', 'BusinessController@viewStore');
 Route::get('/business/viewStore/{id}/about', 'BusinessController@about');
 Route::get('/business/viewStore/{id}/contact', 'BusinessController@contact');
 Route::get('/business/viewService/{planId}', 'BusinessController@viewService');
-Route::get('/business/checkins/{businessId}', 'BusinessController@showCheckinView');
+Route::get('/business/checkins', 'BusinessController@showCheckinView');
 Route::get('/business/cancel', 'BusinessController@showCancelAccountView');
 Route::get('/business/notifyCustomers', 'BusinessController@showNotifyCustomersView');
 Route::get('/business/notifications', 'BusinessController@showBusinessNotificationView');

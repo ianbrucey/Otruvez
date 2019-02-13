@@ -138,7 +138,7 @@ class Notification extends Model
 
     public function getBusinessNotifications($businessId)
     {
-        return $this->where('business_id', $businessId)->orderBy('id', 'desc')->get();
+        return $this->where('business_id', $businessId)->where('recipient_id', Auth::id())->orderBy('id', 'desc')->get();
     }
 
 
@@ -291,6 +291,8 @@ class Notification extends Model
         $this->recipient_id         = $user->id;
         $this->subscription_id      = $subscription->id;
         $this->save();
+
+        // business should get one too
 
         return Email::sendUnsubscribedUserEmail($user, $this->body);
     }
