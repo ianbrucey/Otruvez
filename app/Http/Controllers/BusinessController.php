@@ -343,13 +343,23 @@ class BusinessController extends Controller
         return redirect('/business/manageBusiness')->with('warningMessage','Business does not exist or is inactive');
     }
 
-    public function showBusinessNotificationView($businessId){
+    public function showBusinessNotificationView(){
         $business = getAuthedBusiness();
         noEntityAbort($business, 403);
         $notifications = (new Notification())->getBusinessNotifications($business->id);
         // maybe also get common
         return view('business.business-notifications')->with('notifications', $notifications);
     }
+
+    public function showSubscribers(){
+        $business = getAuthedBusiness();
+        noEntityAbort($business, 403);
+        $subscribers = DB::table('users')->join('subscriptions','users.id','=','subscriptions.user_id')->whereIn('users.id', (new \App\Subscription())->where('business_id', $business->id)->pluck('user_id'))->get();
+        // maybe also get common
+//        var_dump($subscribers); die();
+        return view('business.active-subscribers')->with('subscribers', $subscribers);
+    }
+
 
     public function showNotifyCustomersView(){
         $business = getAuthedBusiness();
@@ -384,7 +394,7 @@ class BusinessController extends Controller
         } else {
             return redirect('/business')->with('infoMessage', "You do not have any subscribers yet");
         }
-        return redirect('/business');
+        return redirect('/business')->with('successMessage', "Your message was sent successfully");
     }
 
     public function deleteBusiness(Request $request, $businessId, $userDelete = null)
@@ -576,7 +586,7 @@ class BusinessController extends Controller
         return $income;
     }
 
-    public function showCheckinView($businessId) {
+    public function showCheckinView() {
 
         $business = getAuthedBusiness();
         noEntityAbort($business, 403);
@@ -584,7 +594,7 @@ class BusinessController extends Controller
         return view('business.checkins')->with('checkins', $checkins);
     }
 
-    public function businessNotificationView($businessId){
+    public function businessNotificationView(){
         $business = getAuthedBusiness();
         noEntityAbort($business, 403);
         $businessEmail = (new Business())->where('id', $business->id)->value('email');

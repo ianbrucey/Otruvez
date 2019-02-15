@@ -28,7 +28,7 @@
                     <textarea class="form-control bg-white" name="body" id="body" placeholder="" rows="5" cols="50"></textarea>
                     <input type="hidden" name="type" value="support">
                     <hr>
-                    <button type="button" class="btn theme-background" data-target="#notify-customer-form" onclick="triggerTargetSubmit(event, this, true)">Submit</button>
+                    <button type="submit" class="btn theme-background" data-target="#notify-customer-form" >Submit</button>
                 </form>
             </div>
         </div>

@@ -675,3 +675,22 @@ function checkHandleAvailability() {
     // sendSuccess("success");
     return true;
 }
+
+
+$('#list-filter').on('keyup', function () {
+    let filterString = $(this).val(); // german/french word for this is zis
+    $.expr[":"].contains = $.expr.createPseudo(function(arg) {
+        return function( elem ) {
+            return $(elem).text().toUpperCase().indexOf(arg.toUpperCase()) >= 0;
+        };
+    });
+
+    if(filterString.length > 1){
+        $('.filterable').parents('.filterable-containter').addClass('hide');
+        let matchedElements = $('.filterable:contains('+filterString+')');
+        matchedElements.parents('.filterable-containter').removeClass('hide');
+    } else {
+        $('.filterable').parents('.filterable-containter').removeClass('hide');
+    }
+
+})

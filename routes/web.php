@@ -137,11 +137,12 @@ Route::get('/business/viewStore/{id}', 'BusinessController@viewStore');
 Route::get('/business/viewStore/{id}/about', 'BusinessController@about');
 Route::get('/business/viewStore/{id}/contact', 'BusinessController@contact');
 Route::get('/business/viewService/{planId}', 'BusinessController@viewService');
-Route::get('/business/checkins/{businessId}', 'BusinessController@showCheckinView');
+Route::get('/business/checkins', 'BusinessController@showCheckinView');
 Route::get('/business/cancel', 'BusinessController@showCancelAccountView');
 Route::get('/business/notifyCustomers', 'BusinessController@showNotifyCustomersView');
-Route::get('/business/notifications/{businessId}', 'BusinessController@showBusinessNotificationView');
+Route::get('/business/notifications', 'BusinessController@showBusinessNotificationView');
 Route::get('/store/{businessHandle}', 'BusinessController@getStore');
+Route::get('/business/subscribers', 'BusinessController@showSubscribers');
 Route::post('/business/checkHandleAvailability', 'BusinessController@checkHandleAvailability');
 Route::post('/business/notifyCustomers', 'BusinessController@notifyCustomers');
 Route::post('/business/deleteBusiness/{id}', 'BusinessController@deleteBusiness');
@@ -244,6 +245,7 @@ Route::post('/account/deleteAccount', 'AccountController@deleteAccount');
 
 /** WEBHOOK ROUTES */
 Route::post('/stripeWebhook/failedPayment', 'WebhookController@failedPayment'); // [charge.failed , invoice.payment_failed]
+Route::post('/stripeWebhook/successfulPayment', 'WebhookController@successfulPayment'); // [charge.failed , invoice.payment_failed]
 /** WEBHOOK ROUTES END */
 
 /** PORTAL ROUTES */
