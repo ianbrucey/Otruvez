@@ -54,7 +54,7 @@ class Subscription extends Model
         ];
 
         // not sure about the paid date logic....
-        if($paidDate >= $todaysDate && $subscription->uses != $planLimit && $subscription->uses < $planLimit) { // if user is at usage limit, no refund, else prorate
+        if($subscription->uses != $planLimit && $subscription->uses < $planLimit) { // if user is at usage limit, no refund, else prorate
             $refundStatus['refund'] = true;
             $refundAmount = ($subscription->uses / $planLimit) * $subscription->price;
             $refundStatus['amount'] = formatPrice($subscription->price);
