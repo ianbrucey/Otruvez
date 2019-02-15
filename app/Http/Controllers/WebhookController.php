@@ -23,6 +23,7 @@ class WebhookController extends Controller
     private function getSuccessfulPaymentEventList() {
         return [
             'invoice.payment_succeeded',
+            'charge.succeeded'
         ];
     }
 
