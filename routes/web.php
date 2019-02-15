@@ -250,6 +250,7 @@ Route::post('/account/deleteAccount', 'AccountController@deleteAccount');
 
 /** WEBHOOK ROUTES */
 Route::post('/stripeWebhook/failedPayment', 'WebhookController@failedPayment'); // [charge.failed , invoice.payment_failed]
+Route::post('/stripeWebhook/successfulPayment', 'WebhookController@successfulPayment'); // [charge.failed , invoice.payment_failed]
 /** WEBHOOK ROUTES END */
 
 /** PORTAL ROUTES */

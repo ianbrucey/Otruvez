@@ -16,6 +16,7 @@ class VerifyCsrfToken extends BaseVerifier
         'subscription/checkin/*',
         'subscription/confirmCheckin/*',
         '/stripeWebhook/failedPayment',
+        '/stripeWebhook/successfulPayment',
         '/business/checkHandleAvailability'
     ];
 }

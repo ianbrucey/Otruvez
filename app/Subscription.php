@@ -4,6 +4,7 @@ namespace App;
 
 use DateTime;
 use Illuminate\Database\Eloquent\Model;
+use Stripe\Refund;
 
 class Subscription extends Model
 {
@@ -42,6 +43,8 @@ class Subscription extends Model
 
         setStripeApiKey('secret');
         $stripeSubscription = \Stripe\Subscription::retrieve($subscription->stripe_id);
+        $plan = (new Plan())->find($subscription->plan_id);
+        $planLimit = $subscription->o_interval == 'month' ? $plan->use_limit_month : $plan->use_limit_year;
         $todaysDate = new DateTime();
         $paidDate = new DateTime();
         $paidDate->setTimestamp($stripeSubscription->current_period_start);
@@ -50,23 +53,28 @@ class Subscription extends Model
             'amount' => 0
         ];
 
-        if($paidDate >= $todaysDate && $subscription->uses < 1) {
+        // not sure about the paid date logic....
+        if($paidDate >= $todaysDate && $subscription->uses != $planLimit && $subscription->uses < $planLimit) { // if user is at usage limit, no refund, else prorate
             $refundStatus['refund'] = true;
+            $refundAmount = ($subscription->uses / $planLimit) * $subscription->price;
             $refundStatus['amount'] = formatPrice($subscription->price);
 
-            self::issueRefund($subscription); // here we will issue the refund
+            self::issueRefund($subscription, $refundAmount); // here we will issue the refund
         }
 
         return $refundStatus;
     }
 
-    public static function issueRefund($subscription) {
+    public static function issueRefund($subscription, $amount = null) {
 
         setStripeApiKey('secret');
+        $refundArray = [];
+        $refundArray['charge'] = $subscription->last_charge_id;
+        if($amount) {
+            $refundArray['amount'] = $amount;
+        }
 
-        \Stripe\Refund::create(array(
-            "charge" => $subscription->last_charge_id
-        ));
+        Refund::create($refundArray);
     }
 
 }

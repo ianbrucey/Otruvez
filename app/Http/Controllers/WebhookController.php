@@ -7,6 +7,8 @@ use App\Plan;
 use App\StripeWebhook;
 use App\Subscription;
 use App\User;
+use Bugsnag\BugsnagLaravel\Facades\Bugsnag;
+use Exception;
 use Illuminate\Http\Request;
 
 class WebhookController extends Controller
@@ -76,14 +78,19 @@ class WebhookController extends Controller
         return 0;
     }
 
-    public function successfulCharge(Request $request) {
+    public function successfulPayment(Request $request) {
         setStripeApiKey('secret');
         $event = $this->verifyStripeEvent($request,StripeWebhook::PAYMENT_SUCCEEDED_WH_KEY);
 
         if (isset($event) && in_array($event->type, $this->getSuccessfulPaymentEventList())) {
 
-            Subscription::where('stripe_id', $event->data->object->lines->data[0]->id)
-                ->update(['last_charge_id' => $event->data->object->charge]);
+            try {
+                (new Subscription())->where('stripe_id', $event->data->object->lines->data[0]->id)
+                    ->update(['last_charge_id' => $event->data->object->charge]);
+            } catch (Exception $e) {
+                logException($e);
+                return 0;
+            }
 
             return 1;
         }
