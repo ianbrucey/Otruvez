@@ -1420,5 +1420,5 @@ const SERVICE_CATEGORY_LIST = [
 const CUSTOMER_SERVICE_CONTACT_LIMIT = 5;
 const ALPHANUMERIC_DASH_SPACE_REGEX = 'regex:/^[a-zA-Z0-9\-\s]+$/';
 const ALPHANUMERIC_DASH_SPACE_DOT_REGEX = 'regex:/^[a-zA-Z0-9\-\s.]+$/';
-const HANDLE = 'regex:/^[a-zA-Z0-9\_\s.]+$/';
+const HANDLE = 'regex:/^[a-zA-Z0-9\_.]+$/';
 // logo: <img src="{{getImage("logos/otruvez-logo.png")}}" style="width: 150px; height: auto;">

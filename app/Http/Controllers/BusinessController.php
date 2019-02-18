@@ -41,10 +41,10 @@ class BusinessController extends Controller
     private $photoClient;
     private $validationRules = [
         'name'            => 'required|'.ALPHANUMERIC_DASH_SPACE_REGEX,
-        'business_handle' => 'required|'.HANDLE, // needs to be digits and underscores only
+        'business_handle' => 'required|'.HANDLE, // needs to be digits and underscores only also no spaces
         'email'           => 'required|email',
         'phone'           => 'nullable|numeric',
-        'description'     => 'required|'.ALPHANUMERIC_DASH_SPACE_DOT_REGEX,
+        'description'     => 'required',
         'redirect_to'     => 'nullable|url',
 
     ];
