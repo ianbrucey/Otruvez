@@ -1379,6 +1379,31 @@ function isUsageLimitExceeded(Subscription $subscription, Plan $plan ) {
     return false;
 }
 
+/**
+ * @param Subscription $subscription
+ * @return bool
+ * This method is one of many used to determine whether or not a refund should be issued.
+ * The 'uses' are reset every month or year depending on the interval. But before we can issue you a refund,
+ * we need to be sure that you've paid within that same month or year, else we have nothing
+ * to refund you
+ */
+function isPaymentWithinCurrentInterval(Subscription $subscription) {
+    setStripeApiKey('secret');
+    $stripeSubscription = \Stripe\Subscription::retrieve($subscription->stripe_id);
+    $plan               = (new Plan())->find($subscription->plan_id);
+    $usageInterval      = $plan->limit_interval;
+    $currentDate        = new DateTime();
+    $paidDate           = new DateTime();
+    $paidDate->setTimestamp($stripeSubscription->current_period_start);
+
+    if($usageInterval == 'month') {
+        return $currentDate->format('M') == $paidDate->format('M');
+    } else {
+        return $currentDate->format('Y') == $paidDate->format('Y');
+    }
+
+}
+
 const SERVICE_CATEGORY_LIST = [
     ""  => "Choose a category",
     "1" => "Beauty & Spa",

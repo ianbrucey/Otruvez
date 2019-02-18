@@ -203,7 +203,7 @@ class SubscriptionController extends Controller
 
         if (isUsageLimitExceeded($subscription, $plan))
         {
-            return 'You have exceeded your limit for this month';
+            return 'You have exceeded your usage limit for this period';
 
         }
 

@@ -43,7 +43,7 @@ class Subscription extends Model
 
         $plan = (new Plan())->find($subscription->plan_id);
         $customer = (new User())->find($subscription->user_id);
-        $limitExceeded = isUsageLimitExceeded($subscription, $plan);
+        $limitExceeded = isUsageLimitExceeded($subscription, $plan); // put this above calculateRemainingUses() because it may potentially alter the subscription record
         $usageData =  calculateRemainingUses($plan, $subscription);
         $refundStatus = [
             'refund' => false,
@@ -51,7 +51,7 @@ class Subscription extends Model
             'pennies'=> 0
         ];
 
-        if($customer->has_valid_payment_method && !$limitExceeded && $usageData['limitInterval'] && $usageData['usesRemaining'] != 0) { // if user is at usage limit, no refund, else prorate
+        if(isPaymentWithinCurrentInterval($subscription) && $customer->has_valid_payment_method && !$limitExceeded && $usageData['limitInterval'] && $usageData['usesRemaining'] != 0) { // if user is at usage limit, no refund, else prorate
             $refundStatus['refund'] = true;
             $refundAmount = ($usageData['usesRemaining'] / $usageData['useLimit']) * $subscription->price ;
             $refundStatus['amount'] = formatPrice($refundAmount);
