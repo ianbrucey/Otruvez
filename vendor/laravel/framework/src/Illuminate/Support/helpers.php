@@ -1337,13 +1337,47 @@ function getAuthedBusiness() {
 
 function calculateRemainingUses(Plan $plan, Subscription $subscription) {
     $limitInterval = $plan->limit_interval;
-    $usesRemaining = $limitInterval == "year" ? $plan->use_limit_year : $plan->use_limit_month;
+
+    if(!empty($limitInterval)) {
+        $useLimit = $limitInterval == "year" ? $plan->use_limit_year : $plan->use_limit_month;
+    }
     return [
         'limitInterval' => $limitInterval,
-        'usesRemaining' => $usesRemaining
+        'usesRemaining' => $useLimit - $subscription->uses,
+        'useLimit'      => $useLimit
     ];
 }
 
+/**
+ * @param Subscription $subscription
+ * @param Plan $plan
+ * @return bool
+ * This method will check to see if the 'uses' on the subscription
+ * are greater than the plan's limit. If so, then we check to see if
+ * last usage date is within the range of current interval. if it is, then the limit is exceeded.
+ * If the last usage was in the previous month or year, then they have not exceeded
+ */
+function isUsageLimitExceeded(Subscription $subscription, Plan $plan ) {
+
+    $planInterval = $plan->limit_interval;
+
+    $planUseLimit = $planInterval == 'year' ? $plan->use_limit_year : $plan->use_limit_month;
+
+    if ($subscription->uses >= $planUseLimit) // resets every mont
+    {
+        if($planInterval == 'year' && extractLimitYear($subscription->last_usage_date) == currentYear() ||
+            $planInterval == 'month' && extractLimitMonth($subscription->last_usage_date) == currentMonth()
+        )
+        {
+            return true;
+        }
+        // we are in a new month so we can reset the uses on the sub
+        $subscription->uses = 0;
+        $subscription->save();
+
+    }
+    return false;
+}
 
 const SERVICE_CATEGORY_LIST = [
     ""  => "Choose a category",

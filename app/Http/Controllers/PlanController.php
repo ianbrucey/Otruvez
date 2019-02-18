@@ -116,7 +116,7 @@ class PlanController extends Controller
         $planIdentifier       = uniqid(sprintf("%u_%u",$businessId,Auth::id()));
         $useLimitMonth        = abs(intval($request->get('use_limit_month')));
         $useLimitYear         = abs(intval($request->get('use_limit_year')));
-        $limitInterval        = $this->getInterval($useLimitMonth, $useLimitYear);
+        $limitInterval        = $this->getInterval($useLimitMonth, $useLimitYear); // which limit should you use? there can only be one.
         $monthPrice           = $request->month_price * 100;
         $yearPrice            = $request->year_price * 100;
         $description          = $request->description;
