@@ -210,7 +210,6 @@ class SubscriptionController extends Controller
         $checkinCode = rand(10000,99999);
         $subscription->checkin_code = $checkinCode;
         $subscription->last_usage_date = currentMonthAndYear();
-        $subscription->uses = 0;
         $subscription->is_checking_in = "1";
         $subscription->save();
 
