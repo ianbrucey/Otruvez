@@ -26,7 +26,7 @@ class ConfirmAccount extends Mailable
         $this->email = $email;
         $this->fname = ucfirst($fname);
         $this->subject("Please confirm your new account");
-        $this->from("support@otruvez.com");
+        $this->from("otruvez@gmail.com", 'Otruvez');
     }
 
     /**

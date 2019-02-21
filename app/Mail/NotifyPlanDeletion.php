@@ -22,7 +22,7 @@ class NotifyPlanDeletion extends Mailable
     {
         $this->business = $business;
         $this->subject("We've canceled a subscription for you");
-        $this->from("support@otruvez.com");
+        $this->from("otruvez@gmail.com", 'Otruvez');
     }
 
     /**

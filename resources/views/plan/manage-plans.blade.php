@@ -16,12 +16,14 @@
         </div>
     </div>
     <div class="container">
-        <div class="row">
-            @if(count($plans) < 10 || true)
-                <a class="col-md-6 offset-md-3 plan-preview-card my-3 new-plan-card" href="/plan/createService">
-                    <p class="text-white">Create a new service</p>
-                    <span class="fa fa-plus"></span>
-                </a>
+        <div class="row text-center">
+            @if(count($plans) <= 10)
+                <div class="col-8 offset-2">
+                    <button type="button" class="btn theme-background" onclick="triggerTargetHref(event, this)" data-href="/plan/createService">
+                        Create a new service<br>
+                        <span class="fa fa-plus"></span>
+                    </button>
+                </div>
             @endif
         </div>
     </div>
@@ -86,7 +88,7 @@
                                         <span class="fa fa-pencil fa-2x"></span>
                                     </div>
                                     <div class="col-4 delete-plan" data-target="#delete-plan-form-{{$plan->id}}" data-plan-name="{{$plan->stripe_plan_name}}" onclick="deletePlan(event, this)">
-                                        <form action="https://www.otruvez.com/plan/delete/{{$plan->id}}" method="POST" id="delete-plan-form-{{$plan->id}}">
+                                        <form action="/plan/delete/{{$plan->id}}" method="POST" id="delete-plan-form-{{$plan->id}}">
                                             {{method_field('DELETE')}}
                                             {{csrf_field()}}
                                             <span class="fa fa-trash fa-2x"></span>

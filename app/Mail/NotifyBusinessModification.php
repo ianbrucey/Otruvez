@@ -22,7 +22,7 @@ class NotifyBusinessModification extends Mailable
     {
         $this->business = $business;
         $this->subject($business->name . " has made some changes");
-        $this->from("support@otruvez.com");
+        $this->from("otruvez@gmail.com", 'Otruvez');
     }
 
     /**

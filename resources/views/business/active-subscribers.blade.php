@@ -5,7 +5,7 @@
         <div class="col-md-8 offset-md-2">
             <h3 class="text-center">Active Subscribers</h3>
             <h6 class="text-center">Total subscription count: {{count($subscribers)}}</h6>
-            <p><input class="form-control" placeholder="filter results with matching term" id="list-filter"></p>
+            <p><input class="form-control" placeholder="filter results by name, email or subscription name" id="list-filter"></p>
             <ul>
                 @forelse($subscribers as $user)
                     <li class="card-text p-2 filterable-containter">

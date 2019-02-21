@@ -22,7 +22,7 @@ class UnsubscribedUser extends Mailable
     {
         $this->messageBody  = $messageBody;
         $this->subject("Subscription cancellation confirmation");
-        $this->from("support@otruvez.com");
+        $this->from("otruvez@gmail.com", 'Otruvez');
     }
 
 

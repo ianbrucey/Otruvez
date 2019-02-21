@@ -2,7 +2,9 @@
 
 namespace App;
 
+use Bugsnag\BugsnagLaravel\Facades\Bugsnag;
 use DateTime;
+use Exception;
 use Illuminate\Database\Eloquent\Model;
 use Stripe\Refund;
 
@@ -39,27 +41,27 @@ class Subscription extends Model
         return $this->belongsTo('App\User');
     }
 
-    public static function getRefundStatusAndAmount($subscription) {
+    public static function getRefundStatusAndAmount($subscription, $refundAmountOnly = false) {
 
-        setStripeApiKey('secret');
-        $stripeSubscription = \Stripe\Subscription::retrieve($subscription->stripe_id);
         $plan = (new Plan())->find($subscription->plan_id);
-        $planLimit = $subscription->o_interval == 'month' ? $plan->use_limit_month : $plan->use_limit_year;
-        $todaysDate = new DateTime();
-        $paidDate = new DateTime();
-        $paidDate->setTimestamp($stripeSubscription->current_period_start);
+        $customer = (new User())->find($subscription->user_id);
+        $limitExceeded = isUsageLimitExceeded($subscription, $plan); // put this above calculateRemainingUses() because it may potentially alter the subscription record
+        $usageData =  calculateRemainingUses($plan, $subscription);
         $refundStatus = [
             'refund' => false,
-            'amount' => 0
+            'amount' => 0,
+            'pennies'=> 0
         ];
 
-        // not sure about the paid date logic....
-        if($subscription->uses != $planLimit && $subscription->uses < $planLimit) { // if user is at usage limit, no refund, else prorate
+        if(isPaymentWithinCurrentInterval($subscription) && $customer->has_valid_payment_method && !$limitExceeded && $usageData['limitInterval'] && $usageData['usesRemaining'] != 0) { // if user is at usage limit, no refund, else prorate
             $refundStatus['refund'] = true;
-            $refundAmount = ($subscription->uses / $planLimit) * $subscription->price;
-            $refundStatus['amount'] = formatPrice($subscription->price);
+            $refundAmount = ($usageData['usesRemaining'] / $usageData['useLimit']) * $subscription->price ;
+            $refundStatus['amount'] = formatPrice($refundAmount);
+            $refundStatus['pennies'] = $refundAmount;
 
-            self::issueRefund($subscription, $refundAmount); // here we will issue the refund
+            if (!$refundAmountOnly) {
+                self::issueRefund($subscription, $refundAmount); // here we will issue the refund
+            }
         }
 
         return $refundStatus;
@@ -67,14 +69,20 @@ class Subscription extends Model
 
     public static function issueRefund($subscription, $amount = null) {
 
-        setStripeApiKey('secret');
-        $refundArray = [];
-        $refundArray['charge'] = $subscription->last_charge_id;
-        if($amount) {
-            $refundArray['amount'] = $amount;
-        }
+        if (!empty($subscription->last_charge_id)) {
+            setStripeApiKey('secret');
+            $refundArray = [];
+            $refundArray['charge'] = $subscription->last_charge_id;
+            if ($amount) {
+                $refundArray['amount'] = $amount;
+            }
 
-        Refund::create($refundArray);
+            try {
+                Refund::create($refundArray);
+            } catch (Exception $e) {
+                Bugsnag::notifyException($e);
+            }
+        }
     }
 
 }

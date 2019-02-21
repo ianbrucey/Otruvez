@@ -27,18 +27,22 @@ $('.confirm-checkin').on('click', function () {
     }
 
     let subscriptionId = zis.attr('data-subscription-id');
-    let url = "/subscription/confirmCheckin/"+subscriptionId  ;
+    let url = "/subscription/confirmCheckin/"+subscriptionId;
     let checkinCard = $('#confirm-checkin-card-'+subscriptionId);
     let checkinForm = $('.confirm-checkin-form-'+subscriptionId);
+    let checkinModal = $('#confirm-checkin-modal-'+subscriptionId);
     let responseContainer = $('#confirm-checkin-response-container-'+subscriptionId);
     let postdata = checkinForm.serialize();
     // response is wrong. got successful response on bad code
     $.post(url, postdata).done(function (data) {
         if(data == 1){
-            responseContainer.html('<h3 class="text-success text-center">The customer is checked in! <br> They may now use your service.<hr>An email has been sent to them for confirmation</h3>');
             checkinCard.hide();
+            checkinModal.hide();
+            sendSuccess("The customer is checked in! <br> They may now use your service.<hr>An email has been sent to them for confirmation");
         } else {
-            responseContainer.html('<h3 class="text-danger text-center">Check-in Failed. Please double check that the code is valid.<br> If it is, the user has reached their limit for the time period.</h3>');
+            checkinModal.hide();
+            sendWarning("Check-in Failed. Please double check that the code is valid.<br> If it is, the user has reached their limit for the time period.");
+
         }
     });
 

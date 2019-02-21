@@ -196,7 +196,7 @@ class Notification extends Model
             $subscription       = $data['subscription'];
             $plan               = $data['plan'];
             $business           = $data['business'];
-            $refundStatus       = $data['refundStatus'];
+            $refundStatus       = $data['refundStatus']; // array
 
             return view($this->body_template)->with([
                 'companyName'       => $business->name,
