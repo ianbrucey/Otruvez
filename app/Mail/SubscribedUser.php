@@ -22,7 +22,7 @@ class SubscribedUser extends Mailable
     {
         $this->messageBody  = $messageBody;
         $this->subject("Thanks for your subscription!");
-        $this->from("support@otruvez.com");
+        $this->from("otruvez@gmail.com", 'Otruvez');
     }
 
 

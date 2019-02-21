@@ -22,7 +22,7 @@ class NotifyPlanModification extends Mailable
     {
         $this->business = $business;
         $this->subject("Details on your subscription have changed");
-        $this->from("support@otruvez.com");
+        $this->from("otruvez@gmail.com", 'Otruvez');
     }
 
     /**

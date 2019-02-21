@@ -22,7 +22,7 @@ class NotifyBusinessDeletion extends Mailable
     {
         $this->business = $business;
         $this->subject($business->name . " is no longer with us");
-        $this->from("support@otruvez.com");
+        $this->from("otruvez@gmail.com", 'Otruvez');
     }
 
     /**

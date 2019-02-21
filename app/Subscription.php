@@ -2,7 +2,9 @@
 
 namespace App;
 
+use Bugsnag\BugsnagLaravel\Facades\Bugsnag;
 use DateTime;
+use Exception;
 use Illuminate\Database\Eloquent\Model;
 use Stripe\Refund;
 
@@ -67,14 +69,20 @@ class Subscription extends Model
 
     public static function issueRefund($subscription, $amount = null) {
 
-        setStripeApiKey('secret');
-        $refundArray = [];
-        $refundArray['charge'] = $subscription->last_charge_id;
-        if($amount) {
-            $refundArray['amount'] = $amount;
-        }
+        if (!empty($subscription->last_charge_id)) {
+            setStripeApiKey('secret');
+            $refundArray = [];
+            $refundArray['charge'] = $subscription->last_charge_id;
+            if ($amount) {
+                $refundArray['amount'] = $amount;
+            }
 
-        Refund::create($refundArray);
+            try {
+                Refund::create($refundArray);
+            } catch (Exception $e) {
+                Bugsnag::notifyException($e);
+            }
+        }
     }
 
 }

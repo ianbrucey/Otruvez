@@ -16,16 +16,18 @@
         </div>
     </div>
     <div class="container">
-        <div class="row">
-            @if(count($plans) < 10 || true)
-                <a class="col-md-6 offset-md-3 plan-preview-card my-3 new-plan-card" href="/plan/createService">
-                    <p class="text-white">Create a new service</p>
-                    {{--<span class="fa fa-plus"></span>--}}
-                </a>
+        <div class="row text-center">
+            @if(count($plans) <= 10)
+                <div class="col-8 offset-2">
+                    <button type="button" class="btn theme-background" onclick="triggerTargetHref(event, this)" data-href="/plan/createService">
+                        Create a new service<br>
+                        <span class="fa fa-plus"></span>
+                    </button>
+                </div>
             @endif
         </div>
     </div>
-
+.
     <div class="container-fluid">
         <div class="row">
             @if(count($plans))

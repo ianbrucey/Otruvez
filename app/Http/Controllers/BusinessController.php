@@ -425,19 +425,23 @@ class BusinessController extends Controller
         if(count($subs) > 0) {
             foreach($subs as $sub)
             {
-                try {
-                    $data['refundStatus'] = \App\Subscription::getRefundStatusAndAmount($sub);
-                    Subscription::retrieve($sub->stripe_id)->cancel();
-                } catch (Exception $e) {
-                    logger('subscription cancellation failed');
-                }
+//                try {
+//                    $data['refundStatus'] = \App\Subscription::getRefundStatusAndAmount($sub);
+//                    Subscription::retrieve($sub->stripe_id)->cancel();
+//                } catch (Exception $e) {
+//                    logger('subscription cancellation failed');
+//                }
                 if(!isset($sentToUser[$sub->user_id])) // only send out one broad email
                 {
                     $sentToUser[$sub->user_id] = 1;
                     // send email
                 }
 
-                $notification->sendNotifyBusinessDeletionNotification($business, $sub, $data);
+                try {
+                    $notification->sendNotifyBusinessDeletionNotification($business, $sub, $data);
+                } catch (\Exception $e) {
+                    logException($e);
+                }
                 $sub->delete(); // delete all photos assoc with plans
             }
         }

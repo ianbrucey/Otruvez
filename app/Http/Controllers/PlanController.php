@@ -380,12 +380,15 @@ class PlanController extends Controller
         if($subscriptions) {
             foreach ($subscriptions as $subscription) {
                 // need to calculate REFUND, maybe if create date is within "X"
-                Notification::where('subscription_id', $subscription->id)->delete();
+                try {
+                    Notification::where('subscription_id', $subscription->id)->delete();
+                } catch (Exception $e) {
+                    logException($e);
+                }
                 $data = [
                     'subscription'  => $subscription,
                     'plan'          => $smPlan,
                     'business'      => $business,
-                    'refund'        => getRefundStatusAndAmount($subscription)
                 ];
                 $data['refundStatus'] = Subscription::getRefundStatusAndAmount($subscription);
                 $notification->sendNotifyPlanDeletionNotification($business, $subscription, $data);
@@ -394,19 +397,20 @@ class PlanController extends Controller
         }
 
 
+        try {
+            if ($smPlan && $smPlan->user_id != Auth::id()) {
+                return redirect("/plan/managePlans")->with('errorMessage', 'YOU ARE NOT AUTHORIZED TO DO THIS! PLEASE DON\'T!');
+            }
 
+            if (!$smPlan->delete()) {
+                return redirect("/plan/managePlans")->with('warningMessage', "There was a problem. Please try again");
+            }
 
-        if($smPlan && $smPlan->user_id != Auth::id()) {
-            return redirect("/plan/managePlans")->with('errorMessage','YOU ARE NOT AUTHORIZED TO DO THIS! PLEASE DON\'T!');
+            Subscription::where('plan_id', $id)->delete();
+            $planId = $smPlan->stripe_plan_id;
+        } catch (Exception $e) {
+            logException($e);
         }
-
-        if(!$smPlan->delete())
-        {
-            return redirect("/plan/managePlans")->with('warningMessage',"There was a problem. Please try again");
-        }
-
-        Subscription::where('plan_id', $id)->delete();
-        $planId =  $smPlan->stripe_plan_id;
         try {
             setStripeApiKey('secret');
             $plan = \Stripe\Plan::retrieve($planId . "_month");
