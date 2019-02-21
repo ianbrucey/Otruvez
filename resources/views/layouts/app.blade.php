@@ -87,6 +87,10 @@
                             <a class="btn btn-lg white-bg theme-color  nav-link login-button" href="/sellYourServices"> <span class="fa fa-shopping-cart "></span> How to sell with Otruvez </a>
                         </li>
 
+                        <li class="nav-item">
+                            <a class="btn btn-lg white-bg theme-color  nav-link login-button" href="/home">Find subscriptions</a>
+                        </li>
+
                     </ul>
 
                 </div>
