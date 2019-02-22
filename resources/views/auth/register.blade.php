@@ -17,7 +17,7 @@
                 @include('partials.social.auth-buttons')
 
                 <div class="card-body">
-                    <form class="form-horizontal validate-register" method="POST" action="{{ route('register') }}">
+                    <form class="form-horizontal validate-register" method="POST" action="{{ secureUrl(route('register')) }}">
                         {{ csrf_field() }}
                         <div class="form-group{{ $errors->has('first') ? ' has-error' : '' }}">
 

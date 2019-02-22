@@ -13,7 +13,7 @@
 
                 <div class="card-body">
                     @include('partials.social.auth-buttons')
-                    <form class="form-horizontal validate-login" method="POST" action="{{ route('login') }}">
+                    <form class="form-horizontal validate-login" method="POST" action="{{ secureUrl(route('login')) }}">
                         {{ csrf_field() }}
 
                         <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">

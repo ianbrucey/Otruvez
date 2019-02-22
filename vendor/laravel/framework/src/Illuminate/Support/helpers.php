@@ -1419,7 +1419,11 @@ const SERVICE_CATEGORY_LIST = [
 ];
 
 function subtractStripeFees($pennies) {
-    return substr(($pennies - STRIPE_FLAT_FEE) * (1 - STRIPE_PERCENT_FEE),0,4);
+    return $pennies == 0 ? 0 : substr(($pennies - STRIPE_FLAT_FEE) * (1 - STRIPE_PERCENT_FEE),0,4);
+}
+
+function secureUrl($str) {
+    return env('APP_ENV') == 'prod' ? str_replace("http://","https://", $str) : $str;
 }
 const CUSTOMER_SERVICE_CONTACT_LIMIT = 5;
 const ALPHANUMERIC_DASH_SPACE_REGEX = 'regex:/^[a-zA-Z0-9\-\s]+$/';
