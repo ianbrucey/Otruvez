@@ -564,8 +564,7 @@ $(document).ready(function () {
             // }
         },
         submitHandler: function (form) {
-            $('#submitting').fadeIn(500);
-            form.submit();
+            event.preventDefault();
         }
     });
 
