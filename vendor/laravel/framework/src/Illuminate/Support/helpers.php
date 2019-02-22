@@ -1419,7 +1419,7 @@ const SERVICE_CATEGORY_LIST = [
 ];
 
 function subtractStripeFees($pennies) {
-    return ($pennies - STRIPE_FLAT_FEE) * (1 - STRIPE_PERCENT_FEE);
+    return substr(($pennies - STRIPE_FLAT_FEE) * (1 - STRIPE_PERCENT_FEE),0,4);
 }
 const CUSTOMER_SERVICE_CONTACT_LIMIT = 5;
 const ALPHANUMERIC_DASH_SPACE_REGEX = 'regex:/^[a-zA-Z0-9\-\s]+$/';
