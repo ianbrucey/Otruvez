@@ -16,7 +16,14 @@ $('.checkin').on('click', function () {
 
 });
 
-$('.confirm-checkin').on('click', function () {
+$('.validate-checkin').on('submit', function(event){
+    if(event.keyCode === 13) {
+        event.preventDefault();
+        return false;
+    }
+});
+
+$('.confirm-checkin').on('click', function (event) {
     let zis     = $(this);
     if($('#checkin-code').val() == '') {
         $('.checkin-error-message').show().text('Checkin code required');
