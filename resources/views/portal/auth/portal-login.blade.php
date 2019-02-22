@@ -68,7 +68,7 @@
                                 </a>
                                 <hr>
 
-                                <a class="btn btn-link theme-color" href="{{ route('password.request') }}">
+                                <a class="btn btn-link theme-color" href="{{ secureUrl(route('password.request')) }}">
                                     Forgot Your Password?
                                 </a>
                             </div>
