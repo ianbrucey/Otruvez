@@ -587,7 +587,7 @@ class BusinessController extends Controller
             }
         }
 
-        return $income;
+        return subtractStripeFees($income);
     }
 
     public function showCheckinView() {

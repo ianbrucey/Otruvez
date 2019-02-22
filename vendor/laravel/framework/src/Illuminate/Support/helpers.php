@@ -1417,8 +1417,14 @@ const SERVICE_CATEGORY_LIST = [
     "9" => "Software",
     "10" => "Travel"
 ];
+
+function subtractStripeFees($pennies) {
+    return ($pennies - STRIPE_FLAT_FEE) * (1 - STRIPE_PERCENT_FEE);
+}
 const CUSTOMER_SERVICE_CONTACT_LIMIT = 5;
 const ALPHANUMERIC_DASH_SPACE_REGEX = 'regex:/^[a-zA-Z0-9\-\s]+$/';
 const ALPHANUMERIC_DASH_SPACE_DOT_REGEX = 'regex:/^[a-zA-Z0-9\-\s.]+$/';
 const HANDLE = 'regex:/^[a-zA-Z0-9\_.]+$/';
+const STRIPE_FLAT_FEE = 30;
+const STRIPE_PERCENT_FEE = .029;
 // logo: <img src="{{getImage("logos/otruvez-logo.png")}}" style="width: 150px; height: auto;">
