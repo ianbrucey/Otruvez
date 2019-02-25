@@ -25,10 +25,8 @@ $(function() {
             // loadingPhoto.fadeOut();
 
             if(successful) {
-                console.log("complete");
                 window.location.href = currentLocation + "?uploadSuccess";
             } else {
-                console.log("not complete");
                 window.location.href = currentLocation + "?uploadFailed";
             }
         },

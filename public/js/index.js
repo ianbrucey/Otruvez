@@ -5,7 +5,7 @@ let currentLocation = window.location.href;
 let loadingPhoto = $('#loading-photo');
 let submittingLoader = $('#submitting');
 const validFileExtensions = ['jpeg' , 'jpg', 'png', 'bmp', 'gif'];
-const maxUploadSize = 1024000;
+const maxUploadSize = 3 * 1024000;
 
 $('#searchField').keyup(function(event) {
     if($(this).val().trim() == '' || $(this).val().length < 2) {
@@ -630,7 +630,7 @@ function isValidImage(file) {
         valid = false;
     }
     if (file.size > maxUploadSize) {
-        sendWarning('Max Upload size is 1MB only: <b class="text-danger">' + file.name + '<b>');
+        sendWarning('Max Upload size is 3MB only: <b class="text-danger">' + file.name + '<b>');
         valid = false;
     }
     return valid;

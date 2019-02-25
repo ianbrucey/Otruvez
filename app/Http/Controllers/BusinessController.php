@@ -22,6 +22,8 @@ use Illuminate\Support\Facades\Bus;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Input;
+use Imagick;
+use Intervention\Image\ImageManager;
 use Stripe\Stripe;
 use Stripe\Subscription;
 use Symfony\Component\Finder\Exception\AccessDeniedException;
@@ -219,6 +221,7 @@ class BusinessController extends Controller
                     $this->photoClient->unlink($business->logo_path);
                 }
                 $file = $request->file('file');
+                (new ImageManager())->make($file->path())->orientate()->save($file->path()); // orients the photo and saves it back to the temporary file path before storing
                 $path = $this->photoClient->store($file, S3FolderTypes::BUSINESS_PHOTO);
                 $business->logo_path = $path;
                 $business->save();
