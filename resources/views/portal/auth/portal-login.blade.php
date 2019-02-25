@@ -13,7 +13,7 @@
                 <div class="card-body">
                     @include('partials.social.portal-auth-buttons')
 
-                    <form class="form-horizontal validate-login" method="POST" action="{{ route('login') }}">
+                    <form class="form-horizontal validate-login" method="POST" action="{{ secureUrl(route('login')) }}">
                         {{ csrf_field() }}
                         <input type="hidden" name="businessId" value="{{$businessId}}">
                         <input type="hidden" name="stripeId" value="{{$stripeId}}">
@@ -68,7 +68,7 @@
                                 </a>
                                 <hr>
 
-                                <a class="btn btn-link theme-color" href="{{ route('password.request') }}">
+                                <a class="btn btn-link theme-color" href="{{ secureUrl(route('password.request')) }}">
                                     Forgot Your Password?
                                 </a>
                             </div>

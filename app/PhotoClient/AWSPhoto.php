@@ -46,6 +46,7 @@ class AWSPhoto implements PhotoInterface
             $this->getS3Client()->upload($this->bucket, $filename, fopen($file->getPathname(), 'rb'), "public-read");
             return $filename;
         } catch (Exception $e) {
+            logException($e);
             return 0;
         }
     }

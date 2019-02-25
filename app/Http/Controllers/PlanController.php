@@ -22,6 +22,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Elasticsearch\Client;
 use App\PhotoClient\AWSPhoto;
+use Intervention\Image\ImageManager;
 use Stripe\Stripe;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 
@@ -241,6 +242,7 @@ class PlanController extends Controller
             ]);
 
             $photo = $file ?: $request->file('featured_photo');
+            (new ImageManager())->make($photo->path())->orientate()->save($photo->path()); // orients the photo and saves it back to the temporary file path before storing$photo
             $path = $this->photoClient->store($photo, S3FolderTypes::PLAN_FEATURED_PHOTO);
             try {
                 $plan = Plan::where('user_id', Auth::id())->where('id',$id)->first();
@@ -300,6 +302,7 @@ class PlanController extends Controller
 
 
         try {
+                (new ImageManager())->make($photo->path())->orientate()->save($photo->path()); // orients the photo and saves it back to the temporary file path before storing
                 $path = $this->photoClient->store($photo, S3FolderTypes::PLAN_GALLERY_PHOTO);
 
                 $newPhoto = Photo::create([

@@ -12,10 +12,10 @@
                     </div>
 
 
-                    <div class="card-body">
-                        @include('partials.social.auth-buttons')
-                        <form class="form-horizontal validate-login" method="POST" action="/login">
-                            {{ csrf_field() }}
+                <div class="card-body">
+                    @include('partials.social.auth-buttons')
+                    <form class="form-horizontal validate-login" method="POST" action="{{ secureUrl(route('login')) }}">
+                        {{ csrf_field() }}
 
                             <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
                                 <label for="email" class="col-md-12 text-left control-label">E-Mail Address</label>
@@ -62,7 +62,7 @@
                                         Login
                                     </button>
 
-                                    <a class="btn btn-link theme-color" href="{{ route('password.request') }}">
+                                    <a class="btn btn-link theme-color" href="{{ secureUrl(route('password.request')) }}">
                                         Forgot Your Password?
                                     </a>
                                 </div>

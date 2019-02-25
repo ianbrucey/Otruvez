@@ -20,7 +20,7 @@
                 <div class="card-body">
                     @include('partials.social.portal-auth-buttons')
 
-                    <form class="form-horizontal validate-register" method="POST" action="{{ route('register') }}">
+                    <form class="form-horizontal validate-register" method="POST" action="{{ secureUrl(route('register')) }}">
                         {{ csrf_field() }}
                         <input type="hidden" name="businessId" value="{{$businessId}}">
                         <input type="hidden" name="stripeId" value="{{$stripeId}}">

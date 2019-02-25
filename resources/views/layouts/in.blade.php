@@ -27,17 +27,17 @@
     @if (Auth::check())
         <div class="container-fluid">
             <div class="row text-center">
-                <a href="{{ route('home') }}" class="col-xs-4 btn btn-lg"><span class="fa fa-home fa-2x"></span></a>
-                <a href="{{ route('user') }}" class="col-xs-4 btn btn-lg"><span class="fa fa-user fa-2x"></span> </a>
-                <a href="{{ route('business') }}" class="col-xs-4 btn btn-lg"><span class="fa fa-briefcase fa-2x"></span> </a>
+                <a href="{{ secureUrl(route('home')) }}" class="col-xs-4 btn btn-lg"><span class="fa fa-home fa-2x"></span></a>
+                <a href="{{ secureUrl(route('user')) }}" class="col-xs-4 btn btn-lg"><span class="fa fa-user fa-2x"></span> </a>
+                <a href="{{ secureUrl(route('business')) }}" class="col-xs-4 btn btn-lg"><span class="fa fa-briefcase fa-2x"></span> </a>
             </div>
         </div>
     @endif
-</nav>
+</nav>secure_url(
 
 
 
-@yield('body')
+@yiel)d('body')
 
 @yield('footer')
 
