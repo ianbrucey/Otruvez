@@ -5,7 +5,7 @@ let currentLocation = window.location.href;
 let loadingPhoto = $('#loading-photo');
 let submittingLoader = $('#submitting');
 const validFileExtensions = ['jpeg' , 'jpg', 'png', 'bmp', 'gif'];
-const maxUploadSize = 3 * 1024000;
+const maxUploadSize = 4 * 1024000;
 
 $('#searchField').keyup(function(event) {
     if($(this).val().trim() == '' || $(this).val().length < 2) {
