@@ -437,3 +437,7 @@ textarea {
 .small-spinner, .check-mark {
     display: none;
 }
+
+.popular-deals p {
+    font-size: 18px;
+}

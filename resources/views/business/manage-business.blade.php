@@ -158,7 +158,6 @@
 @section('footer')
 
 
-    <script src="{{ baseUrlConcat('/js/index.js') }}"></script>
     <script src="{{ baseUrlConcat('/js/dropzone.js') }}"></script>
     <script src="{{ baseUrlConcat('/js/dropzone-options.js') }}"></script>
     <script src="{{baseUrlConcat('/js/google-location/set-address.js')}}"></script>
