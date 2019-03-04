@@ -49,7 +49,7 @@
         </a>
 
 
-        <a class="col-md-4" href="/business/viewStore/{{$data['businessId']}}">
+        <a class="col-md-4" href="/business/viewStore/{{$data['business_handle']}}">
             <div class="card">
                 <span class="fa fa-eye fa-2x"></span>
                 <h3>Preview Store</h3>

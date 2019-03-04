@@ -79,8 +79,8 @@ class BusinessController extends Controller
 
     }
 
-    public function viewStore(Request $request, $id) {
-        $business   = Business::find($id);
+    public function viewStore(Request $request, $handle) {
+        $business   = (new Business())->where('business_handle', $handle)->first();
         noEntityAbort($business, 404);
         $owner      = Auth::check()  ? $business->user->id == Auth::id() : false;
         $hasPhoto   = !empty($business->photo_path);
@@ -106,8 +106,8 @@ class BusinessController extends Controller
         }
     }
 
-    public function about(Request $request, $id) {
-        $business   = Business::find($id);
+    public function about(Request $request, $handle) {
+        $business   = (new Business())->where('business_handle', $handle)->first();
         noEntityAbort($business, 404);
         $owner      = Auth::check()  ? $business->user->id == Auth::id() : false;
         $hasPhoto   = !empty($business->photo_path);
@@ -122,9 +122,9 @@ class BusinessController extends Controller
             ->with('owner',$owner);
     }
 
-    public function contact(Request $request, $id) {
+    public function contact(Request $request, $handle) {
 
-        $business   = Business::find($id);
+        $business   = (new Business())->where('business_handle', $handle)->first();
         noEntityAbort($business, 404);
         $owner      = Auth::check() ? $business->user->id == Auth::id() : false;
         $hasPhoto   = !empty($business->photo_path);

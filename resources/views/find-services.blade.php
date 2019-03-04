@@ -89,7 +89,7 @@
                             </div>
                             <div class="card-header">
                                 <a href="/business/viewService/{{$plan->id}}" class="text-info">view service</a>
-                                <a href="/business/viewStore/{{$plan->business['id']}}" class="float-right text-info">Go to store</a>
+                                <a href="/business/viewStore/{{$plan->business['business_handle']}}" class="float-right text-info">Go to store</a>
                             </div>
                         </div>
                     </div>
