@@ -270,9 +270,9 @@ label {
     padding-top: 5px;
 }
 
-.hide {
-    display: none !important;
-}
+/*.hide {*/
+    /*display: none !important;*/
+/*}*/
 
 .inline {
     display: inline !important;
@@ -440,4 +440,8 @@ textarea {
 
 .small-spinner, .check-mark {
     display: none;
+}
+
+.popular-deals p {
+    font-size: 18px;
 }

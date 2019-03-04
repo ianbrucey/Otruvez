@@ -154,12 +154,7 @@
 	</div>
 	<!-- Container End -->
 </section>
-<script>
-	var screenheight = screen.height + "px";
-	$('#landing-page-section-1').css('height', screenheight);
 
-
-</script>
 
 @endsection
 

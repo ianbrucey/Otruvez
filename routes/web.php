@@ -27,10 +27,18 @@ Route::get('/', function () {
 
 Route::get('/contact', function () {
     if(Auth::check()) {
-//        return redirect('/home');
+        return redirect('/account/support');
     } else {
         return view('contact');
     }
+});
+
+Route::get('/faqs', function () {
+        return view('faqs');
+});
+
+Route::get('/merchant-faqs', function () {
+    return view('merchant-faqs');
 });
 
 Route::get('/sellYourServices', function () {
