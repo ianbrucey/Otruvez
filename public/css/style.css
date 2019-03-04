@@ -270,9 +270,9 @@ label {
     padding-top: 5px;
 }
 
-/*.hide {*/
-    /*display: none !important;*/
-/*}*/
+.hide {
+    display: none !important;
+}
 
 .inline {
     display: inline !important;

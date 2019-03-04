@@ -1237,11 +1237,18 @@ function s3PhotobucketPath() {
 }
 
 function getImage($imgPath) {
-    return s3PhotobucketPath().$imgPath;
+    return fixDoubleSlash(s3PhotobucketPath().$imgPath);
+}
+
+function fixDoubleSlash($path) {
+    $path = str_replace("https://","", $path);
+    $path = str_replace("http://","", $path);
+    $path = str_replace("//","/", $path);
+    return "https://".$path;
 }
 
 function getLocalImage($imgPath) {
-    return s3PhotobucketPath().$imgPath;
+    return fixDoubleSlash(s3PhotobucketPath().$imgPath);
 }
 
 function s3BucketFolderList() {
