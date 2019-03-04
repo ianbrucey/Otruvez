@@ -52,7 +52,7 @@
                 </button>
                 @else
                 <a class="navbar-brand" href="/">
-                    <img src="{{baseUrlConcat("/classimax/images/logos/o-logo.png")}}" width="50">
+                    <img src="{{getOtruvezCircleLogoImg()}}" width="50">
                 </a>
                 <button class="navbar-toggler theme-background" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation" style="margin-left: 62% !important;">
                     {!! hasNewNotifications() ? '<span class="fa fa-bell text-danger"></span>' : '<span class="navbar-toggler-icon"></span>' !!}
