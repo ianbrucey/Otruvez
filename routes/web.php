@@ -49,6 +49,10 @@ Route::get('/terms-and-conditions', function () {
     return view('legal.terms-and-conditions');
 });
 
+Route::get('/conduct-and-refund-policy', function () {
+    return view('legal.conduct-and-refund-policy');
+});
+
 Route::get('/sellYourServices', function () {
 
         $sections = [

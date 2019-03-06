@@ -19,7 +19,8 @@
                 <a href="/terms-and-conditions">Terms And Conditions</a> |
                 <a href="/contact">Contact Us</a> |
                 <a href="/faqs">Consumer FAQs</a> |
-                <a href="/merchant-faqs">Merchant FAQs</a>
+                <a href="/merchant-faqs">Merchant FAQs</a> |
+                <a href="/conduct-and-refund-policy">Professional Conduct and Refund Policy</a>
 
             </div>
             <!-- Grid column -->

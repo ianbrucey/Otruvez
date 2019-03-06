@@ -75,8 +75,8 @@
                                 Legal
                             </a>
                             <div class="dropdown-menu nav-item" aria-labelledby="navbarDropdown" id="dropit-2">
+                                <a class="dropdown-item" href="/conduct-and-refund-policy">Professional Conduct and Refund Policy</a>
                                 <a class="dropdown-item" href="/privacy">Privacy</a>
-                                <div class="dropdown-divider"></div>
                                 <a class="dropdown-item" href="/terms-of-service">Terms of Service</a>
                             </div>
                         </li>
