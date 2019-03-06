@@ -45,7 +45,7 @@
                 </button>
                 @else
                 <a class="navbar-brand" href="/">
-                    <img src="{{baseUrlConcat("/classimax/images/logos/o-logo.png")}}" width="50">
+                    <img src="{{getOtruvezCircleLogoImg()}}" width="50">
                 </a>
                 <button class="navbar-toggler theme-background" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation" style="margin-left: 62% !important;">
                     {!! hasNewNotifications() ? '<span class="fa fa-bell text-danger"></span>' : '<span class="navbar-toggler-icon"></span>' !!}
@@ -68,15 +68,29 @@
                         <li class="nav-item">
                             <a class="nav-link" href="/log/out"><span class="fa fa-sign-out "></span> Logout</a>
                         </li>
+
                         <li class="nav-item dropdown">
-                            <a class="nav-link" href="#" data-toggle="collapse" data-target="#dropit" aria-controls="dropit" aria-expanded="false" aria-label="Toggle navigation">
-                                <span class="fa fa-question"></span>
-                                FAQs
+                            <a class="nav-link" href="#" data-toggle="collapse" data-target="#dropit-2" aria-controls="dropit" aria-expanded="false" aria-label="Toggle navigation">
+                                <span class="fa fa-legal"></span>
+                                Legal
                             </a>
-                            <div class="dropdown-menu nav-item" aria-labelledby="navbarDropdown" id="dropit">
-                                <a class="dropdown-item" href="/faqs">Consumer FAQs</a>
+                            <div class="dropdown-menu nav-item" aria-labelledby="navbarDropdown" id="dropit-2">
+                                <a class="dropdown-item" href="/privacy">Privacy</a>
                                 <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" href="/terms-of-service">Terms of Service</a>
+                            </div>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link" href="#" data-toggle="collapse" data-target="#dropit-1" aria-controls="dropit" aria-expanded="false" aria-label="Toggle navigation">
+                                <span class="fa fa-question"></span>
+                                Help
+                            </a>
+                            <div class="dropdown-menu nav-item" aria-labelledby="navbarDropdown" id="dropit-1">
+                                <a class="dropdown-item" href="/faqs">Consumer FAQs</a>
+
                                 <a class="dropdown-item" href="/merchant-faqs">Merchant FAQs</a>
+
+                                <a class="dropdown-item" href="/sellYourServices">How to Sell With Us</a>
                             </div>
                         </li>
                     </ul>
@@ -141,8 +155,8 @@
 <!-- JAVASCRIPTS -->
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
-
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.0/jquery-confirm.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/jquery.validate.min.js"></script>
 <script src='https://ajax.aspnetcdn.com/ajax/jquery.validate/1.17.0/additional-methods.js'></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/lity/2.3.0/lity.min.js"></script>
@@ -152,7 +166,12 @@
     $('#landing-page-section-1').css('height', screenheight);
 </script>
 @yield('footer')
+<!-- Footer -->
+@if(!\Illuminate\Support\Facades\Auth::check())
 
+    @include('footers.footer')
+@endif
+<!-- Footer -->
 </body>
 
 </html>

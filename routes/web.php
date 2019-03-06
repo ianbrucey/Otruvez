@@ -41,10 +41,16 @@ Route::get('/merchant-faqs', function () {
     return view('merchant-faqs');
 });
 
+Route::get('/privacy', function () {
+    return view('legal.privacy');
+});
+
+Route::get('/terms-and-conditions', function () {
+    return view('legal.terms-and-conditions');
+});
+
 Route::get('/sellYourServices', function () {
-    if(Auth::check()) {
-//        return redirect('/home');
-    } else {
+
         $sections = [
             [
                 'msg'       => 'We charge 10% per Subscription you sell and payout every 2 weeks. That\'s it. Now let\'s talk about selling',
@@ -98,7 +104,6 @@ Route::get('/sellYourServices', function () {
             ]
         ];
         return view('sell-your-services')->with('sections', $sections);
-    }
 });
 
 
