@@ -650,7 +650,10 @@ function copyText(self) {
     thisObj.find('.copied-msg').fadeOut(1500);
 
 }
-
+$('#choose-business-handle').on('keyup', function(){
+    let val = $(this).val();
+    $(this).val(val.replace(/[^\w\s]/gi, ''));
+});
 function checkHandleAvailability() {
     let handle = $('#choose-business-handle').val();
     if(handle === '') {
@@ -661,13 +664,13 @@ function checkHandleAvailability() {
     let formData = $('form').serialize();
     $.post("/business/checkHandleAvailability", formData).done(function(data) {
         if(data === "1") {
-            sendSuccess("This name is available! <br> Finish the form below");
+            sendSuccess("This name is available! <br> Finish the form below <br><span class='text-danger'>If you do not rightfully own this name, it can be revoked and or modified</span>");
             $('#business-handle').val(handle);
             $('#chosen-handle').text("You chose @"+handle);
             $('.rest-of-biz-inputs').show(500);
             $('#business-handle').val(handle); // add this to the DB and ES index next
         } else {
-            sendWarning("This name is not available");
+            sendWarning("This name is not available<br><span class='text-danger'>If you rightfully own this business name, please contact <a href='/support' class='theme-color'>support</a> </span>");
             $('.rest-of-biz-inputs').hide(500);
         }
     });

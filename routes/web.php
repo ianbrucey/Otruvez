@@ -41,10 +41,20 @@ Route::get('/merchant-faqs', function () {
     return view('merchant-faqs');
 });
 
+Route::get('/privacy', function () {
+    return view('legal.privacy');
+});
+
+Route::get('/terms-and-conditions', function () {
+    return view('legal.terms-and-conditions');
+});
+
+Route::get('/conduct-and-refund-policy', function () {
+    return view('legal.conduct-and-refund-policy');
+});
+
 Route::get('/sellYourServices', function () {
-    if(Auth::check()) {
-//        return redirect('/home');
-    } else {
+
         $sections = [
             [
                 'msg'       => '1st, register with us and then login. After logging in you will see "business account" at the top. Go there',
@@ -93,7 +103,6 @@ Route::get('/sellYourServices', function () {
             ]
         ];
         return view('sell-your-services')->with('sections', $sections);
-    }
 });
 
 

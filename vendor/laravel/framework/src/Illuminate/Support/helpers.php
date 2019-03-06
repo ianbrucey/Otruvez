@@ -1422,7 +1422,27 @@ const SERVICE_CATEGORY_LIST = [
     "7" => "Home Services",
     "8" => "Online Services",
     "9" => "Software",
-    "10" => "Travel"
+    "10" => "Travel",
+    "11" => "Apparel",
+    "12" => "Automotive",
+    "13" => "Baby &amp; Kids",
+    "14" => "Beauty",
+    "15" => "Collectibles",
+    "16" => "Electronics",
+    "17" => "Entertainment",
+    "18" => "Footwear",
+    "19" => "Grocery",
+    "20" => "Handbags",
+    "21" => "Home Improvement",
+    "22" => "Home",
+    "23" => "Intimates",
+    "24" => "Jewelry",
+    "25" => "Office",
+    "26" => "Patio",
+    "27" => "Pets",
+    "28" => "Sports &amp; Outdoors",
+    "29" => "Toys &amp; Games",
+    "30" => "Vitamins",
 ];
 
 function subtractStripeFees($pennies) {
