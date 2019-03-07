@@ -157,7 +157,7 @@ class PlanController extends Controller
                     }
                 }
 
-                Bugsnag::notifyException($e);
+                logException($e);
                 return redirect('/plan/managePlans')->with('successMessage',"We apologize, we are having technical difficulties. Please contact us about your issue");
             }
 
@@ -193,7 +193,7 @@ class PlanController extends Controller
                 }
             }
 
-            Bugsnag::notifyException($ex);
+            logException($ex);
             return redirect('/plan/managePlans')->with('successMessage',"We apologize, we are having technical difficulties. Please contact us about your issue");
         }
 
@@ -209,7 +209,7 @@ class PlanController extends Controller
                 }
             }
         } catch (Exception $e) {
-            Bugsnag::notifyException($e);
+            logException($e);
             $msg .= " Warning: there was a problem with one or more of your uploads";
         }
 
@@ -241,10 +241,11 @@ class PlanController extends Controller
                 'featured_photo'    => 'required|image'
             ]);
 
-            $photo = $file ?: $request->file('featured_photo');
-            (new ImageManager())->make($photo->path())->orientate()->save($photo->path()); // orients the photo and saves it back to the temporary file path before storing$photo
-            $path = $this->photoClient->store($photo, S3FolderTypes::PLAN_FEATURED_PHOTO);
+
             try {
+                $photo = $file ?: $request->file('featured_photo');
+                (new ImageManager())->make($photo->path())->orientate()->save($photo->path()); // orients the photo and saves it back to the temporary file path before storing$photo
+                $path = $this->photoClient->store($photo, S3FolderTypes::PLAN_FEATURED_PHOTO);
                 $plan = Plan::where('user_id', Auth::id())->where('id',$id)->first();
                 if ($plan->featured_photo_path) {
                     $this->photoClient->unlink(getFullPathToImage($plan->featured_photo_path));
@@ -252,6 +253,7 @@ class PlanController extends Controller
                 $plan->featured_photo_path = $path;
                 $plan->save();
             } catch (Exception $e) {
+                logException($e);
                 $this->photoClient->unlink($path);
                 return Response::create([
                     'msg' => sprintf("Upload failed: %s", $e->getMessage())
