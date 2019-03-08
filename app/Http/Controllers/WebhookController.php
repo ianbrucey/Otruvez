@@ -86,9 +86,16 @@ class WebhookController extends Controller
         if (isset($event) && in_array($event->type, $this->getSuccessfulPaymentEventList())) {
 
             try {
-                (new Subscription())->where('stripe_id', $event->data->object->lines->data[0]->id)
-                    ->update(['last_charge_id' => $event->data->object->charge]);
+
+                $customerId = $event->data->object->customer;
+                $user       = (new User())->where('stripe_id', $customerId)->get();
+                $chargeId   = $event->data->object->object == "charge" ? $event->data->object->id : $event->data->object->charge;
+
+                (new Subscription())->where('user_id', $user->id)
+                    ->update(['last_charge_id' => $chargeId]);
+
             } catch (Exception $e) {
+
                 logException($e);
                 return 0;
             }
