@@ -88,7 +88,7 @@ class WebhookController extends Controller
             try {
 
                 $customerId = $event->data->object->customer;
-                $user       = (new User())->where('stripe_id', $customerId)->get();
+                $user       = (new User())->where('stripe_id', $customerId)->first();
                 $chargeId   = $event->data->object->object == "charge" ? $event->data->object->id : $event->data->object->charge;
 
                 (new Subscription())->where('user_id', $user->id)
