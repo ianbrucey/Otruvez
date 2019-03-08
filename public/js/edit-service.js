@@ -185,7 +185,8 @@ function ajaxPost(route, formDataObj, clearImageObj, featured = true) {
         error: function (xhr, status, msg) {
             loadingPhoto.hide();
             clearImage(clearImageObj);
-            sendWarning(featured ? xhr.responseJSON.featured_photo[0] : xhr.responseJSON.gallery_photos[0]);
+            sendWarning(xhr.responseJSON.msg);
+            // sendWarning(featured ? xhr.responseJSON.featured_photo[0] : xhr.responseJSON.gallery_photos[0]);
             $('.small-spinner').hide();
         },
         cache: false,
