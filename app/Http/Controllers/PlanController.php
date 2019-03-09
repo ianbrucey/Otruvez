@@ -117,11 +117,11 @@ class PlanController extends Controller
         $planIdentifier       = uniqid(sprintf("%u_%u",$businessId,Auth::id()));
         $useLimitMonth        = abs(intval($request->get('use_limit_month')));
         $useLimitYear         = abs(intval($request->get('use_limit_year')));
-        $limitInterval        = $this->getInterval($useLimitMonth, $useLimitYear); // which limit should you use? there can only be one.
+        $limitInterval        = $this->getInterval($useLimitMonth, $useLimitYear);
         $monthPrice           = $request->month_price * 100;
         $yearPrice            = $request->year_price * 100;
         $description          = $request->description;
-        $category             = $request->category;
+        $category             = $request->category; // this is stored as an int and the list is currently hardcoded in vendor/laravel/.../Support/helpers.php
         $intervals            = ['month','year'];
 
 
@@ -251,6 +251,14 @@ class PlanController extends Controller
                 }
                 $plan->featured_photo_path = $path;
                 $plan->save();
+
+                $this->updateEsIndex($plan, $this->esClient);
+
+                return Response::create([
+                    'msg' => sprintf("Upload successful"),
+                    'path' => $path
+                ], 200);
+
             } catch (Exception $e) {
                 $this->photoClient->unlink($path);
                 return Response::create([
@@ -258,12 +266,7 @@ class PlanController extends Controller
                 ], 400);
             }
 
-            $this->updateEsIndex($plan, $this->esClient);
 
-            return Response::create([
-                'msg' => sprintf("Upload successful"),
-                'path' => $path
-            ], 200);
         }
 
         return Response::create([

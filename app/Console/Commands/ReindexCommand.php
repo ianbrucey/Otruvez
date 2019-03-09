@@ -24,7 +24,7 @@ class ReindexCommand extends Command
 
     public function handle()
     {
-        // curl -XDELETE 'localhost:9200/plans?pretty'
+        shell_exec("curl -XDELETE 'localhost:9200/plans?pretty'");
         $this->output->write("building index.... \n");
         $this->buildPlanIndex(); // builds schema
         $this->output->write("index built \n");

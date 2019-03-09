@@ -166,6 +166,14 @@ $(document).find('.Button-animationWrapper-child--primary').on('click', function
 $(document).ready(function () {
 
 
+    $('#searchField').on('input', function () {
+        if(!$.isNumeric($('#lat').val()) || !$.isNumeric($('#lng').val())) {
+            sendWarning("oops! your location was not detected. please set it before searching");
+            document.getElementById('autocomplete').style.border = "3px solid red";
+        } else {
+            document.getElementById('autocomplete').style.border = "";
+        }
+    });
 
     // LOGIN VALIDATION
     $('.validate-login').validate({
@@ -695,4 +703,4 @@ $('#list-filter').on('keyup', function () {
         $('.filterable').parents('.filterable-containter').removeClass('hide');
     }
 
-})
+});
