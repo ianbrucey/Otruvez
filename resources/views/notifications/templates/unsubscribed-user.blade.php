@@ -1,4 +1,4 @@
-<h4>You've canceled your subscription to <span class="theme-color">{{$companyName}}</span>.</h4>
+<h4>We've canceled your subscription to <span class="theme-color">{{$companyName}}</span>.</h4>
 <hr>
 <ul style="width: 100%">
     <li>Subscription name: <h3>{{$serviceName}}</h3></li>

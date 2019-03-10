@@ -1338,6 +1338,19 @@ function logException(Exception $e) {
     return Bugsnag::notifyException($e);
 }
 
+function sanitizeRequest(\Illuminate\Http\Request $request) {
+    if(strtoupper($request->method()) == 'PUT' || strtoupper($request->method()) == 'POST') {
+        $skip = ['_method', '_token'];
+        $keys = array_keys($request->all());
+        foreach ($keys as $key) {
+            $value = in_array($key, $skip) ? $request->$key : htmlspecialchars($request->$key);
+            $request->merge([$key => $value]);
+        }
+        var_dump($request->all());
+    }
+}
+
+
 function getAuthedBusiness() {
     return Business::where('user_id', Auth::id())->first();
 }
@@ -1452,9 +1465,11 @@ function subtractStripeFees($pennies) {
 function secureUrl($str) {
     return env('APP_ENV') == 'prod' ? str_replace("http://","https://", $str) : $str;
 }
-const CUSTOMER_SERVICE_CONTACT_LIMIT = 5;
-const ALPHANUMERIC_DASH_SPACE_REGEX = 'regex:/^[a-zA-Z0-9\-\s]+$/';
-const ALPHANUMERIC_DASH_SPACE_DOT_REGEX = 'regex:/^[a-zA-Z0-9\-\s.]+$/';
+const CUSTOMER_SERVICE_CONTACT_LIMIT = 3;
+const ALPHANUMERIC_DASH_SPACE_REGEX = 'regex:/^[a-zA-Z0-9\-\s#]+$/';
+const ALPHANUMERIC_DASH_SPACE_DOT_REGEX = 'regex:/^[a-zA-Z0-9\-\s.#]+$/';
+const TITLE_NAME_REGEX =  'regex:/^[a-zA-Z0-9\-\s.,\'"_()#]+$/';
+const DESCRIPTION_REGEX = 'regex:/^[a-zA-Z0-9\-_\s.,\'"?:()$@!+=#]+$/';
 const HANDLE = 'regex:/^[a-zA-Z0-9\_.]+$/';
 const STRIPE_FLAT_FEE = 30;
 const STRIPE_PERCENT_FEE = .029;

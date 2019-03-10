@@ -53,7 +53,7 @@
                             {{removeLastWord($subscription->name)}}<br>
                             by {{"@".$plan->business->business_handle}}<br>
                             <p>{{$usesRemaining['usesRemaining'] == -1 ? '' : sprintf("You can use this subscription %s more %s this %s", $usesRemaining['usesRemaining'], $usesRemaining['usesRemaining'] > 1 ? 'times' : 'time', $usesRemaining['limitInterval']) }}</p>
-                            <form method="POST" id="delete-subscription-form-{{$subscription->id}}" action=/subscription/cancel/{{$subscription->id}}" style="display: inline-block" class="float-right">
+                            <form method="POST" id="delete-subscription-form-{{$subscription->id}}" action="/subscription/cancel/{{$subscription->id}}" style="display: inline-block" class="float-right">
                                 {{csrf_field()}}
                                 {{method_field("DELETE")}}
                                 <input type="hidden" name="is_business_account" value="0">

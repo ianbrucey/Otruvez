@@ -126,7 +126,6 @@
 
 @section('footer')
 
-    <script src="{{ baseUrlConcat('/js/index.js') }}"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.2.0/min/dropzone.min.js"></script>
     <script src="{{ baseUrlConcat('/js/dropzone-options.js') }}"></script>
     <script src="{{baseUrlConcat('/js/google-location/set-address.js')}}"></script>

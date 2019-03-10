@@ -40,11 +40,13 @@ class PlanController extends Controller
 
     private $photoClient;
 
-    public function __construct(Client $esClient)
+    public function __construct(Client $esClient, Request $request)
     {
         $this->middleware('auth');
         $this->esClient = $esClient;
         $this->photoClient = new AWSPhoto();
+        sanitizeRequest($request);
+
     }
 
     private function getSecretStripeKey()
@@ -74,7 +76,7 @@ class PlanController extends Controller
 
 
 //    public function storeAppPlansLocally() {
-        // this is for charging businesses to us otruvez. probably wont use this though
+    // this is for charging businesses to us otruvez. probably wont use this though
 //        /** @var \Stripe\Plan $plan */
 //            $query = Plan::insert([
 //                'stripe_plan_id' => 'sm_standard',
@@ -117,11 +119,11 @@ class PlanController extends Controller
         $planIdentifier       = uniqid(sprintf("%u_%u",$businessId,Auth::id()));
         $useLimitMonth        = abs(intval($request->get('use_limit_month')));
         $useLimitYear         = abs(intval($request->get('use_limit_year')));
-        $limitInterval        = $this->getInterval($useLimitMonth, $useLimitYear); // which limit should you use? there can only be one.
+        $limitInterval        = $this->getInterval($useLimitMonth, $useLimitYear);
         $monthPrice           = $request->month_price * 100;
         $yearPrice            = $request->year_price * 100;
         $description          = $request->description;
-        $category             = $request->category;
+        $category             = $request->category; // this is stored as an int and the list is currently hardcoded in vendor/laravel/.../Support/helpers.php
         $intervals            = ['month','year'];
 
 
@@ -157,7 +159,7 @@ class PlanController extends Controller
                     }
                 }
 
-                logException($e);
+                Bugsnag::notifyException($e);
                 return redirect('/plan/managePlans')->with('successMessage',"We apologize, we are having technical difficulties. Please contact us about your issue");
             }
 
@@ -193,7 +195,7 @@ class PlanController extends Controller
                 }
             }
 
-            logException($ex);
+            Bugsnag::notifyException($ex);
             return redirect('/plan/managePlans')->with('successMessage',"We apologize, we are having technical difficulties. Please contact us about your issue");
         }
 
@@ -209,7 +211,7 @@ class PlanController extends Controller
                 }
             }
         } catch (Exception $e) {
-            logException($e);
+            Bugsnag::notifyException($e);
             $msg .= " Warning: there was a problem with one or more of your uploads";
         }
 
@@ -241,31 +243,32 @@ class PlanController extends Controller
                 'featured_photo'    => 'required|image'
             ]);
 
-
+            $photo = $file ?: $request->file('featured_photo');
+            (new ImageManager())->make($photo->path())->orientate()->save($photo->path()); // orients the photo and saves it back to the temporary file path before storing$photo
+            $path = $this->photoClient->store($photo, S3FolderTypes::PLAN_FEATURED_PHOTO);
             try {
-                $photo = $file ?: $request->file('featured_photo');
-                (new ImageManager())->make($photo->path())->orientate()->save($photo->path()); // orients the photo and saves it back to the temporary file path before storing$photo
-                $path = $this->photoClient->store($photo, S3FolderTypes::PLAN_FEATURED_PHOTO);
                 $plan = Plan::where('user_id', Auth::id())->where('id',$id)->first();
                 if ($plan->featured_photo_path) {
                     $this->photoClient->unlink(getFullPathToImage($plan->featured_photo_path));
                 }
                 $plan->featured_photo_path = $path;
                 $plan->save();
+
+                $this->updateEsIndex($plan, $this->esClient);
+
+                return Response::create([
+                    'msg' => sprintf("Upload successful"),
+                    'path' => $path
+                ], 200);
+
             } catch (Exception $e) {
-                logException($e);
                 $this->photoClient->unlink($path);
                 return Response::create([
                     'msg' => sprintf("Upload failed: %s", $e->getMessage())
                 ], 400);
             }
 
-            $this->updateEsIndex($plan, $this->esClient);
 
-            return Response::create([
-                'msg' => sprintf("Upload successful"),
-                'path' => $path
-            ], 200);
         }
 
         return Response::create([
@@ -304,21 +307,21 @@ class PlanController extends Controller
 
 
         try {
-                (new ImageManager())->make($photo->path())->orientate()->save($photo->path()); // orients the photo and saves it back to the temporary file path before storing
-                $path = $this->photoClient->store($photo, S3FolderTypes::PLAN_GALLERY_PHOTO);
+            (new ImageManager())->make($photo->path())->orientate()->save($photo->path()); // orients the photo and saves it back to the temporary file path before storing
+            $path = $this->photoClient->store($photo, S3FolderTypes::PLAN_GALLERY_PHOTO);
 
-                $newPhoto = Photo::create([
-                    'plan_id'   => $plan->id,
-                    'user_id'   => Auth::id(),
-                    'type'      => self::PHOTO_TYPE,
-                    'path'      => $path
-                ]);
+            $newPhoto = Photo::create([
+                'plan_id'   => $plan->id,
+                'user_id'   => Auth::id(),
+                'type'      => self::PHOTO_TYPE,
+                'path'      => $path
+            ]);
 
-                return Response::create([
-                    'path'          => getImage($path),
-                    'deleteRoute'   => sprintf("/plan/galleryPhoto/%s",$newPhoto->id),
-                    'msg'           => 'upload successful'
-                ], 200);
+            return Response::create([
+                'path'          => getImage($path),
+                'deleteRoute'   => sprintf("/plan/galleryPhoto/%s",$newPhoto->id),
+                'msg'           => 'upload successful'
+            ], 200);
 
         } catch (Exception $e) {
             $this->photoClient->unlink($path);
@@ -335,22 +338,22 @@ class PlanController extends Controller
             'stripe_plan_name'   => 'required',
             'description'        => 'required'
         ]);
-        $smPlan = Plan::where('user_id', Auth::id())->where('id',$id)->first();
+        $otruvezPlan = Plan::where('user_id', Auth::id())->where('id',$id)->first();
 
-        noEntityAbort($smPlan,404);
+        noEntityAbort($otruvezPlan,404);
 
-        $business   = $smPlan->business;
+        $business   = $otruvezPlan->business;
         $data       = [
-            'oldName'           => $smPlan->stripe_plan_name,
-            'oldDescription'    => $smPlan->description,
+            'oldName'           => $otruvezPlan->stripe_plan_name,
+            'oldDescription'    => $otruvezPlan->description,
         ];
 
         try {
-            $this->updateEsIndex($smPlan, $this->esClient);
+            $this->updateEsIndex($otruvezPlan, $this->esClient);
             // may need to update the use limits
-            $smPlan->stripe_plan_name   = $request->stripe_plan_name;
-            $smPlan->description        = $request->description;
-            $smPlan->save();
+            $otruvezPlan->stripe_plan_name   = $request->stripe_plan_name;
+            $otruvezPlan->description        = $request->description;
+            $otruvezPlan->save();
             $subscriptions              = Subscription::where('plan_id', $id)->get();
             $notification               = new Notification();
             if($subscriptions) {
@@ -376,10 +379,10 @@ class PlanController extends Controller
     public function deletePlan(Request $request, $id)
     {
         // in the future, i'd like to obfuscate the plan id to prevent data mining
-        $smPlan = Plan::where('user_id', Auth::id())->where('id',$id)->first();
-        noEntityAbort($smPlan,404);
-        $business = $smPlan->business;
-        $planName = $smPlan->stripe_plan_name;
+        $otruvezPlan = Plan::where('user_id', Auth::id())->where('id',$id)->first();
+        noEntityAbort($otruvezPlan,404);
+        $business = $otruvezPlan->business;
+        $planName = $otruvezPlan->stripe_plan_name;
         $subscriptions = Subscription::where('plan_id', $id)->get();
         $notification         = new Notification();
         if($subscriptions) {
@@ -392,7 +395,7 @@ class PlanController extends Controller
                 }
                 $data = [
                     'subscription'  => $subscription,
-                    'plan'          => $smPlan,
+                    'plan'          => $otruvezPlan,
                     'business'      => $business,
                 ];
                 $data['refundStatus'] = Subscription::getRefundStatusAndAmount($subscription);
@@ -403,16 +406,16 @@ class PlanController extends Controller
 
 
         try {
-            if ($smPlan && $smPlan->user_id != Auth::id()) {
+            if ($otruvezPlan && $otruvezPlan->user_id != Auth::id()) {
                 return redirect("/plan/managePlans")->with('errorMessage', 'YOU ARE NOT AUTHORIZED TO DO THIS! PLEASE DON\'T!');
             }
 
-            if (!$smPlan->delete()) {
+            if (!$otruvezPlan->delete()) {
                 return redirect("/plan/managePlans")->with('warningMessage', "There was a problem. Please try again");
             }
 
             Subscription::where('plan_id', $id)->delete();
-            $planId = $smPlan->stripe_plan_id;
+            $planId = $otruvezPlan->stripe_plan_id;
         } catch (Exception $e) {
             logException($e);
         }

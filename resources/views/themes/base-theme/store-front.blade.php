@@ -63,7 +63,7 @@
 
                       </div>
                       <div class="card-body">
-                        <h4 class="card-title"><a href="">{{$plan->stripe_plan_name}}</a></h4>
+                        <h4 class="card-title"><a href="">{{html_entity_decode($plan->stripe_plan_name)}}</a></h4>
                         <ul class="list-inline product-meta">
                           <li class="list-inline-item">
                             <a href=""><i class="fa fa-briefcase"></i>{{$plan->business['name']}}</a>

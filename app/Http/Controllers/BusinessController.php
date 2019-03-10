@@ -37,16 +37,13 @@ class BusinessController extends Controller
         $this->es = $esClient;
     }
     private $es;
-    private $failMessage = "The business you requested does not exist";
-    private $businessPhotoPath = 'public/images/business';
-    private $businessLogoPath = 'public/images/business/logos';
     private $photoClient;
     private $validationRules = [
-        'name'            => 'required|'.ALPHANUMERIC_DASH_SPACE_REGEX,
+        'name'            => 'required|'.TITLE_NAME_REGEX,
         'business_handle' => 'required|'.HANDLE, // needs to be digits and underscores only also no spaces
         'email'           => 'required|email',
         'phone'           => 'nullable|numeric',
-        'description'     => 'required',
+        'description'     => 'required|'.DESCRIPTION_REGEX,
         'redirect_to'     => 'nullable|url',
 
     ];
@@ -54,7 +51,7 @@ class BusinessController extends Controller
     private $updateValidationRules = [
         'email'           => 'required|email',
         'phone'           => 'nullable|numeric',
-        'description'     => 'required',
+        'description'     => 'required'.DESCRIPTION_REGEX,
         'redirect_to'     => 'nullable|url',
     ];
 
@@ -285,12 +282,12 @@ class BusinessController extends Controller
 
     public function createBusiness(Request $request) // maybe an are you sure button? some info will not be editable for customer protection
     {
-        $this->validate($request,$this->validationRules);
 
-        /** @var User $user */
-        $user = Auth::user();
             try {
+                $this->validate($request,$this->validationRules);
 
+                /** @var User $user */
+                $user = Auth::user();
                 $request = $this->formatRedirectToField($request);
                 $newBusiness = new Business($request->all());
                 $newBusiness->user_id = Auth::id();
@@ -304,8 +301,9 @@ class BusinessController extends Controller
                 $message = "Business creation was successful";
 
                 // send email to business
-            } catch (Exception $e) {
+            } catch (\Exception $e) {
                 $message = $e->getMessage();
+                return redirect('/business/manageBusiness')->with('errorMessage', $message);
             }
 
         return redirect('/business')->with('successMessage', $message);
@@ -357,7 +355,7 @@ class BusinessController extends Controller
     public function showSubscribers(){
         $business = getAuthedBusiness();
         noEntityAbort($business, 403);
-        $subscribers = DB::table('users')->join('subscriptions','users.id','=','subscriptions.user_id')->whereIn('users.id', (new \App\Subscription())->where('business_id', $business->id)->pluck('user_id'))->get();
+        $subscribers = DB::table('users')->crossJoin('subscriptions','users.id','=','subscriptions.user_id')->whereIn('users.id', (new \App\Subscription())->where('business_id', $business->id)->pluck('user_id'))->get();
         // maybe also get common
 //        var_dump($subscribers); die();
         return view('business.active-subscribers')->with('subscribers', $subscribers);

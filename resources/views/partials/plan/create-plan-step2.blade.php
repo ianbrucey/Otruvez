@@ -18,7 +18,7 @@
                         </select>
                         <hr>
                         <label>Plan Name</label>
-                        <input type="text" name="stripe_plan_name" class="form-control" placeholder="Plan Name">
+                        <input type="text" name="stripe_plan_name" class="form-control" placeholder="Plan Name" value="{{old('stripe_plan_name')}}">
 
                         <hr>
                         <label>
@@ -30,9 +30,9 @@
                             customers of the coming update and to then create a new plan to replace the old one.
                         </p>
                         <label>Monthly Price</label>
-                        <input type="number" name="month_price" id="month_price" class="form-control" placeholder="Monthly Price">
+                        <input type="number" name="month_price" id="month_price" class="form-control" placeholder="Monthly Price" value="{{old('month_price')}}">
                         <label>Annual Price</label>
-                        <input type="number" name="year_price" id="year_price" class="form-control" placeholder="Annual Price">
+                        <input type="number" name="year_price" id="year_price" class="form-control" placeholder="Annual Price" value="{{old('year_price')}}">
 
 
 
@@ -43,10 +43,10 @@
                         <div class="row" >
 
                             <div class="col-1 pt-2">
-                                <input type="radio" name="which_usage_interval" class="which_usage_interval" data-input="#use_limit_month" data-input-other="#use_limit_year" data-label="#ulm-label" data-label-other="#uly-label" checked>
+                                <input type="radio" name="which_usage_interval" class="which_usage_interval" data-input="#use_limit_month" data-input-other="#use_limit_year" data-label="#ulm-label" data-label-other="#uly-label" checked >
                             </div>
                             <div class="col-3">
-                                <input type="number" min="0" name="use_limit_month" id="use_limit_month" class="form-control" placeholder="#">
+                                <input type="number" min="0" name="use_limit_month" id="use_limit_month" class="form-control" placeholder="#" value="{{old('use_limit_month')}}">
                             </div>
                             <div class="col-8 pt-3">
                                 <h4 class="theme-color" id="ulm-label">times a month</h4>
@@ -60,7 +60,7 @@
                                 <input type="radio" name="which_usage_interval" class="which_usage_interval" data-input="#use_limit_year" data-input-other="#use_limit_month" data-label="#uly-label" data-label-other="#ulm-label">
                             </div>
                             <div class="col-3">
-                                <input type="number" min="0" name="use_limit_year" id="use_limit_year" class="form-control" placeholder="#" disabled="">
+                                <input type="number" min="0" name="use_limit_year" id="use_limit_year" class="form-control" placeholder="#" disabled="" value="{{old('use_limit_year')}}">
                             </div>
                             <div class="col-8 pt-3">
                                 <h4 style="color: lightgrey" id="uly-label">times a year</h4>
@@ -70,7 +70,7 @@
                         <hr style="color: {{getThemeColorValue()}}">
 
                         <label>Service Description</label>
-                        <textarea name="description" class="form-control" placeholder="Service Description here..."></textarea>
+                        <textarea name="description" class="form-control" placeholder="Service Description here...">{{old('description')}}</textarea>
                         <hr>
                         {{csrf_field()}}
                     </div>
