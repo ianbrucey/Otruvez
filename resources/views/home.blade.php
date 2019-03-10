@@ -26,7 +26,6 @@
     <script src="{{baseUrlConcat('/js/google-location/set-address.js')}}"></script>
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCgE-TwAg_-s8NzBqtdJtkMVlQ86Qf9nho&libraries=places&callback=initAutocompleteCities"
             async defer></script>
-<script src="{{baseUrlConcat('/js/index.js')}}"></script>
 <script>
     $(window).keydown(function(event){
         if(event.keyCode === 13) {

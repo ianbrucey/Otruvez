@@ -43,7 +43,7 @@ $intervals = ['month','year'];
                     </div>
                     <div class="card-body">
                         <h4>Description</h4>
-                        <p class="card-text">{{$plan->description}}</p>
+                        <p class="card-text">{{html_entity_decode($plan->description)}}</p>
                         <hr>
                         <h5>Usage Limit:</h5>
                         <p class="card-text theme-color"><strong>{{getUseLimitString($plan)}}</strong></p>
@@ -123,6 +123,7 @@ $intervals = ['month','year'];
                                                 data-name="{{$plan->stripe_plan_name}} {{strtoupper($interval)}}"
                                                 data-description="For plan: {{$plan->stripe_plan_id}}_{{$interval}}"
                                                 data-image="{{ $haslogo ? getImage($business->logo_path) : ''}}"
+                                                data-email="{{ \Illuminate\Support\Facades\Auth::user()->email}}"
                                                 data-locale="auto">
                                         </script>
                                         <input type="hidden" name="apiKey" value="{{$apiKey}}">

@@ -67,7 +67,7 @@
 
                             </div>
                             <div class="card-body">
-                                <h4 class="card-title search-card-title">{{ truncateCardTitle($plan->stripe_plan_name) }}</h4>
+                                <h4 class="card-title search-card-title">{{ truncateCardTitle(html_entity_decode($plan->stripe_plan_name)) }}</h4>
                                 <ul class="list-inline product-meta">
                                     <li class="list-inline-item">
                                         <a href=""><i class="fa fa-briefcase"></i><span class="theme-color">{{"@".$plan->business['business_handle']}}</span></a>
@@ -117,7 +117,6 @@
     <script src="{{baseUrlConcat('/js/google-location/set-address.js')}}"></script>
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCgE-TwAg_-s8NzBqtdJtkMVlQ86Qf9nho&libraries=places&callback=initAutocompleteCities"
             async defer></script>
-    <script src="{{baseUrlConcat('/js/index.js')}}"></script>
     <script>
         $(window).keydown(function(event){
             if(event.keyCode === 13) {

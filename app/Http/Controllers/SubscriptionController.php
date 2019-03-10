@@ -141,16 +141,17 @@ class SubscriptionController extends Controller
 
     public function cancelSubscription(Request $request, $subscriptionId)
     {
-        /** @var User $user */
-        setStripeApiKey("secret");
-        $user               = Auth::user();
-        $localSubscription  = Subscription::find($subscriptionId);
-        $business           = Business::find($localSubscription->business_id);
-        Notification::where('subscription_id',$subscriptionId)->delete();
-
         try {
+            /** @var User $user */
+            setStripeApiKey("secret");
+            $user               = Auth::user();
+            $localSubscription  = Subscription::find($subscriptionId);
+            $business           = Business::find($localSubscription->business_id);
+            Notification::where('subscription_id',$subscriptionId)->delete();
+
             $stripeSubscription = \Stripe\Subscription::retrieve($localSubscription->stripe_id);
         } catch (Exception $e) {
+            logException($e);
             return redirect()->back()->with("errorMessage", "There was a problem canceling your subscription. please try again or contact customer service {$localSubscription->stripe_id} {$subscriptionId}");
         }
 

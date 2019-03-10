@@ -91,7 +91,6 @@ function triggerTargetSubmit(e, obj, ajaxSubmit) {
             return;
         }
         $('#submitting').fadeIn(500);
-        let currentLocation = window.location.href;
         let postdata    = form.serialize();
         let url         = form.attr('action');
         $.post(url, postdata);
@@ -179,14 +178,13 @@ $(document).ready(function () {
     $('.validate-login').validate({
         rules: {
             email: {
+                email: true,
                 required: true,
-                email: true
             },
             password: {
-                required: true,
+                password: true,
                 minlength: 8,
-                password: true
-
+                required: true,
             }
         },
         invalidHandler: function(event, validator) {
@@ -213,27 +211,30 @@ $(document).ready(function () {
     $('.validate-register').validate({
         rules: {
             first: {
+                lettersonly: true,
                 required: true,
-                lettersonly: true
-
             },
             last: {
+                lettersonly: true,
                 required: true,
-                lettersonly: true
             },
             email: {
+                email: true,
                 required: true,
-                email: true
             },
             password: {
-                required: true,
+                password: true,
                 minlength: 8,
-                password: true
+                required: true,
+
+
             },
             password_confirmation: {
-                required: true,
+                password: true,
                 minlength: 8,
-                password: true
+                required: true,
+
+
             }
         },
         invalidHandler: function(event, validator) {
@@ -262,12 +263,13 @@ $(document).ready(function () {
                 email: true
             },
             subject: {
-                required: true,
                 minlength: 3,
+                required: true,
+
             },
             body: {
-                required: true,
                 minlength: 10,
+                required: true,
             }
         },
         invalidHandler: function(event, validator) {
@@ -292,56 +294,56 @@ $(document).ready(function () {
     $('.validate-create-business').validate({
         rules: {
             name: {
-                required: true,
+                titleNameRegex: true,
                 minlength: 3,
-                alphaNumericSpace: true
+                required: true,
             },
             choose_business_handle: {
-                required: true,
+                handle: true,
                 minlength: 2,
-                handle: true
+                required: true
             },
             email: {
-                required: true,
                 email: true,
-                minlength: 10
+                required: true,
             },
             phone: {
-                required: false,
+                phoneUS: true,
                 minlength: 10,
-                phoneUS: true
+                required: false,
             },
             description: {
-                required: true,
+                descriptionRegex: true,
                 minlength: 10,
+                required: true,
             },
             monday: {
-                required: false,
-                alphaNumericSpace: true
+                handle: true,
+                required: false
             },
             tuesday: {
-                required: false,
-                alphaNumericSpace: true
+                handle: true,
+                required: false
             },
             wednesday: {
-                required: false,
-                alphaNumericSpace: true
+                handle: true,
+                required: false
             },
             thursday: {
-                required: false,
-                alphaNumericSpace: true
+                handle: true,
+                required: false
             },
             friday: {
-                required: false,
-                alphaNumericSpace: true
+                handle: true,
+                required: false
             },
             saturday: {
-                required: false,
-                alphaNumericSpace: true
+                handle: true,
+                required: false
             },
             sunday: {
-                required: false,
-                alphaNumericSpace: true
+                handle: true,
+                required: false
             }
         },
         invalidHandler: function(event, validator) {
@@ -380,12 +382,12 @@ $(document).ready(function () {
     $('.validate-create-service').validate({
         rules: {
             stripe_plan_name: {
-                required: true,
-                alphaNumericSpace: true
+                titleNameRegex: true,
+                required: true
             },
             service_category: {
+                digits: true, // uses a key value pair
                 required: true,
-                digits: true
             },
             month_price: {
                 digits: true,
@@ -402,8 +404,9 @@ $(document).ready(function () {
                 required: false
             },
             description: {
-                required: true,
+                descriptionRegex: true,
                 minlength: 10,
+                required: true,
             }
         },
         invalidHandler: function(event, validator) {
@@ -443,14 +446,12 @@ $(document).ready(function () {
     $('.validate-edit-plan').validate({
         rules: {
             stripe_plan_name: {
+                minlength: 3,
                 required: true,
-                minlength: 3
-
             },
             description: {
-                required: true,
                 minlength: 10,
-
+                required: true,
             }
         },
         invalidHandler: function(event, validator) {
@@ -576,16 +577,36 @@ $(document).ready(function () {
         }
     });
 
-    $.validator.addMethod("alphaNumericSpace", function(value, element) {
-        return this.optional(element) || /^[a-z0-9\-\s.]+$/i.test(value);
-    }, "field must contain only letters, numbers, or dashes.");
+    $.validator.addMethod("descriptionRegex", function(value, element) {
+        let valid = this.optional(element) || /^[a-zA-Z0-9\-_\s.,'"?:()$@!+=#]+$/i.test(value);
+        if(!valid) {
+            $(element).focus();
+        }
+        return valid;
+    }, "Invalid character detected, please remove to continue");
+
+    $.validator.addMethod("titleNameRegex", function(value, element) {
+        let valid = this.optional(element) || /^[a-zA-Z0-9\-\s.,'"_()#]+$/i.test(value);
+        if(!valid) {
+            $(element).focus();
+        }
+        return valid;
+    }, "Invalid character detected, please remove to continue");
 
     $.validator.addMethod("handle", function(value, element) {
-        return this.optional(element) || /^[a-z0-9_\s.]+$/i.test(value);
+        let valid = this.optional(element) || /^[a-zA-Z0-9\-_\s.]+$/i.test(value);
+        if(!valid) {
+            $(element).focus();
+        }
+        return valid;
     }, "field must contain only letters, numbers, periods or underscores.");
 
     $.validator.addMethod("password", function(value, element) {
-        return this.optional(element) || /^(?=.*[\d])(?=.*[A-Z])(?=.*[a-z])(?=.*[!@#$%^&*])[\w!@#$%^&*]{8,}$/i.test(value);
+        let valid = this.optional(element) || /^(?=.*[\d])(?=.*[A-Z])(?=.*[a-z])(?=.*[!@#$%^&*])[\w!@#$%^&*]{8,}$/i.test(value);
+        if(!valid) {
+            $(element).focus();
+        }
+        return valid;
     }, "Your password does not meet our requirements");
 
 });

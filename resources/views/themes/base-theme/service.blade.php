@@ -16,7 +16,7 @@ $intervals = ['month','year'];
             <div class="col-lg-9">
 
                 <div class="card mt-4 no-shadow">
-                    <h1 class="product-title">{{$plan->stripe_plan_name}}</h1>
+                    <h1 class="product-title">{{html_entity_decode($plan->stripe_plan_name)}}</h1>
                     <div class="product-meta">
                         <ul class="list-inline">
                             <li class="list-inline-item"><i class="fa fa-user-o"></i> By <a href="">{{$business->name}}</a></li>
@@ -43,7 +43,7 @@ $intervals = ['month','year'];
                     </div>
                     <div class="card-body">
                         <h4>Description</h4>
-                        <p class="card-text">{{$plan->description}}</p>
+                        <p class="card-text">{{html_entity_decode($plan->description)}}</p>
                         <hr>
                         <h5>Usage Limit:</h5>
                         <p class="card-text theme-color"><strong>{{getUseLimitString($plan)}}</strong></p>
@@ -128,7 +128,7 @@ $intervals = ['month','year'];
                                                     src="https://checkout.stripe.com/checkout.js" class="stripe-button"
                                                     data-key="{{$publicStripeKey}}"
                                                     data-amount="{{$interval == 'month' ? $plan->month_price : $plan->year_price}}"
-                                                    data-name="{{$plan->stripe_plan_name}} {{strtoupper($interval)}}"
+                                                    data-name="{{html_entity_decode($plan->stripe_plan_name)}} {{strtoupper($interval)}}"
                                                     data-description="For plan: {{$plan->stripe_plan_id}}_{{$interval}}"
                                                     data-image="{{ $haslogo ? getImage($business->logo_path) : ''}}"
                                                     data-email="{{\Illuminate\Support\Facades\Auth::user()->email}}"
@@ -136,7 +136,7 @@ $intervals = ['month','year'];
                                             </script>
                                             <input type="hidden" name="plan_id" value="{{$plan->id}}">
                                             <input type="hidden" name="stripe_plan_id" value="{{$plan->stripe_plan_id}}_{{$interval}}">
-                                            <input type="hidden" name="stripe_plan_name" value="{{$plan->stripe_plan_name}} {{strtoupper($interval)}}">
+                                            <input type="hidden" name="stripe_plan_name" value="{{html_entity_decode($plan->stripe_plan_name)}} {{strtoupper($interval)}}">
                                             <input type="hidden" name="is_app_plan" value="{{$plan->is_app_plan}}">
                                             <input type="hidden" name="business_id" value="{{$plan->business_id}}">
                                             <input type="hidden" name="price" value="{{$interval == 'month' ? $plan->month_price : $plan->year_price}}">

@@ -40,11 +40,13 @@ class PlanController extends Controller
 
     private $photoClient;
 
-    public function __construct(Client $esClient)
+    public function __construct(Client $esClient, Request $request)
     {
         $this->middleware('auth');
         $this->esClient = $esClient;
         $this->photoClient = new AWSPhoto();
+        sanitizeRequest($request);
+
     }
 
     private function getSecretStripeKey()
