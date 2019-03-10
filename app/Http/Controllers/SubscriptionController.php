@@ -78,7 +78,7 @@ class SubscriptionController extends Controller
         $stripeToken    = $request->stripeToken;
         $planName       = $request->stripe_plan_name;
         $planIdentifier = $request->stripe_plan_id;
-        $smPlanId       = $request->plan_id;
+        $otruvezPlanId       = $request->plan_id;
         $businessId     = $request->business_id;
         $isAppPlan      = $request->is_app_plan;
         $price          = $request->price;
@@ -94,7 +94,7 @@ class SubscriptionController extends Controller
         $newStripeSubscription->business_id         = $businessId;
         $newStripeSubscription->price               = $price;
         $newStripeSubscription->o_interval         = $interval;
-        $newStripeSubscription->plan_id             = $smPlanId;
+        $newStripeSubscription->plan_id             = $otruvezPlanId;
         $newStripeSubscription->save();
 
         if($isAppPlan) {
@@ -104,7 +104,7 @@ class SubscriptionController extends Controller
         $business = Business::find($businessId);
         (new Notification())->sendSubscribedUserNotification($user,$business, $newStripeSubscription);
 
-        if($request->has('apiKey') && validatePortalParams($businessId, $smPlanId, $request->get('apiKey')) != null) {
+        if($request->has('apiKey') && validatePortalParams($businessId, $otruvezPlanId, $request->get('apiKey')) != null) {
             return redirect()->to("/account/mysubscriptions/$businessId");
         }
 
@@ -141,18 +141,34 @@ class SubscriptionController extends Controller
 
     public function cancelSubscription(Request $request, $subscriptionId)
     {
+        setStripeApiKey("secret");
+        $localSubscription  = Subscription::find($subscriptionId);
+        $user               = User::find($localSubscription->user_id);
+        $business           = Business::find($localSubscription->business_id);
+        $refundMsg          = '';
         try {
             /** @var User $user */
-            setStripeApiKey("secret");
-            $user               = Auth::user();
-            $localSubscription  = Subscription::find($subscriptionId);
-            $business           = Business::find($localSubscription->business_id);
+
+            if($user->id == Auth::id() || $business->user_id == Auth::id()) {
+                // if condition passes, we know that the user either owns or created the subscription and we're ok to go on
+                if($business->user_id == Auth::id()) {
+                    $refund = Subscription::getRefundStatusAndAmount($localSubscription);
+                    if($refund['amount']) {
+                        $refundMsg = sprintf("A refund of %s was issued to the customer", $refund['amount']);
+                        $data['subject']    = "Refund Notice";
+                        $data['body']       = sprintf("You will be issued a refund of %s in 2 to 3 business days. If there is an issue, please contact Otruvez Support at otruvez@gmail.com", $refund['amount']);
+                        (new Notification())->sendMessageToCustomersNotification($business, $localSubscription, $data);
+                    }
+                }
+            } else {
+                abort(403,"You are not authorized to make this request homie.");
+            }
             Notification::where('subscription_id',$subscriptionId)->delete();
 
             $stripeSubscription = \Stripe\Subscription::retrieve($localSubscription->stripe_id);
         } catch (Exception $e) {
             logException($e);
-            return redirect()->back()->with("errorMessage", "There was a problem canceling your subscription. please try again or contact customer service {$localSubscription->stripe_id} {$subscriptionId}");
+            return redirect()->back()->with("errorMessage", "There was a problem canceling your subscription. please try again or contact customer service {$localSubscription->stripe_id} {$subscriptionId} {$e->getMessage()}");
         }
 
         (new Notification())->sendUnsubscribedUserNotification($user,$business, $localSubscription);
@@ -160,21 +176,22 @@ class SubscriptionController extends Controller
         try {
             $stripeSubscription->cancel(); // need a catch here
         } catch (Exception $e) {
-            return redirect("/account/mysubscriptions")->with('warningMessage',"There was a problem deleting the service because it may no longer exist. please contact support with the following id if problems persist: {$localSubscription->stripe_id}");
+            logException($e);
+//            return redirect()->back()->with('warningMessage',"There was a problem deleting the service because it may no longer exist. please contact support with the following id if problems persist: {$localSubscription->stripe_id}");
         }
 
 
 
-        $isBusinessAcoount    = $request->is_business_account;
+        $isBusinessAccount = isset($request->is_business_account) ? $request->is_business_account : "0";
 
-        if($isBusinessAcoount) {
+        if($isBusinessAccount) {
             $user->business_account      = "0";
             $user->business_account_plan = null;
             $user->subscription_id       = null;
             $user->save();
         }
 
-        return redirect()->back()->with("successMessage", "Subscription cancelled Successfully");
+        return redirect()->back()->with("successMessage", "Subscription cancelled Successfully. $refundMsg");
 
     }
 

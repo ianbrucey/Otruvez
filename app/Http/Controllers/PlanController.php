@@ -338,22 +338,22 @@ class PlanController extends Controller
             'stripe_plan_name'   => 'required',
             'description'        => 'required'
         ]);
-        $smPlan = Plan::where('user_id', Auth::id())->where('id',$id)->first();
+        $otruvezPlan = Plan::where('user_id', Auth::id())->where('id',$id)->first();
 
-        noEntityAbort($smPlan,404);
+        noEntityAbort($otruvezPlan,404);
 
-        $business   = $smPlan->business;
+        $business   = $otruvezPlan->business;
         $data       = [
-            'oldName'           => $smPlan->stripe_plan_name,
-            'oldDescription'    => $smPlan->description,
+            'oldName'           => $otruvezPlan->stripe_plan_name,
+            'oldDescription'    => $otruvezPlan->description,
         ];
 
         try {
-            $this->updateEsIndex($smPlan, $this->esClient);
+            $this->updateEsIndex($otruvezPlan, $this->esClient);
             // may need to update the use limits
-            $smPlan->stripe_plan_name   = $request->stripe_plan_name;
-            $smPlan->description        = $request->description;
-            $smPlan->save();
+            $otruvezPlan->stripe_plan_name   = $request->stripe_plan_name;
+            $otruvezPlan->description        = $request->description;
+            $otruvezPlan->save();
             $subscriptions              = Subscription::where('plan_id', $id)->get();
             $notification               = new Notification();
             if($subscriptions) {
@@ -379,10 +379,10 @@ class PlanController extends Controller
     public function deletePlan(Request $request, $id)
     {
         // in the future, i'd like to obfuscate the plan id to prevent data mining
-        $smPlan = Plan::where('user_id', Auth::id())->where('id',$id)->first();
-        noEntityAbort($smPlan,404);
-        $business = $smPlan->business;
-        $planName = $smPlan->stripe_plan_name;
+        $otruvezPlan = Plan::where('user_id', Auth::id())->where('id',$id)->first();
+        noEntityAbort($otruvezPlan,404);
+        $business = $otruvezPlan->business;
+        $planName = $otruvezPlan->stripe_plan_name;
         $subscriptions = Subscription::where('plan_id', $id)->get();
         $notification         = new Notification();
         if($subscriptions) {
@@ -395,7 +395,7 @@ class PlanController extends Controller
                 }
                 $data = [
                     'subscription'  => $subscription,
-                    'plan'          => $smPlan,
+                    'plan'          => $otruvezPlan,
                     'business'      => $business,
                 ];
                 $data['refundStatus'] = Subscription::getRefundStatusAndAmount($subscription);
@@ -406,16 +406,16 @@ class PlanController extends Controller
 
 
         try {
-            if ($smPlan && $smPlan->user_id != Auth::id()) {
+            if ($otruvezPlan && $otruvezPlan->user_id != Auth::id()) {
                 return redirect("/plan/managePlans")->with('errorMessage', 'YOU ARE NOT AUTHORIZED TO DO THIS! PLEASE DON\'T!');
             }
 
-            if (!$smPlan->delete()) {
+            if (!$otruvezPlan->delete()) {
                 return redirect("/plan/managePlans")->with('warningMessage', "There was a problem. Please try again");
             }
 
             Subscription::where('plan_id', $id)->delete();
-            $planId = $smPlan->stripe_plan_id;
+            $planId = $otruvezPlan->stripe_plan_id;
         } catch (Exception $e) {
             logException($e);
         }

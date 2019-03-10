@@ -140,7 +140,7 @@ function cancelSubscription(e, obj) {
     $.confirm({
         icon: 'fa fa-warning text-danger',
         title: 'Are you sure?',
-        content: 'Do you want to delete your subscription: "' + $(obj).attr("data-subscription-name") + '"',
+        content: 'Do you want to delete this subscription?',
         buttons: {
             delete: {
                 btnClass: 'btn-danger',

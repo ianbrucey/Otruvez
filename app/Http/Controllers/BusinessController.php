@@ -355,7 +355,7 @@ class BusinessController extends Controller
     public function showSubscribers(){
         $business = getAuthedBusiness();
         noEntityAbort($business, 403);
-        $subscribers = DB::table('users')->join('subscriptions','users.id','=','subscriptions.user_id')->whereIn('users.id', (new \App\Subscription())->where('business_id', $business->id)->pluck('user_id'))->get();
+        $subscribers = DB::table('users')->crossJoin('subscriptions','users.id','=','subscriptions.user_id')->whereIn('users.id', (new \App\Subscription())->where('business_id', $business->id)->pluck('user_id'))->get();
         // maybe also get common
 //        var_dump($subscribers); die();
         return view('business.active-subscribers')->with('subscribers', $subscribers);
