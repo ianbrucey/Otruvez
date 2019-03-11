@@ -33,7 +33,7 @@ class NotifyBusinessModification extends Mailable
     public function build()
     {
         $url = getAccountNotificationsUrl();
-        return $this->markdown('emails.account.notify-Business-modification')->with([
+        return $this->markdown('emails.account.notify-business-modification')->with([
             'business'  => $this->business,
             'url'       => $url
         ]);
