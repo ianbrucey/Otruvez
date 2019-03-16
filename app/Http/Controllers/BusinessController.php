@@ -51,7 +51,7 @@ class BusinessController extends Controller
     private $updateValidationRules = [
         'email'           => 'required|email',
         'phone'           => 'nullable|numeric',
-        'description'     => 'required'.DESCRIPTION_REGEX,
+        'description'     => 'required|'.DESCRIPTION_REGEX,
         'redirect_to'     => 'nullable|url',
     ];
 
