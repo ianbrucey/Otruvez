@@ -22,7 +22,7 @@
 
                         <hr>
                         <label>
-                            <a data-toggle="collapse" data-target="#pricing-info" id="#pricing-info" class="text-danger">*Pricing is final. At least one price required*<br> click here for more info</a>
+                            <a data-toggle="collapse" data-target="#pricing-info" id="#pricing-info" class="text-danger">*Pricing is final.*<br> click here for more info</a>
                         </label><br>
                         <p id="pricing-info" class="collapse">
                             To protect our customers, we do not allow businesses to update the pricing of their services.
@@ -31,13 +31,13 @@
                         </p>
                         <label>Monthly Price</label>
                         <input type="number" name="month_price" id="month_price" class="form-control" placeholder="Monthly Price" value="{{old('month_price')}}">
-                        <label>Annual Price</label>
-                        <input type="number" name="year_price" id="year_price" class="form-control" placeholder="Annual Price" value="{{old('year_price')}}">
+                        {{--<label>Annual Price</label>--}}
+                        {{--<input type="number" name="year_price" id="year_price" class="form-control" placeholder="Annual Price" value="{{old('year_price')}}">--}}
 
 
 
                         <hr style="color: {{getThemeColorValue()}} !important;">
-                        <h6 class="theme-color">How many times can customers use this service per month or year? <br></h6>
+                        <h6 class="theme-color">How many times can customers use this service per month? <br></h6>
                         <p class="text-muted">*leave blank if no limit is imposed*</p>
 
                         <div class="row" >
@@ -52,19 +52,19 @@
                                 <h4 class="theme-color" id="ulm-label">times a month</h4>
                             </div>
 
-                            <div class="col-5"><hr class="theme-color"></div>
-                            <div class="col-2 text-center pr-0 pl-0 pt-1">or</div>
-                            <div class="col-5"><hr class="theme-color"></div>
+                            {{--<div class="col-5"><hr class="theme-color"></div>--}}
+                            {{--<div class="col-2 text-center pr-0 pl-0 pt-1">or</div>--}}
+                            {{--<div class="col-5"><hr class="theme-color"></div>--}}
 
-                            <div class="col-1 pt-2">
-                                <input type="radio" name="which_usage_interval" class="which_usage_interval" data-input="#use_limit_year" data-input-other="#use_limit_month" data-label="#uly-label" data-label-other="#ulm-label">
-                            </div>
-                            <div class="col-3">
-                                <input type="number" min="0" name="use_limit_year" id="use_limit_year" class="form-control" placeholder="#" disabled="" value="{{old('use_limit_year')}}">
-                            </div>
-                            <div class="col-8 pt-3">
-                                <h4 style="color: lightgrey" id="uly-label">times a year</h4>
-                            </div>
+                            {{--<div class="col-1 pt-2">--}}
+                                {{--<input type="radio" name="which_usage_interval" class="which_usage_interval" data-input="#use_limit_year" data-input-other="#use_limit_month" data-label="#uly-label" data-label-other="#ulm-label">--}}
+                            {{--</div>--}}
+                            {{--<div class="col-3">--}}
+                                {{--<input type="number" min="0" name="use_limit_year" id="use_limit_year" class="form-control" placeholder="#" disabled="" value="{{old('use_limit_year')}}">--}}
+                            {{--</div>--}}
+                            {{--<div class="col-8 pt-3">--}}
+                                {{--<h4 style="color: lightgrey" id="uly-label">times a year</h4>--}}
+                            {{--</div>--}}
 
                         </div>
                         <hr style="color: {{getThemeColorValue()}}">
