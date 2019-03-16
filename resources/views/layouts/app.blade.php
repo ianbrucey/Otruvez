@@ -65,9 +65,7 @@
                         <li class="nav-item">
                             <a class="nav-link" href="/business"> <span class="fa fa-briefcase "></span> Business Account </a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="/log/out"><span class="fa fa-sign-out "></span> Logout</a>
-                        </li>
+
 
                         <li class="nav-item dropdown">
                             <a class="nav-link" href="#" data-toggle="collapse" data-target="#dropit-2" aria-controls="dropit" aria-expanded="false" aria-label="Toggle navigation">
@@ -92,6 +90,9 @@
 
                                 <a class="dropdown-item" href="/sellYourServices">How to Sell With Us</a>
                             </div>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/log/out"><span class="fa fa-sign-out "></span> Logout</a>
                         </li>
                     </ul>
                 </div>

@@ -42,9 +42,9 @@
 
                         <div class="row" >
 
-                            <div class="col-1 pt-2">
-                                <input type="radio" name="which_usage_interval" class="which_usage_interval" data-input="#use_limit_month" data-input-other="#use_limit_year" data-label="#ulm-label" data-label-other="#uly-label" checked >
-                            </div>
+                            {{--<div class="col-1 pt-2">--}}
+                                {{--<input type="radio" name="which_usage_interval" class="which_usage_interval" data-input="#use_limit_month" data-input-other="#use_limit_year" data-label="#ulm-label" data-label-other="#uly-label" checked >--}}
+                            {{--</div>--}}
                             <div class="col-3">
                                 <input type="number" min="0" name="use_limit_month" id="use_limit_month" class="form-control" placeholder="#" value="{{old('use_limit_month')}}">
                             </div>

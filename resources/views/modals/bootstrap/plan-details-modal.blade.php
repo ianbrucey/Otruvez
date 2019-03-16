@@ -35,12 +35,12 @@
                         <thead>
                         <tr>
                             <th>Monthly</th>
-                            <th>Annual</th>
+                            {{--<th>Annual</th>--}}
                         </tr>
                         </thead>
                         <tbody>
                             <td>{{formatPrice($plan->month_price)}}</td>
-                            <td>{{formatPrice($plan->year_price)}}</td>
+{{--                            <td>{{formatPrice($plan->year_price)}}</td>--}}
                         </tbody>
                     </table>
                 </div>
