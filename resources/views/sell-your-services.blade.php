@@ -19,7 +19,7 @@
                     <div class="product-item bg-light">
                         <div class="card">
                             <div class="thumb-content">
-                                <a href="#">
+                                <a href="{{$section['photoPath']}}" data-lity>
                                     <img class="card-img-top img-fluid" style="box-shadow: 2px 2px 5px black" src="{{$section['photoPath']}}" alt="Card image cap">
                                 </a>
                             </div>

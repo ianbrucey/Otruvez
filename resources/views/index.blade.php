@@ -72,7 +72,7 @@
 		<div class="row">
 			<div class="col-md-12 mb-0">
 				<div class="section-title">
-					<p class="theme-color">2nd, choose whether you want to pay monthly or annually</p>
+					<p class="theme-color">2nd, pay for the subscription using our secure <a href="https://www.Stripe.com/payments/checkout" target="_blank"><u>Stripe checkout form</u></a> . </p>
 				</div>
 			</div>
 		</div>

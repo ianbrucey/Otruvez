@@ -78,7 +78,7 @@
                           <span class="text-warning">
                             {{getRatingStars($plan->ratings())}}
                           </span>
-                            <a class=" list-inline-item float-right">{{formatPrice($plan->month_price)}} - {{formatPrice($plan->year_price)}}</a>
+                            <a class=" list-inline-item float-right">{{formatPrice($plan->month_price)}} / month {{-- - {{formatPrice($plan->year_price)}} --}}</a>
                           </ul>
 
                         </div>
