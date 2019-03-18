@@ -87,7 +87,7 @@ Route::get('/sellYourServices', function () {
                 'first'     => ''
             ],
             [
-                'msg'       => "After creating the service, you'll still need to <br>activate it by adding a \"Featured Photo\"",
+                'msg'       => "In order to be included in our search engine, you'll need a featured photo. So there's a problem with you upload, you'll see this.",
                 'photoPath' => baseUrlConcat('/images/inactiveplan.png'),
                 'first'     => ''
             ],
@@ -97,7 +97,7 @@ Route::get('/sellYourServices', function () {
                 'first'     => ''
             ],
             [
-                'msg'       => "After adding your photo, your plan will be active",
+                'msg'       => "After adding your photo and entering all your information for the service, your subscription will be active",
                 'photoPath' => baseUrlConcat('/images/activeplan.png'),
                 'first'     => ''
             ],
