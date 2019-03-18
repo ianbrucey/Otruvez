@@ -82,7 +82,7 @@ Route::get('/sellYourServices', function () {
                 'first'     => ''
             ],
             [
-                'msg'       => "In order to be included in our search engine, you'll need a featured photo. So there's a problem with you upload, you'll see this.",
+                'msg'       => "In order to be included in our search engine, you'll need a featured photo. So if there's a problem with you upload, you'll see this.",
                 'photoPath' => baseUrlConcat('/images/inactiveplan.png'),
                 'first'     => ''
             ],
