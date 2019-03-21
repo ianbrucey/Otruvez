@@ -40,7 +40,8 @@
                         <textarea type="text" name="description" class="form-control" placeholder="Business Description here..." required>{{old('description')}}</textarea>
                         <div class="text-white-children">
                             <hr>
-                            <h4 data-toggle="collapse" data-target="#redirect-url-info"><u>Redirect Url:</u> <span class="float-right">What's this?</span></h4>
+                            <h4 data-toggle="collapse" data-target="#redirect-url-info"><u>Redirect Url:</u> *optional* <span class="float-right">What's this?</span></h4>
+                            <p> *optional, for online businesses*</p>
                             <p class="collapse" id="redirect-url-info" >This field is for online businesses who want to use our portal to sell their subscriptions. After a customer completes the subscription process, they will be redirected to this URL. You can also set this field in the <b>API & Online Business Integration</b> Page.</p>
                         </div>
                         <div class="">
