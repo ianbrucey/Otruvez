@@ -679,7 +679,7 @@ function copyText(self) {
     thisObj.find('.copied-msg').fadeOut(1500);
 
 }
-$('#choose-business-handle').on('keyup', function(){
+$('#choose-business-handle').on('input', function(){
     let val = $(this).val();
     $(this).val(val.replace(/[^\w]/gi, ''));
 });
@@ -708,7 +708,7 @@ function checkHandleAvailability() {
 }
 
 
-$('#list-filter').on('keyup', function () {
+$('#list-filter').on('input', function () {
     let filterString = $(this).val(); // german/french word for this is zis
     $.expr[":"].contains = $.expr.createPseudo(function(arg) {
         return function( elem ) {
