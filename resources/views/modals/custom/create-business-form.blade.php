@@ -24,7 +24,7 @@
                         <p class="p-2 bg-white theme-color collapse show" id="business-handle-info" style="">
                             Your business handle will be used so people can quickly access your online store, either through our search engine or via a url like this: <b class="theme-color">OTRUVEZ.COM/STORE/EXAMPLE_STORE</b>
                             <br>
-                            <strong class="theme-color"><hr>Please note that your handle can and will be revoked if you register a name that you do not rightfully own.</strong>
+                            <strong class="theme-color">Please note that your handle can and will be revoked if you register a name that you do not rightfully own.</strong>
                         </p>
 
                         <p id="chosen-handle">{{ !empty(old('business_handle')) ? "You chose @".old('business_handle') : ''}}</p>
