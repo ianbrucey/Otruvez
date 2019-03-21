@@ -23,7 +23,7 @@
                         <h4 data-toggle="collapse" data-target="#business-handle-info"><u>Unique Business Handle</u> <span class="float-right">What's this?</span></h4>
                         <p class="collapse" id="business-handle-info" >
                             Your business handle will be used so people can quickly access your online store, either through our search engine or via a url like this: <b>{{strtoupper("otruvez.com/store/example_store")}}</b>
-                            <hr>
+                        <br>
                             <strong>Please note that your handle can and will be revoked if you register a name that you do not rightfully own.</strong>
                         </p>
 
