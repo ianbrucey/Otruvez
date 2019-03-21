@@ -681,10 +681,10 @@ function copyText(self) {
 }
 $('#choose-business-handle').on('keyup', function(){
     let val = $(this).val();
-    $(this).val(val.replace(/[^\w\s]/gi, ''));
+    $(this).val(val.replace(/[^\w]/gi, ''));
 });
 function checkHandleAvailability() {
-    let handle = $('#choose-business-handle').val();
+    let handle = $('#choose-business-handle').val().trim();
     if(handle === '') {
         sendWarning("Please enter a value");
         $('.rest-of-biz-inputs').hide(500);
