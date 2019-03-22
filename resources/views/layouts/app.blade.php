@@ -52,9 +52,9 @@
                 </button>
                 @else
                 <a class="navbar-brand" href="/">
-                    <img src="{{getOtruvezCircleLogoImg()}}" width="50">
+                    <img src="{{getOtruvezCircleLogoImg()}}" style="width: 150px; height: auto;">
                 </a>
-                <button class="navbar-toggler theme-background" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation" style="margin-left: 62% !important;">
+                <button class="navbar-toggler theme-background" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                     {!! hasNewNotifications() ? '<span class="fa fa-bell text-danger"></span>' : '<span class="navbar-toggler-icon"></span>' !!}
                 </button>
                 @endif
@@ -104,7 +104,7 @@
                     </ul>
                 </div>
             @else
-                <div class="collapse navbar-collapse text-center form-inline" id="navbarSupportedContent">
+                <div class="collapse navbar-collapse " id="navbarSupportedContent">
                     <ul class="navbar-nav ">
                         <li class="nav-item">
                             <a class="btn btn-lg white-bg theme-color  nav-link login-button" href="/">Home</a>
