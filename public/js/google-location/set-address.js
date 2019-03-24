@@ -91,7 +91,8 @@ function fillInAddress() {
 
 // Bias the autocomplete object to the user's geographical location,
 // as supplied by the browser's 'navigator.geolocation' object.
-function geolocateAfterPrompt() {
+// function geolocateAfterPrompt() {
+function geolocate() {
     console.log("geolocating...");
     if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(function(position) {
@@ -111,21 +112,23 @@ function geolocateAfterPrompt() {
     }
 }
 
-function geolocate() {
-    $.confirm({
-        icon: 'fa fa-map-marker text-warning',
-        title: 'We need your permission',
-        content: 'So that we can set your location, please select "allow" or "yes" when prompted by the browser for your location',
-        buttons: {
-            go: {
-                btnClass: 'btn theme-background',
-                action: function() {
-                    geolocateAfterPrompt();
-                }
-            }
-        }
-    });
-}
+// function geolocate() {
+//     $.confirm({
+//         icon: 'fa fa-map-marker text-warning',
+//         title: 'We need your permission',
+//         content: 'So that we can set your location, please select "allow" or "yes" when prompted by the browser for your location',
+//         buttons: {
+//             go: {
+//                 btnClass: 'btn theme-background',
+//                 action: function() {
+//                     // after first prompt, set cookie so no more prompts.
+//                     // if they said ok to their location, do not prompt anymore
+//                     geolocateAfterPrompt();
+//                 }
+//             }
+//         }
+//     });
+// }
 
 
 $('#autocomplete').parents('form').on('submit', function(e){
