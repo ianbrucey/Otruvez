@@ -19,8 +19,7 @@
                 <div class="card-body theme-form">
                     {{csrf_field()}}
                     <div class="text-white-children business-handle-container">
-                        <hr>
-                        <h4 data-toggle="collapse" data-target="#business-handle-info"><u>Unique Business Handle</u> <span class="float-right">What's this?</span></h4>
+                        <p data-toggle="collapse" data-target="#business-handle-info"><u>Unique Business Handle</u> <span class="float-right">What's this?</span></p>
                         <p class="p-2 bg-white theme-color collapse" id="business-handle-info" style="">
                             Your business handle will be used so people can quickly access your online store, either through our search engine or via a url like this: <b class="theme-color">OTRUVEZ.COM/STORE/EXAMPLE_STORE</b>
                             <br>
@@ -40,7 +39,7 @@
                         <textarea type="text" name="description" class="form-control" placeholder="Business Description here..." required>{{old('description')}}</textarea>
                         <div class="text-white-children">
                             <hr>
-                            <h4 data-toggle="collapse" data-target="#redirect-url-info"><u>Redirect Url:</u> *optional* <span class="float-right">What's this?</span></h4>
+                            <p data-toggle="collapse" data-target="#redirect-url-info"><u>Redirect Url:</u> *optional* <span class="float-right">What's this?</span></p>
                             <p> *optional, for online businesses*</p>
                             <p class="collapse" id="redirect-url-info" >This field is for online businesses who want to use our portal to sell their subscriptions. After a customer completes the subscription process, they will be redirected to this URL. You can also set this field in the <b>API & Online Business Integration</b> Page.</p>
                         </div>
@@ -51,9 +50,9 @@
                         @include('partials.location.set-address')
 
                         <hr>
-                        <h4 class="text-white"><u>Business hours</u>
+                        <p class="text-white"><u>Business hours</u>
                             <label class=" pull-right checkbox-inline text-white"><input type="checkbox" class="has-business-hours "> Add store hours</label>
-                        </h4>
+                        </p>
                         <div class="business-hours">
                             @foreach($days as $day)
                                 <div style="width: 30%; display: inline-block">
