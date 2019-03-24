@@ -54,7 +54,7 @@
                 <a class="navbar-brand" href="/">
                     <img src="{{getOtruvezCircleLogoImg()}}" width="50">
                 </a>
-                <button class="navbar-toggler theme-background" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation" style="margin-left: 62% !important;">
+                <button class="navbar-toggler theme-background" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation" >
                     {!! hasNewNotifications() ? '<span class="fa fa-bell text-danger"></span>' : '<span class="navbar-toggler-icon"></span>' !!}
                 </button>
                 @endif
@@ -141,7 +141,6 @@
                     </ul>
 
                 </div>
-                <hr>
             @endif
         </nav>
         {{--</div>--}}
@@ -167,7 +166,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/jquery.validate.min.js"></script>
 <script src='https://ajax.aspnetcdn.com/ajax/jquery.validate/1.17.0/additional-methods.js'></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/lity/2.3.0/lity.min.js"></script>
-<script src="{{ baseUrlConcat('/js/index.js') }}"></script>
+<script src="{{ baseUrlConcat('/js/index.js') }}?ver=0.0.0.1"></script>
 <script>
     var screenheight = screen.height + "px";
     $('#landing-page-section-1').css('height', screenheight);

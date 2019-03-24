@@ -7,6 +7,15 @@ let submittingLoader = $('#submitting');
 const validFileExtensions = ['jpeg' , 'jpg', 'png', 'bmp', 'gif'];
 const maxUploadSize = 4 * 1024000;
 
+$(document).ready(function () {
+    // fail safe method incase there is an error and the loading screen doesn't leave
+    setTimeout(function () {
+        $('#loading-photo').hide();
+        $('#loading').hide();
+        $('#submitting').hide();
+        $('#blanket').hide();
+    }, 4000);
+});
 $('#searchField').keyup(function(event) {
     if($(this).val().trim() == '' || $(this).val().length < 2) {
         $("#searchField-btn").prop('disabled', true);
@@ -725,3 +734,4 @@ $('#list-filter').on('input', function () {
     }
 
 });
+

@@ -133,7 +133,7 @@ Route::post('/validateToken', 'UserController@validateToken');
 /** BUSINESS ROUTES */
 Route::get('/confirmAccount', 'HomeController@showConfirmAccount');
 Route::get('/home', 'HomeController@index');
-Route::post('/home/findServices', 'HomeController@findServices');
+Route::get('/home/findServices', 'HomeController@findServices');
 /** BUSINESS ROUTES */
 
 
