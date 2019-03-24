@@ -11,7 +11,7 @@
                     <input class="form-control" name="email" type="text" placeholder="enter user account email">
                     <hr>
                     {{csrf_field()}}
-                    <button class="btn btn-danger" type="submit">Yes, Delete my account</button>
+                    <button class="btn btn-danger p-1" type="submit">Yes, Delete my account</button>
                 </form>
             </div>
         </div>
