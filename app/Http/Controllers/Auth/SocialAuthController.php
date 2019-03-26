@@ -112,10 +112,10 @@ class SocialAuthController extends Controller
             'last' => $data['last'],
             'email' => $data['email'],
             'stripe_id' => $stripeCustomer->id,
-            'activated' => issetAndTrue($data['provider']) ? "1" : "0",
+            'activated' => issetAndTrue($data,'provider') ? "1" : "0",
             'activation_token' => $activationToken,
-            'provider' => issetAndTrue($data['provider']),
-            'provider_id' => issetAndTrue($data['provider_id'])
+            'provider' => issetAndTrue($data,'provider'),
+            'provider_id' => issetAndTrue($data,'provider_id')
         ]);
 
         if($user->activated != 1) {

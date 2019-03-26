@@ -7,6 +7,15 @@ let submittingLoader = $('#submitting');
 const validFileExtensions = ['jpeg' , 'jpg', 'png', 'bmp', 'gif'];
 const maxUploadSize = 4 * 1024000;
 
+$(document).ready(function () {
+    // fail safe method incase there is an error and the loading screen doesn't leave
+    setTimeout(function () {
+        $('#loading-photo').hide();
+        $('#loading').hide();
+        $('#submitting').hide();
+        $('#blanket').hide();
+    }, 4000);
+});
 $('#searchField').keyup(function(event) {
     if($(this).val().trim() == '' || $(this).val().length < 2) {
         $("#searchField-btn").prop('disabled', true);
@@ -679,12 +688,12 @@ function copyText(self) {
     thisObj.find('.copied-msg').fadeOut(1500);
 
 }
-$('#choose-business-handle').on('keyup', function(){
+$('#choose-business-handle').on('input', function(){
     let val = $(this).val();
-    $(this).val(val.replace(/[^\w\s]/gi, ''));
+    $(this).val(val.replace(/[^\w]/gi, ''));
 });
 function checkHandleAvailability() {
-    let handle = $('#choose-business-handle').val();
+    let handle = $('#choose-business-handle').val().trim();
     if(handle === '') {
         sendWarning("Please enter a value");
         $('.rest-of-biz-inputs').hide(500);
@@ -708,7 +717,7 @@ function checkHandleAvailability() {
 }
 
 
-$('#list-filter').on('keyup', function () {
+$('#list-filter').on('input', function () {
     let filterString = $(this).val(); // german/french word for this is zis
     $.expr[":"].contains = $.expr.createPseudo(function(arg) {
         return function( elem ) {
@@ -725,3 +734,4 @@ $('#list-filter').on('keyup', function () {
     }
 
 });
+

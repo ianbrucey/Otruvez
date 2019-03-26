@@ -87,7 +87,7 @@ Route::get('/sellYourServices', function () {
                 'first'     => ''
             ],
             [
-                'msg'       => "In order to be included in our search engine, you'll need a featured photo. So there's a problem with you upload, you'll see this.",
+                'msg'       => "After creating the service, you'll still need to <br>activate it by adding a \"Featured Photo\"",
                 'photoPath' => baseUrlConcat('/images/inactiveplan.png'),
                 'first'     => ''
             ],
@@ -138,7 +138,7 @@ Route::post('/validateToken', 'UserController@validateToken');
 /** BUSINESS ROUTES */
 Route::get('/confirmAccount', 'HomeController@showConfirmAccount');
 Route::get('/home', 'HomeController@index');
-Route::post('/home/findServices', 'HomeController@findServices');
+Route::get('/home/findServices', 'HomeController@findServices');
 /** BUSINESS ROUTES */
 
 
