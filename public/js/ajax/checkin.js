@@ -11,7 +11,8 @@ $('.checkin').on('click', function () {
     };
 
     $.post(url, postdata).done(function (data) {
-        checkinModal.find('.checkin-code').text(data);
+        // checkinModal.find('.checkin-code').text(data);
+        swal(data,"present this 5 digit code to the service provider", "success");
     });
 
 });
