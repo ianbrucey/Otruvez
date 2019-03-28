@@ -18,7 +18,7 @@
     <div class="container">
         <div class="row text-center">
             @if(count($plans) <= 10)
-                <div class="col-8 offset-2">
+                <div class="col-md-8 offset-md-2 text-center mb-3">
                     <button type="button" class="btn theme-background" onclick="triggerTargetHref(event, this)" data-href="/plan/createService">
                         Create a new service<br>
                         <span class="fa fa-plus"></span>

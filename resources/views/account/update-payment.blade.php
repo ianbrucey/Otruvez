@@ -22,7 +22,7 @@
                     </ul>
                 @else
                     <ul>
-                        <li><h3><b>*No card on file*</b></h3></li>
+                        <li><h3 class="text-center p-3"><b>*No card on file*</b></h3></li>
                     </ul>
                 @endif
                 <form action="https://www.otruvez.com/account/updatePaymentMethod" method="POST" class="mt-4 text-center">

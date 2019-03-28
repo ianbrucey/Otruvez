@@ -5,15 +5,16 @@
             <div class="card">
                 <div class="card-header">
                     <h4>Are you sure you want to delete your business account?</h4>
-                    <p class="text-danger">Note* All subscriptions that have over a week left will be refunded</p>
+                    <p class="text-danger">Note* Some subscribers may be entitled to a refund</p>
                 </div>
                 <div class="card-body">
-                <a href="/business" class="btn theme-background text-white pull-left">Back</a>
+                    <h6>If so, <a href="/account/support"><u><b>send us an email</b></u></a> at support@otruvez.com and we will handle that for you. Thanks!</h6>
+                <a href="/business" class="btn theme-background text-white pull-left p-1">Back</a>
 
-                    <button class="btn btn-danger pull-right show-sm-modal" data-modal-target="#confirm-delete-business-modal">Delete Account</button>
+                    {{--<button class="btn btn-danger pull-right show-sm-modal" data-modal-target="#confirm-delete-business-modal">Delete Account</button>--}}
                 </div>
             </div>
         </div>
     </div>
-    @include('modals.custom.confirm-delete-business-modal')
+{{--    @include('modals.custom.confirm-delete-business-modal')--}}
 @endsection

@@ -9,11 +9,11 @@
             <h3 class="text-center">Welcome, {{"@".$data['business_handle']}} </h3>
             <div class="row theme-background p-2" id="scoreboard">
                 <div class="col-6  ">
-                    <h4 class="text-center text-default">Active Subscriptions </h4>
+                    <p class="text-center text-default">Active Subscriptions </p>
                     <p class="text-center text-default"><span>{{$data['subscriptionCount']}}</span></p>
                 </div>
                 <div class="col-6">
-                    <h4 class="text-center text-default">Projected monthly income </h4>
+                    <p class="text-center text-default">Projected monthly income </p>
                     <p class="text-center text-default"><span>{{$data['projectedMonthlyIncome']}}</span></p>
                 </div>
             </div>

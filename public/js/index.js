@@ -322,7 +322,7 @@ $(document).ready(function () {
                 required: false,
             },
             description: {
-                descriptionRegex: true,
+                // descriptionRegex: true,
                 minlength: 10,
                 required: true,
             },
@@ -413,7 +413,7 @@ $(document).ready(function () {
                 required: false
             },
             description: {
-                descriptionRegex: true,
+                // descriptionRegex: true,
                 minlength: 10,
                 required: true,
             }
@@ -587,7 +587,7 @@ $(document).ready(function () {
     });
 
     $.validator.addMethod("descriptionRegex", function(value, element) {
-        let valid = this.optional(element) || /^[a-zA-Z0-9\-_\s.,'"?:()$@!+=#]+$/i.test(value);
+        let valid = this.optional(element) || /^[a-zA-Z0-9\-_\s.,'"?:()$@!+=#%]+$/i.test(value);
         if(!valid) {
             $(element).focus();
         }
@@ -595,7 +595,7 @@ $(document).ready(function () {
     }, "Invalid character detected, please remove to continue");
 
     $.validator.addMethod("titleNameRegex", function(value, element) {
-        let valid = this.optional(element) || /^[a-zA-Z0-9\-\s.,'"_()#]+$/i.test(value);
+        let valid = this.optional(element) || /^[a-zA-Z0-9\-\s.,'"_()#%]+$/i.test(value);
         if(!valid) {
             $(element).focus();
         }

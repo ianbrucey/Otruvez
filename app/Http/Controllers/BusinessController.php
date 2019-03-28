@@ -43,7 +43,7 @@ class BusinessController extends Controller
         'business_handle' => 'required|'.HANDLE, // needs to be digits and underscores only also no spaces
         'email'           => 'required|email',
         'phone'           => 'nullable|numeric',
-        'description'     => 'required|'.DESCRIPTION_REGEX,
+        'description'     => 'required',
         'redirect_to'     => 'nullable|url',
 
     ];
@@ -51,7 +51,7 @@ class BusinessController extends Controller
     private $updateValidationRules = [
         'email'           => 'required|email',
         'phone'           => 'nullable|numeric',
-        'description'     => 'required|'.DESCRIPTION_REGEX,
+        'description'     => 'required',
         'redirect_to'     => 'nullable|url',
     ];
 
