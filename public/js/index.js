@@ -629,37 +629,29 @@ $( window ).ready(function() {
 // lets us choose a NEW FEATURED PHOTO for the the PLAN
 
 function sendWarning(msg) {
-    return swal({
-        text: msg,
-        icon: "warning",
+    return $.confirm({
+        icon: 'fa fa-warning text-danger',
+        title: '',
+        content: msg,
+        buttons: {
+            ok: {
+                btnClass: 'theme-background',
+            }
+        }
     });
-    // return $.confirm({
-    //     icon: 'fa fa-warning text-danger',
-    //     title: '',
-    //     content: msg,
-    //     buttons: {
-    //         ok: {
-    //             btnClass: 'theme-background',
-    //         }
-    //     }
-    // });
 }
 
 function sendSuccess(msg) {
-    return swal({
-        text: msg,
-        icon: "success",
+    return $.confirm({
+        icon: 'fa fa-star theme-color',
+        title: '',
+        content: msg,
+        buttons: {
+            ok: {
+                btnClass: 'theme-background',
+            }
+        }
     });
-    // return $.confirm({
-    //     icon: 'fa fa-star theme-color',
-    //     title: '',
-    //     content: msg,
-    //     buttons: {
-    //         ok: {
-    //             btnClass: 'theme-background',
-    //         }
-    //     }
-    // });
 }
 
 function scrollToElement(elId) {
