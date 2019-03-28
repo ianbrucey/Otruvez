@@ -29,7 +29,7 @@
             @else
                 <div class="col-md-12">
                     <div class="search-result bg-gray">
-                        <h2>Local deals in your area</h2>
+                        <h2 class="theme-color text-center">Search for local deals in your area</h2>
                     </div>
                 </div>
             @endif

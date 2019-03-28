@@ -371,7 +371,8 @@ z-index: 99999999999999999 !important;
     box-shadow: none !important;
 }
 
-.theme-background {
+.theme-background,
+.swal-button {
     background: #4cb996 !important;
     color: whitesmoke !important;
 }

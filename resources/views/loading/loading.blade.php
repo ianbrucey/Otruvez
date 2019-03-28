@@ -33,3 +33,11 @@
     </div>
 
 </div>
+
+<script>
+    $(document).ready(function () {
+        setTimeout(function () {
+            $('#loading-photo').hide();
+        }, 3000);
+    });
+</script>

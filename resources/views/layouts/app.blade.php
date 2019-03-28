@@ -15,6 +15,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/lity/2.3.0/lity.min.css">
     <link href="{{baseUrlConcat('/classimax/css/style.css')}}" rel="stylesheet">
     <link href="{{ baseUrlConcat('/css/style.css') }}" rel="stylesheet">
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
 
 
