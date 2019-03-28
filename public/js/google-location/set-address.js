@@ -93,6 +93,7 @@ function fillInAddress() {
 // as supplied by the browser's 'navigator.geolocation' object.
 // function geolocateAfterPrompt() {
 function geolocate() {
+    $('#autocomplete').val('');
     console.log("geolocating...");
     if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(function(position) {
@@ -143,3 +144,4 @@ $(document).ready(function () {
         $('#autocomplete').attr('autocomplete', 'nah');
     }, 1000);
 });
+
