@@ -98,11 +98,11 @@
                                 <br/>
                             </div>
                             <div class="col-md-12">
-                                <button type="submit" class="btn theme-background float-left" style="display: none" id="register-button" disabled>
+                                <button type="submit" class="btn-sm theme-background float-left" style="display: none" id="register-button" disabled>
                                     Register
                                 </button>
 
-                                <a type="button" class="btn theme-color float-right" href="{{$loginRoute}}">
+                                <a type="button" class="btn-sm theme-color float-right" href="{{$loginRoute}}">
                                     Login instead
                                 </a>
 

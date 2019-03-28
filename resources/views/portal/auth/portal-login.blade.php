@@ -63,12 +63,12 @@
                                 <button type="submit" class="btn theme-background">
                                     Login
                                 </button>
-                                <a type="button" class="btn bg-white theme-color float-right" href="{{$registerRoute}}">
+                                <a type="button" class="btn-sm bg-white theme-color float-right" href="{{$registerRoute}}">
                                     Register instead
                                 </a>
                                 <hr>
 
-                                <a class="btn btn-link theme-color" href="{{ secureUrl(route('password.request')) }}">
+                                <a class="btn-sm btn-link theme-color" href="{{ secureUrl(route('password.request')) }}">
                                     Forgot Your Password?
                                 </a>
                             </div>

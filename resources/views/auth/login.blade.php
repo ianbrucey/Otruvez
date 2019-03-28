@@ -58,11 +58,11 @@
 
                             <div class="form-group">
                                 <div class="col-md-8">
-                                    <button type="submit" class="btn theme-background">
+                                    <button type="submit" class="btn-sm theme-background">
                                         Login
                                     </button>
 
-                                    <a class="btn btn-link theme-color" href="{{ secureUrl(route('password.request')) }}">
+                                    <a class="btn-sm btn-link theme-color" href="{{ secureUrl(route('password.request')) }}">
                                         Forgot Your Password?
                                     </a>
                                 </div>
