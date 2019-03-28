@@ -7,13 +7,13 @@
             <div class="card-body text-center">
                 <h2 class="text-center">Do you like this service? please rate it</h2>
 
-                    <h1 style="display: inline" class="mr-4"><span class="fa fa-frown-o"></span></h1>
+                    <h2 style="display: inline" class="mr-4"><span class="fa fa-frown-o"></span></h2>
                     @for($i = 1; $i <=5; $i++)
 
-                        <h3 style="display: inline" class="rate-star"><span class="fa fa-star-o fa-lg star-icons" data-rate="{{$i}}"></span></h3>
+                        <h5 style="display: inline" class="rate-star"><span class="fa fa-star-o fa-lg star-icons" data-rate="{{$i}}"></span></h5>
 
                     @endfor
-                    <h1 style="display: inline" class="ml-4"><span class="fa fa-smile-o"></span></h1>
+                    <h2 style="display: inline" class="ml-4"><span class="fa fa-smile-o"></span></h2>
 
                 <form method="post" action="/rating/rateService/{{$plan->id}}" class="form-group">
                     <input type="hidden" name="rate_number" id="rate-number">
