@@ -31,8 +31,10 @@ return [
 
     'stripe' => [
         'model'             => App\User::class,
-        'public'            => env('STRIPE_KEY','pk_test_GQCUjPm3eovgzCUVD2RmzTjU'),
-        'secret'            => env('STRIPE_SECRET','sk_test_nsFME4mazT714NbSa8IDpejm'),
+//        'public'            => env('STRIPE_KEY','pk_test_GQCUjPm3eovgzCUVD2RmzTjU'),
+//        'secret'            => env('STRIPE_SECRET','sk_test_nsFME4mazT714NbSa8IDpejm'),
+        'public'            => env('STRIPE_KEY','pk_live_A4ihazIvy0r1OQxucdQanpp1'),
+        'secret'            => env('STRIPE_SECRET','sk_live_YtBdDOks5WQHsjRp2ezqFUTr'),
         \App\StripeWebhook::PAYMENT_FAILED_WH_KEY       => env('WEBHOOK_KEY','whsec_Z1z2IVZ9qJL012EwnAvbczRFizlOBK0E'),
         \App\StripeWebhook::PAYMENT_SUCCEEDED_WH_KEY    => env('WEBHOOK_KEY','whsec_4kwZz7SAJIHfuJuafwqLkU3bO5phChJY'),
 
