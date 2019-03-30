@@ -37,14 +37,14 @@
         <a class="col-md-4" href="/business/manageBusiness">
             <div class="card">
                 <span class="fa fa-briefcase fa-2x"></span>
-                <h3>Manage Business</h3>
+                <h5>Manage Business</h5>
             </div>
         </a>
 
         <a class="col-md-4" href="/plan/managePlans">
             <div class="card">
                 <span class="fa fa-shopping-cart fa-2x"></span>
-                <h3>Manage Services</h3>
+                <h5>Create / Manage Subscriptions</h5>
             </div>
         </a>
 
@@ -52,35 +52,35 @@
         <a class="col-md-4" href="/business/viewStore/{{$data['businessId']}}">
             <div class="card">
                 <span class="fa fa-eye fa-2x"></span>
-                <h3>Preview Store</h3>
+                <h5>Preview Store</h5>
             </div>
         </a>
 
         <a class="col-md-4" href="/business/notifications">
             <div class="card">
                 <span class="fa fa-bell fa-2x"></span>
-                <h3>Notifications</h3>
+                <h5>Notifications</h5>
             </div>
         </a>
 
         <a class="col-md-4" href="/business/checkins">
             <div class="card">
                 <span class="fa fa-envelope fa-2x"></span>
-                <h3>Check-ins</h3>
+                <h5>Check-ins</h5>
             </div>
         </a>
 
         <a class="col-md-4" href="/business/subscribers">
             <div class="card">
                 <span class="fa fa-user fa-2x"></span>
-                <h3>Active Subscribers</h3>
+                <h5>Active Subscribers</h5>
             </div>
         </a>
 
         <a class="col-md-4" href="/business/notifyCustomers">
             <div class="card">
                 <span class="fa fa-bullhorn fa-2x"></span>
-                <h3>Mass message to customers</h3>
+                <h5>Mass message to customers</h5>
             </div>
         </a>
 
@@ -88,7 +88,7 @@
         <a class="col-md-4" href="/business/cancel">
             <div class="card">
                 <span class="fa fa-window-close fa-2x text-danger"></span>
-                <h3>Cancel account</h3>
+                <h5>Cancel account</h5>
             </div>
         </a>
     </div>
