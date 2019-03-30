@@ -433,13 +433,6 @@ $(document).ready(function () {
         },
         submitHandler: function (form) {
             $('#submitting').fadeIn(500);
-            if(!$('#month_price').val() && !$('#year_price').val()) {
-                alert("At least one price is required");
-                submittingLoader.hide();
-                $("#price-msg").removeClass("theme-color").addClass("text-danger");
-                scrollToElement('#pricing-info');
-                return false;
-            }
             if(!$('#featured-photo').val()) {
                 sendWarning("A featured photo is required. Please add one to proceed.");
                 $('#create-service-step1').show();
