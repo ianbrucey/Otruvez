@@ -16,8 +16,8 @@
             <div class="row">
                 <div class="col-sm-12 col-lg-8 offset-lg-2 hidden-sm hidden-xs">
                     <!-- product card -->
-                    <div class="product-item bg-light">
-                        <div class="card">
+                    <div class="product-item">
+                        <div class="">
                             <div class="thumb-content">
                                 <a href="{{$section['photoPath']}}" data-lity>
                                     <img class="card-img-top img-fluid" style="box-shadow: 2px 2px 5px black" src="{{$section['photoPath']}}" alt="Card image cap">

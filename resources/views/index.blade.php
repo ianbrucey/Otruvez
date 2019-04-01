@@ -48,8 +48,8 @@
 			</div>
 <div class="col-sm-12 col-lg-4 offset-lg-4 hidden-sm hidden-xs">
 				<!-- product card -->
-	<div class="product-item bg-light">
-		<div class="card">
+	<div class="product-item">
+		<div class="">
 			<div class="thumb-content">
 				<!-- <div class="price">$200</div> -->
 				<a href="">
@@ -80,8 +80,8 @@
 			<!-- offer 01 -->
 			<div class="col-sm-12 col-lg-4 offset-lg-4 hidden-sm hidden-xs">
 				<!-- product card -->
-				<div class="product-item bg-light">
-					<div class="card">
+				<div class="product-item">
+					<div class="">
 						<div class="thumb-content">
 							<!-- <div class="price">$200</div> -->
 							<a href="">
@@ -110,8 +110,8 @@
 			<!-- offer 01 -->
 			<div class="col-sm-12 col-lg-4 offset-lg-4 hidden-sm hidden-xs">
 				<!-- product card -->
-				<div class="product-item bg-light">
-					<div class="card">
+				<div class="product-item">
+					<div class="">
 						<div class="thumb-content">
 							<!-- <div class="price">$200</div> -->
 							<a href="">

@@ -57,8 +57,8 @@
                 @php $hasPlans = true; @endphp
                 <div class="col-sm-12 col-md-4">
                   <!-- product card -->
-                  <div class="product-item bg-light">
-                    <div class="card">
+                  <div class="product-item">
+                    <div class="">
                       <div class="thumb-content" style="width: 100%; height: 200px; background: url({{getImage($plan->featured_photo_path)}}) no-repeat; background-size: contain; background-position: center">
 
                       </div>

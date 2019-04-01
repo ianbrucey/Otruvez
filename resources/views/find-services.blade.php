@@ -14,7 +14,8 @@
                         @if(!empty($searchField))
                             <h4>Results For "{{$queryString}}"  </h4>
                             <p class="text-info">{{$category > 0 ? sprintf('category: %s', SERVICE_CATEGORY_LIST[$category])  : ""}}</p>
-                            <p>{{$totalResultCount}} {{$totalResultCount == 1 ? 'result' : 'results'}} within {{$miles}} miles of {{$location->city}}, {{$location->state}}</p>
+                            {{--<p>{{$totalResultCount}} {{$totalResultCount == 1 ? 'result' : 'results'}} within {{$miles}} miles of {{$location->city}}, {{$location->state}}</p>--}}
+                            <p>{{$totalResultCount}} {{$totalResultCount == 1 ? 'result' : 'results'}} near {{$location->city}}, {{$location->state}}</p>
                             @if($searchFrom)
                                 <p class="theme-color small">Showing {{$searchFrom+1}} - {{$searchFrom+25}}</p>
                             @else
@@ -61,8 +62,8 @@
             @forelse($plans as $plan)
                 <div class="col-sm-12 col-md-4">
                     <!-- product card -->
-                    <div class="product-item bg-light">
-                        <div class="card">
+                    <div class="product-item">
+                        <div class="">
                             <div class="thumb-content" style="width: 100%; height: 200px; background: url({{$plan->featured_photo_path ? getImage($plan->featured_photo_path) : ''}}) no-repeat; background-size: contain; background-position: center">
 
                             </div>
@@ -99,8 +100,8 @@
                 <br>
                 <div class="col-sm-12 offset-md-4 col-md-4">
                     <!-- product card -->
-                    <div class="product-item bg-light">
-                        <div class="card">
+                    <div class="product-item">
+                        <div class="">
                             <div class="card-header text-center">
                                 <h3>No services available in your area.</h3>
                             </div>
