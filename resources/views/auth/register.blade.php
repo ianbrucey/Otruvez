@@ -25,7 +25,7 @@
                             <label for="business_owner" class="col-md-12 text-left control-label">Business owner? Click here</label>
                             <div class="col-md-12">
 
-                                <input id="business_owner" type="checkbox" class="form-control" name="business_owner" value=true autofocus>
+                                <input id="business_owner" type="checkbox" class="form-control" name="business_owner" value=true {{issetAndTrue($_GET,'business') ? 'checked' : ''}}>
 
                                 @if ($errors->has('business_owner'))
                                     <span class="help-block">
