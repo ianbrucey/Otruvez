@@ -129,7 +129,9 @@ function geolocate() {
 //         }
 //     });
 // }
-
+$('#autocomplete').focus(function () {
+    $(this).val('');
+});
 
 $('#autocomplete').parents('form').on('submit', function(e){
     if(e.keyCode === 13) {

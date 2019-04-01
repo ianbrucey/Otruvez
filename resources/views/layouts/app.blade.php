@@ -167,7 +167,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/jquery.validate.min.js"></script>
 <script src='https://ajax.aspnetcdn.com/ajax/jquery.validate/1.17.0/additional-methods.js'></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/lity/2.3.0/lity.min.js"></script>
-<script src="{{ baseUrlConcat('/js/index.js') }}?ver=0.0.0.2"></script>
+<script src="{{ baseUrlConcat('/js/index.js') }}?ver=0.0.0.1"></script>
 <script>
     var screenheight = screen.height + "px";
     $('#landing-page-section-1').css('height', screenheight);
