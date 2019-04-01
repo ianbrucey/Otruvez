@@ -71,7 +71,7 @@
                                 <h4 class="card-title search-card-title">{{ truncateCardTitle(html_entity_decode($plan->stripe_plan_name)) }}</h4>
                                 <ul class="list-inline product-meta">
                                     <li class="list-inline-item">
-                                        <a href=""><i class="fa fa-briefcase"></i><span class="theme-color">{{"@".$plan->business['business_handle']}}</span></a>
+                                        <a href="/store/{{$plan->business['business_handle']}}"><i class="fa fa-briefcase"></i><span class="theme-color">{{"@".$plan->business['business_handle']}}</span></a>
                                     </li>
 
                                     <li class="list-item">
@@ -89,7 +89,7 @@
                                 </div>
                             </div>
                             <div class="card-header">
-                                <a href="/business/viewService/{{$plan->id}}" class="text-info">view service</a>
+                                <a href="/business/viewService/{{$plan->id}}" class="text-info">view subscription</a>
                                 <a href="/business/viewStore/{{$plan->business['id']}}" class="float-right text-info">Go to store</a>
                             </div>
                         </div>

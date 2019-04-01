@@ -97,7 +97,7 @@ class HomeController extends Controller
 
         $location = Cache::get('location');
         $location->latitude     = $request->get('latitude') && is_numeric($request->get('latitude')) ? $request->get('latitude') : null;
-        $location->longitude    = $request->get('longitude') && is_numeric($request->get('longitude')) ? $request->get('latitude') : null;
+        $location->longitude    = $request->get('longitude') && is_numeric($request->get('longitude')) ? $request->get('longitude') : null;
         $location->city         = $request->get('city');
         $location->state        = $request->get('state');
         $location->postal       = $request->get('postal');

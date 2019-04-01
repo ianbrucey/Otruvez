@@ -84,7 +84,7 @@
                         </div>
                       </div>
                       <div class="card-header">
-                        <a href="/business/viewService/{{$plan->id}}" class="text-info">view service</a>
+                        <a href="/business/viewService/{{$plan->id}}" class="text-info">view subscription</a>
                       </div>
                     </div>
                   </div>
