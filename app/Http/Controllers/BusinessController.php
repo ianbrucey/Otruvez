@@ -293,6 +293,7 @@ class BusinessController extends Controller
                 $newBusiness->user_id = Auth::id();
                 $newBusiness->api_key  = $this->generateApiKey($newBusiness->id);
                 $newBusiness->active = "1";
+                $newBusiness->payout_address = $newBusiness->address;
                 $newBusiness->save();
                 $user->business_id = $newBusiness->id;
                 $user->save();
@@ -307,6 +308,21 @@ class BusinessController extends Controller
             }
 
         return redirect('/business')->with('successMessage', $message);
+    }
+
+    public function updatePayoutOption(Request $request)
+    {
+
+        try {
+            $business = getAuthedBusiness();
+            noEntityAbort($business, 403);
+            $business->payout_address = $request->get('payout_address');
+            $business->save();
+            return redirect()->back()->with("successMessage", "Payout Address was updated successfully!");
+        } catch (\Exception $e) {
+            return redirect()->back()->with("successMessage", "There was a problem updating your payout address. If this problem persists, please contact customer service");
+        }
+
     }
 
     public function updateBusiness(Request $request, $id)
@@ -348,8 +364,14 @@ class BusinessController extends Controller
         $business = getAuthedBusiness();
         noEntityAbort($business, 403);
         $notifications = (new Notification())->getBusinessNotifications($business->id);
-        // maybe also get common
         return view('business.business-notifications')->with('notifications', $notifications);
+    }
+
+    public function showPayoutOptionsView() {
+        $business = getAuthedBusiness();
+        noEntityAbort($business, 403);
+        $payoutAddress =  $business->payout_address ?: $business->address;
+        return view('business.payout-options')->with('business', $business)->with('payoutAddress', $payoutAddress);
     }
 
     public function showSubscribers(){

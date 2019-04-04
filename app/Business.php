@@ -15,6 +15,7 @@ class Business extends Model
         'industry',
         'description',
         'address',
+        'payout_address',
         'city',
         'api_key',
         'redirect_to',
