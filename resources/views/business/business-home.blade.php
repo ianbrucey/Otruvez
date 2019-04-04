@@ -84,6 +84,13 @@
             </div>
         </a>
 
+        <a class="col-md-4" href="/business/payoutOptions">
+            <div class="card">
+                <span class="fa fa-dollar fa-2x"></span>
+                <h3>Payout Options</h3>
+            </div>
+        </a>
+
 {{----------------------------------------------------------CANCEL----------------------------------------------------------------}}
         <a class="col-md-4" href="/business/cancel">
             <div class="card">
