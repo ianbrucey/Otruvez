@@ -1,7 +1,0 @@
-.env.example
-.env
-.idea
-/vendor
-!/vendor/laravel/framework/src/Illuminate/Support/helpers.php3
-.gitignore
-.idea/workspace.xml
