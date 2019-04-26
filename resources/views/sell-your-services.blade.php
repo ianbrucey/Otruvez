@@ -8,7 +8,7 @@
             <div class="row">
                 <div class="col-md-12 mb-0">
                     <div class="section-title text-center">
-                        @if(!empty($section['first'])) <h2 class="text-white">{{$section['first']}}</h2> @endif
+                        @if(!empty($section['first'])) <h2 class="">{{$section['first']}}</h2> @endif
                         <p class="sect-message">{!! $section['msg'] !!}</p>
                     </div>
                 </div>

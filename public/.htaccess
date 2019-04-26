@@ -5,8 +5,8 @@
 
     RewriteEngine On
 
-    RewriteCond %{HTTP:X-Forwarded-Proto} !https
-    RewriteRule !/status https://%{SERVER_NAME}%{REQUEST_URI} [L,R]
+#    RewriteCond %{HTTP:X-Forwarded-Proto} !https
+#    RewriteRule !/status https://%{SERVER_NAME}%{REQUEST_URI} [L,R]
 
     # Redirect Trailing Slashes If Not A Folder...
     RewriteCond %{REQUEST_FILENAME} !-d

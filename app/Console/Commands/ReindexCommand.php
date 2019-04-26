@@ -24,14 +24,14 @@ class ReindexCommand extends Command
 
     public function handle()
     {
-        shell_exec("curl -XDELETE 'localhost:9200/plans?pretty'");
+        shell_exec("curl -XDELETE 'http://docker.for.mac.localhost:9200/plans?pretty'");
         $this->output->write("building index.... \n");
         $this->buildPlanIndex(); // builds schema
         $this->output->write("index built \n");
 
 
         $this->info('Indexing all plans. Might take a while...');
-        $this->output->write(sprintf("there are %s plans", count(Plan::cursor())));
+//        $this->output->write(sprintf("there are %s plans", count(Plan::cursor())));
         foreach (Plan::cursor() as $model) {
 
             if($model->business) {
