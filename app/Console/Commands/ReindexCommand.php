@@ -24,7 +24,8 @@ class ReindexCommand extends Command
 
     public function handle()
     {
-        shell_exec("curl -XDELETE 'http://docker.for.mac.localhost:9200/plans?pretty'");
+//        $cmd = sprintf("curl -XDELETE '%s/plans?pretty'", env("SEARCH_HOSTS"));
+//        shell_exec($cmd);
         $this->output->write("building index.... \n");
         $this->buildPlanIndex(); // builds schema
         $this->output->write("index built \n");
