@@ -14,7 +14,7 @@ ls
 2) run 'composer install' to download dependencies and fix 500 error
 3) run 'chmod -R 777 storage' because storage directory must be writable (need to figure out correct permissions)
 4) run 'chmod -R 777 bootstrap' because bootstrap directory must be writable (need to figure out correct permissions)
-
+5) check here for prod permissions https://vijayasankarn.wordpress.com/2017/02/04/securely-setting-file-permissions-for-laravel-framework/
 - [Simple, fast routing engine](https://laravel.com/docs/routing).
 - [Powerful dependency injection container](https://laravel.com/docs/container).
 - Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
