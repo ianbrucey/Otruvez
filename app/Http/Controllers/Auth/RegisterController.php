@@ -99,9 +99,9 @@ class RegisterController extends Controller
      * @param Request $request
      * @return User
      */
-    protected function create(array $data, Request $request)
+    protected function create(Request $request)
     {
-
+        $data = $request->all();
         $stripeSecretKey = config('services.stripe.secret');
 
         Stripe::setApiKey($stripeSecretKey);
